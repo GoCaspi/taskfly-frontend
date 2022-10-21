@@ -15,12 +15,17 @@ import {RouterLink} from "@angular/router";
 import {AppRoutingModule} from "./app-routing.module";
 import {MatDividerModule} from "@angular/material/divider";
 import {HomeComponent} from "./home/home.component";
+import {SideNavComponent} from "./side-nav/side-nav.component";
+
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    SideNavComponent,
+
 
   ],
   imports: [
