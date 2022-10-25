@@ -22,6 +22,12 @@ import { LandingComponent } from './landing/landing.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatMenuModule} from "@angular/material/menu";
+import { ImportantComponent } from './important/important.component';
+import { PlannedComponent } from './planned/planned.component';
+import { AssignedComponent } from './assigned/assigned.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { MydayComponent } from './myday/myday.component';
+
 
 
 
@@ -34,6 +40,12 @@ import {MatMenuModule} from "@angular/material/menu";
     LoginComponent,
     SignUpComponent,
     LandingComponent,
+    ImportantComponent,
+    PlannedComponent,
+    AssignedComponent,
+    TasksComponent,
+    MydayComponent,
+
 
 
   ],
