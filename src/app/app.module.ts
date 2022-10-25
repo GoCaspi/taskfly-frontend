@@ -1,11 +1,11 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {MatSidenavModule} from "@angular/material/sidenav";
+import { MatSidenavModule} from "@angular/material/sidenav";
 import {RouterLinkActive, RouterLinkWithHref, RouterOutlet} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
@@ -19,14 +19,15 @@ import {SideNavComponent} from "./side-nav/side-nav.component";
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { LandingComponent } from './landing/landing.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
+import { MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import {MatMenuModule} from "@angular/material/menu";
+import { MatMenuModule} from "@angular/material/menu";
 import { ImportantComponent } from './important/important.component';
 import { PlannedComponent } from './planned/planned.component';
 import { AssignedComponent } from './assigned/assigned.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { MydayComponent } from './myday/myday.component';
+
 
 
 
@@ -45,9 +46,6 @@ import { MydayComponent } from './myday/myday.component';
     AssignedComponent,
     TasksComponent,
     MydayComponent,
-
-
-
   ],
     imports: [
         BrowserModule,
@@ -67,7 +65,9 @@ import { MydayComponent } from './myday/myday.component';
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
-        MatMenuModule
+        MatMenuModule,
+
+
 
 
     ],

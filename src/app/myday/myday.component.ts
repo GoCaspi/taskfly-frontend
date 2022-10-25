@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./myday.component.css']
 })
 export class MydayComponent implements OnInit {
-  signUpForm: any;
 
   constructor() { }
 
