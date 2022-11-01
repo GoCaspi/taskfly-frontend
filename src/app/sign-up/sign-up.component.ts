@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -27,7 +27,7 @@ export function passwordsMatchValidator():ValidatorFn{
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent   {
   signUpForm = new FormGroup({
     name: new FormControl('',Validators.required),
     email: new FormControl('',[Validators.email,Validators.required]),
@@ -37,10 +37,7 @@ export class SignUpComponent implements OnInit {
 
 
 
-  constructor() { }
 
-  ngOnInit(): void {
-  }
   get name() {
     return this.signUpForm.get('email');
   }
