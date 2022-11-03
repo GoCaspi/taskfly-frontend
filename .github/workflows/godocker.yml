@@ -17,7 +17,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: taskfly.azurecr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: taskflybackend
+  IMAGE_NAME: taskflyfrontend
   DOCKER_USER: TaskFly
 
 
@@ -96,5 +96,4 @@ jobs:
          host: ${{ secrets.HOST }}
          username: ${{ secrets.USERNAME }}
          key: ${{ secrets.KEY }}
-         port: ${{ secrets.PORT }}
          script: whoami
