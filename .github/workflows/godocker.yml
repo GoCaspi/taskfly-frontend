@@ -96,4 +96,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          script: bash deployFrontend.sh TaskFly BBEjFZsEwFMNA+tGs12XsMy49Kxa3vNZ taskfly.azurecr.io ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{GITHUB_REF##*/}}
+          script: bash deployFrontend.sh TaskFly BBEjFZsEwFMNA+tGs12XsMy49Kxa3vNZ taskfly.azurecr.io ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{github.head_ref || github.ref_name}}
