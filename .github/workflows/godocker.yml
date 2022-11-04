@@ -6,7 +6,7 @@ name: Deployment TaskFly frontend
   # documentation.
 
   #on:
-  #  push:
+#  push:
 #    branches: [ "master", "dev","feature/ON4T-174_Backend_for_Tasks" ]
 # Publish semver tags as releases.
 #  pull_request:
@@ -89,11 +89,11 @@ jobs:
         #       COSIGN_EXPERIMENTAL: "true"
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
-    #     run: cosign sign ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
+      #     run: cosign sign ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:
-         host: ${{ secrets.HOST }}
-         username: ${{ secrets.USERNAME }}
-         key: ${{ secrets.KEY }}
-         script: bash deployFrontend.sh
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: bash deployFrontend.sh TaskFly BBEjFZsEwFMNA+tGs12XsMy49Kxa3vNZ taskfly.azurecr.io ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{github.head_ref || github.ref_name}}
