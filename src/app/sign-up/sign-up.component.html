@@ -21,13 +21,13 @@
 
 
     <mat-form-field>
-      <input matInput placeholder="Password" formControlName="password" type="password"/>
+      <input matInput placeholder="Password" formControlName="password" type="password" id="password"/>
       <mat-error *ngIf="password?.errors?.['required']">
         Password is required
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password"/>
+      <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password" id="confirmPassword"/>
       <mat-error *ngIf="password?.errors?.['required']">
         Confirm Password is required
       </mat-error><br>
