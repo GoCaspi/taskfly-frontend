@@ -1,35 +1,48 @@
-<h1>
-  {{title}}
-</h1>
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <h4>TaskFly</h4>
-    <button mat-button (click)="opened=!opened" ><mat-icon>menu</mat-icon></button>
-  <button mat-button><mat-icon>home</mat-icon>Home</button>
-    <div class="spacer"></div>
-    <a mat-raised-button color="accent">Sign Up</a>
-  </mat-toolbar-row>
 
-</mat-toolbar>
-<mat-sidenav-container>
-   <mat-sidenav [(opened)]="opened" mode="side">
-     <h4 class="name">User Name</h4>
-     <mat-divider></mat-divider>
-      <button mat-raised-button class="menu-button">
-          <mat-icon>home</mat-icon><a routerLink="/home">Home</a>
-      </button><br>
-     <button mat-raised-button class="menu-button">
-       <mat-icon>star</mat-icon><a routerLink="/home">Wichtig</a>
-     </button><br>
-     <button mat-raised-button class="menu-button">
-       <mat-icon>add</mat-icon><a routerLink="/home">Neue Liste</a>
-     </button>
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <h4>TaskFly</h4>
+
+        <button mat-button (click)="opened=!opened" ><mat-icon>menu</mat-icon></button>
+      <button mat-button><mat-icon>home</mat-icon><a routerLink="/sign-up">Home</a></button>
+        <div class="spacer"></div>
+        <button mat-button routerLink="login">
+          <mat-icon>login</mat-icon>
+          Login
+        </button>
+      </mat-toolbar-row>
+
+    </mat-toolbar>
+    <mat-sidenav-container>
+       <mat-sidenav [(opened)]="opened" mode="side">
+         <h4 class="name">User Name</h4>
+         <mat-divider></mat-divider>
+          <br>
+         <button mat-raised-button class="menu-button" >
+           <mat-icon>calendar_month</mat-icon><a routerLink="/myday">Mein Tag</a>
+         </button><br>
+         <button mat-raised-button class="menu-button">
+           <mat-icon>star</mat-icon><a routerLink="/important">Wichtig</a>
+         </button><br>
+         <button mat-raised-button class="menu-button">
+           <mat-icon>event</mat-icon><a routerLink="/planned">Geplant</a>
+         </button><br>
+         <button mat-raised-button class="menu-button">
+           <mat-icon>supervisor_account</mat-icon><a routerLink="/assigned">Mir zugewiesen</a>
+         </button><br>
+         <button mat-raised-button class="menu-button">
+           <mat-icon>comment</mat-icon><a routerLink="/tasks">Aufgaben</a>
+         </button><br><br><br><br><br><br><br><br><br>
+
+         <button mat-raised-button class="menu-button">
+           <mat-icon>add</mat-icon><a routerLink="/home">Neue Liste</a>
+         </button><br>
 
 
-   </mat-sidenav>
-  <mat-sidenav-content>
-   <div class="content mat-elevation-z4">
-     <router-outlet></router-outlet>
-   </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+       </mat-sidenav>
+      <mat-sidenav-content>
+       <div class="content mat-elevation-z4">
+         <router-outlet></router-outlet>
+       </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>

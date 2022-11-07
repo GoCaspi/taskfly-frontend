@@ -22,10 +22,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('TaskFly-frontend');
   });
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('TaskFly-frontend');
-  });
 });
