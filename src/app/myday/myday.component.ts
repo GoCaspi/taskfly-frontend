@@ -26,9 +26,10 @@ export class MydayComponent implements OnInit {
 user : User;
 actualUser : User = {userId:"1"};
 taskData : Task[]=[];
+
+
  constructor() {
   this.user = this.actualUser
-
 }
   async ngOnInit(){
     let mDT = await this.MyDayTasks()

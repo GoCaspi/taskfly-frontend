@@ -1,8 +1,26 @@
 
-<div class="form-container mat-elevation-z5">
-  <h1>My day </h1>
+
+  <mat-toolbar color="secondary" id="listToolbar">
+    <span>Mein Tag</span>
+    <span class="example-spacer"></span>
+    <div id="buttonWrap">
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>share</mat-icon>
+      </button>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+
+
+
   <mat-list role="list">
     <mat-list-item *ngFor="let t of this.taskData" role="listitem">task {{t}} {{t.listId}}</mat-list-item>
   </mat-list>
 
-</div>
+
