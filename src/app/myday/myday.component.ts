@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import axios from "axios";
 
 class TaskCollection {
@@ -14,6 +14,7 @@ interface User{
 interface Task{
   description : string;
   userId : string;
+  listId : string;
 }
 
 @Component({
@@ -21,20 +22,36 @@ interface Task{
   templateUrl: './myday.component.html',
   styleUrls: ['./myday.component.css']
 })
-export class MydayComponent   {
+export class MydayComponent implements OnInit {
 user : User;
-actualUser : User = {userId:"1"}
-constructor() {
+actualUser : User = {userId:"1"};
+taskData : Task[]=[];
+ constructor() {
   this.user = this.actualUser
-  let mDT = this.MyDayTasks()
-  console.log("User is :",this.user," and response from mock is :",mDT)
 
 }
+  async ngOnInit(){
+    let mDT = await this.MyDayTasks()
+    console.log("User is :", this.user, " and response from mock is :", mDT)
+  }
 
- MyDayTasks() : Task[]{
-let t :  Task[] = [{description:"",userId:""}]
- let allTasks =   axios.get("http://localhost:8080/task/userId/1");
-   console.log("response from api :",allTasks)
-   return t
+ async MyDayTasks() : Promise<Task[]>{
+   let tData : Task[] = [];
+   let myDayTasks : Task[] = [];
+try {
+    await axios.get("http://localhost:8080/task/userId/1").then(response =>{tData = <Task[]>response.data;});
 }
+catch (err){ console.log(err) }
+
+   tData.forEach(t =>{
+     if (t.listId == "MyDay"){myDayTasks.push(t);}
+   })
+
+this.taskData = myDayTasks
+ console.log("tData on Object is :",this.taskData);
+   return myDayTasks
+}
+
+
+
 }
