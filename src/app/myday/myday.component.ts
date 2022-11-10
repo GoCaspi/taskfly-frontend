@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 import {StaticListService} from "../services/static-list.service";
+import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 
 class TaskCollection {
   members : string[] = ["1"];
@@ -16,13 +17,14 @@ interface Task{
   description : string;
   userId : string;
   listId : string;
+  taskIdString : string
 }
 
 @Component({
   selector: 'app-myday',
   templateUrl: './myday.component.html',
   styleUrls: ['./myday.component.css'],
-  providers: []
+  providers: [TaskDialogComponent]
 })
 export class MydayComponent implements OnInit {
 user : User;
@@ -30,7 +32,7 @@ actualUser : User = {userId:"1"};
 taskData : Task[]=[];
 
 
- constructor( private sls: StaticListService) {
+ constructor( private sls: StaticListService, public td:TaskDialogComponent) {
   this.user = this.actualUser
 }
   async ngOnInit(){
@@ -52,6 +54,9 @@ renderMyDayTasks(){
    })
 }
 
-
+openTaskDialog(taskId : string){
+   this.td.taskId =taskId
+   this.td.openDialog(taskId);
+}
 
 }

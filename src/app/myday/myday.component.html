@@ -20,7 +20,7 @@
 
 
   <mat-list role="list">
-    <mat-list-item *ngFor="let t of this.taskData" role="listitem">task {{t}} {{t.listId}}</mat-list-item>
+    <mat-list-item *ngFor="let t of this.taskData" role="listitem" id="taskItem" (click)="openTaskDialog(t.taskIdString)">task {{t}} {{t.listId}}</mat-list-item>
   </mat-list>
 
 

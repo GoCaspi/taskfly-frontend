@@ -27,6 +27,8 @@ import { AssignedComponent } from './assigned/assigned.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { MydayComponent } from './myday/myday.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 
 
 
@@ -46,6 +48,7 @@ import { HttpClientModule } from '@angular/common/http';
     AssignedComponent,
     TasksComponent,
     MydayComponent,
+    TaskDialogComponent,
   ],
     imports: [
         BrowserModule,
@@ -67,6 +70,7 @@ import { HttpClientModule } from '@angular/common/http';
         MatFormFieldModule,
         MatInputModule,
         MatMenuModule,
+      MatDialogModule,
     ],
 
   providers: [],
