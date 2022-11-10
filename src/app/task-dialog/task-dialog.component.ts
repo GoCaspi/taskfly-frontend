@@ -23,7 +23,7 @@ export class TaskDialogComponent  {
        console.log("openDialog calles with id :", taskId)
 
        // @ts-ignore
-       document.getElementById("taskContent").innerHTML = data.listId.toString()
+       document.getElementById("taskContent").innerHTML = "Liste: "+data.listId.toString() + " mit id : "+ data.taskId.toString()
        dialogRef.afterClosed().subscribe(result => {
          console.log(`Dialog result: ${result}`);
        });

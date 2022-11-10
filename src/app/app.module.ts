@@ -29,6 +29,7 @@ import { MydayComponent } from './myday/myday.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import { OverlayModule } from '@angular/cdk/overlay';
 
 
 
@@ -71,6 +72,7 @@ import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
         MatInputModule,
         MatMenuModule,
       MatDialogModule,
+      OverlayModule
     ],
 
   providers: [],

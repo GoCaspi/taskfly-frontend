@@ -4,6 +4,8 @@ import { MydayComponent } from './myday.component';
 import {StaticListService} from "../services/static-list.service";
 import {HttpClient} from "@angular/common/http";
 import {createSpyFromClass} from "jasmine-auto-spies";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 
 
 describe('MydayComponent', () => {
@@ -13,8 +15,9 @@ describe('MydayComponent', () => {
 
  beforeEach(async () => {
    await TestBed.configureTestingModule({
+     imports:[MatDialogModule],
      declarations: [ MydayComponent,],
-     providers: [StaticListService,{ provide: HttpClient, useValue: createSpyFromClass(HttpClient) }],
+     providers: [StaticListService,{ provide: HttpClient, useValue: createSpyFromClass(HttpClient) }, TaskDialogComponent,{provide: MatDialog}],
    })
    .compileComponents();
 
