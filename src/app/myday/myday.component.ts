@@ -41,7 +41,7 @@ taskData : Task[]=[];
 renderMyDayTasks(){
   let tData : Task[] = [];
   let myDayTasks : Task[] = [];
-   this.sls.getMyDayTasks().subscribe(response =>{
+   this.sls.getMyDayTasks(this.actualUser.userId).subscribe(response =>{
      tData = <Task[]>response;
      tData.forEach(t =>{
        if (t.listId == "MyDay"){myDayTasks.push(t);}

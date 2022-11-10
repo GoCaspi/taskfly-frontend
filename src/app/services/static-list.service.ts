@@ -6,8 +6,8 @@ import { HttpClient } from '@angular/common/http';
 export class StaticListService {
 
   constructor(private http: HttpClient) { }
-  getMyDayTasks(){
-    return this.http.get("http://localhost:8080/task/userId/1");
+  getMyDayTasks(userId: string){
+    return this.http.get("http://localhost:8080/task/userId/"+userId);
   }
 }
 
