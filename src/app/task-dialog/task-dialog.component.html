@@ -1,4 +1,13 @@
 <p>task-dialog works!</p>
 
 <p id="dataTxt"> data {{data}}</p>
-<div id="taskContent"></div>
+<div id="taskContent">
+
+</div>
+<form>
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>Leave a comment</mat-label>
+  <input matInput placeholder="Ex. It makes me feel..." id="listIdInput">
+</mat-form-field>
+</form>
+<button (click)="getInputValues()"></button>

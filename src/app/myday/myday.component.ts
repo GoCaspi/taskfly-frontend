@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Self, SkipSelf} from '@angular/core';
 
 import {StaticListService} from "../services/static-list.service";
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
+import {BROWSER_STORAGE, BrowserStorageService} from "../services/storage.service";
 
 class TaskCollection {
   members : string[] = ["1"];
@@ -13,18 +14,26 @@ interface User{
   userId : string;
 
 }
+interface TaskBody{
+  topic : string;
+  priority: string;
+  description: string;
+}
+
 interface Task{
-  description : string;
+  body: TaskBody;
   userId : string;
   listId : string;
-  taskIdString : string
+  taskIdString : string;
+  team : string;
+  deadline : string;
 }
 
 @Component({
   selector: 'app-myday',
   templateUrl: './myday.component.html',
   styleUrls: ['./myday.component.css'],
-  providers: [TaskDialogComponent]
+  providers: [TaskDialogComponent, BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
 })
 export class MydayComponent implements OnInit {
 user : User;
@@ -32,7 +41,8 @@ actualUser : User = {userId:"1"};
 taskData : Task[]=[];
 
 
- constructor( private sls: StaticListService, public td:TaskDialogComponent) {
+ constructor( private sls: StaticListService, public td:TaskDialogComponent, @Self() private sessionStorageService: BrowserStorageService,
+  @SkipSelf() private localStorageService: BrowserStorageService,) {
   this.user = this.actualUser
 }
   async ngOnInit(){
@@ -57,6 +67,18 @@ renderMyDayTasks(){
 openTaskDialog(taskId : string){
    this.td.taskId =taskId
    this.td.openDialog(taskId);
+   this.setSession("currentTask",taskId)
+  this.setLocal("currentTask",taskId)
 }
+
+
+
+  setSession(key : string, value : string) {
+    this.sessionStorageService.set(key, value);
+  }
+
+  setLocal(key : string, value : string) {
+    this.localStorageService.set(key, value);
+  }
 
 }
