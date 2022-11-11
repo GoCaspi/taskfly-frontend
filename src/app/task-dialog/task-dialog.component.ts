@@ -50,7 +50,7 @@ export class TaskDialogComponent {
        console.log("openDialog calles with id :", taskId)
 
        // @ts-ignore
-       document.getElementById("taskContent").innerHTML = "Liste: "+data.listId.toString() + " mit id : "+ data.taskId.toString() + data.body.description.toString()
+    //   document.getElementById("taskContent").innerHTML = "Liste: "+data.listId.toString() + " mit id : "+ data.taskId.toString() + data.body.description.toString()
        this.buildInputs(this.data)
 
        dialogRef.afterClosed().subscribe(result => {
@@ -82,7 +82,11 @@ console.log("this fml is :",fml)
 
   ngOnInit(){
     console.log("Local CURRENT task")
+
     console.log("Data call from TaskDialog OnInit" , this.localStorageService.get("currentListId"),this.localStorageService.get("currentDeadline")," with id : ",this.localStorageService.get("currentTask"))
+    // @ts-ignore
+    document.getElementById("taskContent").innerHTML = "Liste: "+this.localStorageService.get("currentListId") + " mit id : "
+      + this.localStorageService.get("currentTask")+" description "  + this.localStorageService.get("currentDescription")
   }
 
 }

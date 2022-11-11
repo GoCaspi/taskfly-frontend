@@ -15,8 +15,12 @@ export class BrowserStorageService {
     return this.storage.getItem(key);
   }
 
+
   set(key: string, value: string) {
     this.storage.setItem(key, value);
+  }
+  setBody(key : string,value:any){
+    this.storage.setItem(key,value)
   }
 
   remove(key: string) {

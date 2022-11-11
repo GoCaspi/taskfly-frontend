@@ -74,6 +74,7 @@ openTaskDialog(taskId : string){
     let myData = <Task>data
     this.localStorageService.set("currentListId",myData.listId)
     this.localStorageService.set("currentDeadline",myData.deadline)
+    this.localStorageService.setBody("currentDescription",myData.body)
     this.td.openDialog(taskId);
   })
 }
