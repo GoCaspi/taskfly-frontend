@@ -30,7 +30,6 @@ interface Task{
 export class TaskDialogComponent {
   taskId : string | undefined;
   data: Task | undefined
-  idFromStorage: string|null = ""
 
 
 
@@ -51,7 +50,7 @@ export class TaskDialogComponent {
 
        // @ts-ignore
     //   document.getElementById("taskContent").innerHTML = "Liste: "+data.listId.toString() + " mit id : "+ data.taskId.toString() + data.body.description.toString()
-       this.buildInputs(this.data)
+     //  this.buildInputs(this.data)
 
        dialogRef.afterClosed().subscribe(result => {
          console.log(`Dialog result: ${result}`);
@@ -60,12 +59,9 @@ export class TaskDialogComponent {
 console.log("this fml is :",fml)
   }
 
-  @ViewChild('taskContent') myDiv: ElementRef | undefined;
 
   ngAfterViewInit() {
-    console.log("after view init ", this.data)
-    console.log(this.myDiv?.nativeElement.innerHTML);
-    this.myDiv?.nativeElement.insertAdjacentHTML('beforeend', '<div class="two">two</div>');
+
   }
 
   buildInputs(data : Task){
@@ -76,7 +72,7 @@ console.log("this fml is :",fml)
   }
 
   getInputValues(){
-    let listIdVal = document.querySelector('#listIdInput')?.ariaValueNow
+    let listIdVal = document.querySelector('#listIdInput')?.ariaValueText
     console.log("GETINPUTVALS RETURN",listIdVal)
   }
 
@@ -87,6 +83,15 @@ console.log("this fml is :",fml)
     // @ts-ignore
     document.getElementById("taskContent").innerHTML = "Liste: "+this.localStorageService.get("currentListId") + " mit id : "
       + this.localStorageService.get("currentTask")+" description "  + this.localStorageService.get("currentDescription")
+  }
+
+  @ViewChild("listIdInput") myNameElem! : ElementRef ;
+  getValue() {
+    let elem = document.getElementById('listIdInput');
+    if(typeof elem !== null && elem !== undefined ) {
+    //  document.getElementById("listIdInput")!.innerHTML = "changed";
+      console.log("getVal ", document.getElementById("listIdInput")!.innerHTML)
+    }
   }
 
 }
