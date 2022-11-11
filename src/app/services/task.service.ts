@@ -7,7 +7,8 @@ import {HttpClient} from "@angular/common/http";
 export class TaskService {
 
   constructor(private http:HttpClient) { }
-  getTaskById(id : string){
+  getTaskById(id : string|null){
+    if(id == null){return this.http.get("http://localhost:8080/task/taskId/")}
     return this.http.get("http://localhost:8080/task/taskId/"+id)
   }
 }

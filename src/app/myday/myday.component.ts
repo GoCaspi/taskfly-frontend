@@ -3,6 +3,7 @@ import {Component, OnInit, Self, SkipSelf} from '@angular/core';
 import {StaticListService} from "../services/static-list.service";
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 import {BROWSER_STORAGE, BrowserStorageService} from "../services/storage.service";
+import {TaskService} from "../services/task.service";
 
 class TaskCollection {
   members : string[] = ["1"];
@@ -42,7 +43,7 @@ taskData : Task[]=[];
 
 
  constructor( private sls: StaticListService, public td:TaskDialogComponent, @Self() private sessionStorageService: BrowserStorageService,
-  @SkipSelf() private localStorageService: BrowserStorageService,) {
+  @SkipSelf() private localStorageService: BrowserStorageService,private taskService: TaskService) {
   this.user = this.actualUser
 }
   async ngOnInit(){
@@ -66,9 +67,15 @@ renderMyDayTasks(){
 
 openTaskDialog(taskId : string){
    this.td.taskId =taskId
-   this.td.openDialog(taskId);
+
    this.setSession("currentTask",taskId)
   this.setLocal("currentTask",taskId)
+  this.taskService.getTaskById(taskId).subscribe(data =>{
+    let myData = <Task>data
+    this.localStorageService.set("currentListId",myData.listId)
+    this.localStorageService.set("currentDeadline",myData.deadline)
+    this.td.openDialog(taskId);
+  })
 }
 
 

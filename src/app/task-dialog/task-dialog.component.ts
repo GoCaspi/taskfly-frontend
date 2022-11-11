@@ -30,6 +30,10 @@ interface Task{
 export class TaskDialogComponent {
   taskId : string | undefined;
   data: Task | undefined
+  idFromStorage: string|null = ""
+
+
+
   constructor(public dialog: MatDialog, private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
               @SkipSelf() private localStorageService: BrowserStorageService,) {}
 
@@ -77,7 +81,8 @@ console.log("this fml is :",fml)
   }
 
   ngOnInit(){
-    console.log("Local CURRENT task",this.localStorageService.get("currentTask"))
+    console.log("Local CURRENT task")
+    console.log("Data call from TaskDialog OnInit" , this.localStorageService.get("currentListId"),this.localStorageService.get("currentDeadline")," with id : ",this.localStorageService.get("currentTask"))
   }
 
 }
