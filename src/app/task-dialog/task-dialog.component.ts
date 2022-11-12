@@ -30,7 +30,13 @@ interface Task{
 export class TaskDialogComponent {
   taskId : string | undefined;
   data: Task | undefined
-
+  listIdInput1 : string ="";
+  teamInput : string ="";
+  deadlineInput : string ="";
+  bTopicInput : string = "";
+  bPriorityInput : string = "";
+  bDescriptionInput : string = "";
+  bodyInput : TaskBody = {topic : "", description : "", priority : ""}
 
 
   constructor(public dialog: MatDialog, private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
@@ -83,6 +89,17 @@ console.log("this fml is :",fml)
     // @ts-ignore
     document.getElementById("taskContent").innerHTML = "Liste: "+this.localStorageService.get("currentListId") + " mit id : "
       + this.localStorageService.get("currentTask")+" description "  + this.localStorageService.get("currentDescription")
+    this.listIdInput1 = this.localStorageService.get("currentListId")!
+    this.setInputFields();
+  }
+
+  setInputFields(){
+   this.listIdInput1  =this.localStorageService.get("currentListId")!;
+    this.teamInput  = this.localStorageService.get("currentTeam")!;
+    this.deadlineInput  = this.localStorageService.get("currentDeadline")!;
+    this.bTopicInput  = this.localStorageService.get("currentTopic")!;
+    this.bPriorityInput  = this.localStorageService.get("currentPriority")!;
+    this.bDescriptionInput  = this.localStorageService.get("currentDescription")!;
   }
 
   @ViewChild("listIdInput") myNameElem! : ElementRef ;
@@ -91,6 +108,7 @@ console.log("this fml is :",fml)
     if(typeof elem !== null && elem !== undefined ) {
     //  document.getElementById("listIdInput")!.innerHTML = "changed";
       console.log("getVal ", document.getElementById("listIdInput")!.innerHTML)
+      console.log("ngModel Input is : ",this.listIdInput1)
     }
   }
 

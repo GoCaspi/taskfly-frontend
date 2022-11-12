@@ -6,8 +6,25 @@
 </div>
 <form>
 <mat-form-field class="example-full-width" appearance="fill">
-  <mat-label>Leave a comment</mat-label>
-  <textarea matInput placeholder="Ex. It makes me feel..." id="listIdInput" type="text"></textarea>
+  <mat-label>List</mat-label>
+  <textarea [(ngModel)]="listIdInput1" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..." id="listIdInput" type="text"></textarea>
 </mat-form-field>
+
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Team</mat-label>
+    <textarea [(ngModel)]="teamInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Deadline</mat-label>
+    <textarea [(ngModel)]="deadlineInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..." id="" type="text"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea [(ngModel)]="bDescriptionInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..." id="" type="text"></textarea>
+  </mat-form-field>
+
 </form>
 <button (click)="getInputValues();getValue()"></button>
