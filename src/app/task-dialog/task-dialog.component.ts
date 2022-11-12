@@ -11,6 +11,12 @@ interface TaskBody{
   priority: string;
   description: string;
 }
+interface TaskUpdate{
+  body: TaskBody;
+  listId : string;
+  team : string;
+  deadline : string;
+}
 
 interface Task{
   body: TaskBody;
@@ -28,7 +34,7 @@ interface Task{
   providers:[BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
 })
 export class TaskDialogComponent {
-  taskId : string | undefined;
+  taskId : string ="";
   data: Task | undefined
   listIdInput1 : string ="";
   teamInput : string ="";
@@ -83,8 +89,7 @@ console.log("this fml is :",fml)
   }
 
   ngOnInit(){
-    console.log("Local CURRENT task")
-
+    this.taskId = this.localStorageService.get("currentTask")!
     console.log("Data call from TaskDialog OnInit" , this.localStorageService.get("currentListId"),this.localStorageService.get("currentDeadline")," with id : ",this.localStorageService.get("currentTask"))
     // @ts-ignore
     document.getElementById("taskContent").innerHTML = "Liste: "+this.localStorageService.get("currentListId") + " mit id : "
@@ -110,6 +115,13 @@ console.log("this fml is :",fml)
       console.log("getVal ", document.getElementById("listIdInput")!.innerHTML)
       console.log("ngModel Input is : ",this.listIdInput1)
     }
+  }
+
+  sendUpdate(){
+    let updateBody : TaskBody = {description:this.bDescriptionInput,topic:this.bTopicInput,priority:this.bPriorityInput}
+   let update :  TaskUpdate = {body:updateBody,listId:this.listIdInput1,deadline:this.deadlineInput,team:this.teamInput}
+    console.log("update is",update)
+    this.sls.updateTask(update, this.taskId).then(r => this.dialog.closeAll())
   }
 
 }
