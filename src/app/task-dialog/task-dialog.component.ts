@@ -50,43 +50,24 @@ export class TaskDialogComponent {
 
   async openDialog(taskId: string) {
     this.taskId = taskId
-    let fml;
      this.sls.getTaskById(taskId).subscribe(data => {
       this.data = <Task>data
-       fml = <Task>data
+
       console.log("data out of dialog", this.data)
 
 
        const dialogRef = this.dialog.open(TaskDialogComponent);
        console.log("openDialog calles with id :", taskId)
 
-       // @ts-ignore
-    //   document.getElementById("taskContent").innerHTML = "Liste: "+data.listId.toString() + " mit id : "+ data.taskId.toString() + data.body.description.toString()
-     //  this.buildInputs(this.data)
 
        dialogRef.afterClosed().subscribe(result => {
          console.log(`Dialog result: ${result}`);
        });
      })
-console.log("this fml is :",fml)
-  }
-
-
-  ngAfterViewInit() {
 
   }
 
-  buildInputs(data : Task){
-    let listIdTxt = data.listId.toString()
 
-    // @ts-ignore
-    document.getElementById("listIdInput").innerHTML = listIdTxt
-  }
-
-  getInputValues(){
-    let listIdVal = document.querySelector('#listIdInput')?.ariaValueText
-    console.log("GETINPUTVALS RETURN",listIdVal)
-  }
 
   ngOnInit(){
     this.taskId = this.localStorageService.get("currentTask")!
@@ -122,6 +103,14 @@ console.log("this fml is :",fml)
    let update :  TaskUpdate = {body:updateBody,listId:this.listIdInput1,deadline:this.deadlineInput,team:this.teamInput}
     console.log("update is",update)
     this.sls.updateTask(update, this.taskId).then(r => this.dialog.closeAll())
+  }
+
+  deleteTask(){
+this.sls.deleteTask(this.taskId).then(r => {
+  this.localStorageService.setBody("updated",true)
+  this.dialog.closeAll()
+  window.location.reload()
+})
   }
 
 }
