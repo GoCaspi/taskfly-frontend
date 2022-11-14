@@ -55,7 +55,7 @@ export class TaskDialogComponent {
   }
 
   setInputFields(){
-   this.listIdInput1  =this.localStorageService.get("currentListId")!;
+   this.listIdInput1  = this.localStorageService.get("currentListId")!;
     this.teamInput  = this.localStorageService.get("currentTeam")!;
     this.deadlineInput  = this.localStorageService.get("currentDeadline")!;
     this.bTopicInput  = this.localStorageService.get("currentTopic")!;

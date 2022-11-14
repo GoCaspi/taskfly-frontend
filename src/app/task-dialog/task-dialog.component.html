@@ -12,6 +12,11 @@
     <textarea [(ngModel)]="bTopicInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
   </mat-form-field>
 
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Priority</mat-label>
+    <textarea [(ngModel)]="bPriorityInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+  </mat-form-field>
+
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Team</mat-label>
@@ -29,5 +34,5 @@
   </mat-form-field>
 
 </form>
-<button (click)="sendUpdate()">Send update</button>
-<button (click)="deleteTask()">Delete task</button>
+<button mat-button color="primary" (click)="sendUpdate()">Send update</button>
+<button mat-button color="warn" (click)="deleteTask()">Delete task</button>

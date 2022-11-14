@@ -20,7 +20,7 @@
 
 
   <mat-list role="list" (change)="reRender($any($event))" id="taskList">
-    <mat-list-item *ngFor="let t of this.taskData" role="listitem" id="taskItem" (click)="openTaskDialog(t.taskIdString)">task {{t}} {{t.listId}}</mat-list-item>
+    <mat-list-item *ngFor="let t of this.taskData" role="listitem" id="taskItem" (click)="openTaskDialog(t.taskIdString)">{{t.body.topic}} mit Priorität: {{t.body.priority}}</mat-list-item>
   </mat-list>
  <!-- <button (click)="openTaskDialog("1")>OPEN</button> -->
 
