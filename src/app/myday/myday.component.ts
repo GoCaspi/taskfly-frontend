@@ -1,9 +1,10 @@
-import {Component, OnInit, Self, SkipSelf} from '@angular/core';
+import {Component, OnInit, Renderer2, Self, SkipSelf} from '@angular/core';
 
 import {StaticListService} from "../services/static-list.service";
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 import {BROWSER_STORAGE, BrowserStorageService} from "../services/storage.service";
 import {TaskService} from "../services/task.service";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 class TaskCollection {
   members : string[] = ["1"];
@@ -40,14 +41,21 @@ export class MydayComponent implements OnInit {
 user : User;
 actualUser : User = {userId:"1"};
 taskData : Task[]=[];
+render: boolean = false;
+private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
 
-
- constructor( private sls: StaticListService, public td:TaskDialogComponent, @Self() private sessionStorageService: BrowserStorageService,
+ constructor( public dialog:MatDialog, renderer: Renderer2,private sls: StaticListService, public td:TaskDialogComponent, @Self() private sessionStorageService: BrowserStorageService,
   @SkipSelf() private localStorageService: BrowserStorageService,private taskService: TaskService) {
   this.user = this.actualUser
 }
   async ngOnInit(){
     this.renderMyDayTasks()
+ //   this.renderer.appendChild("taskList",)
+  }
+
+  reRender(event: boolean){
+   console.log("EVENT CALL ",event)
+   this.render = event
   }
 
 
@@ -64,6 +72,10 @@ renderMyDayTasks(){
      console.log("tData on Object is :",this.taskData);
    })
 }
+open(){
+  this.dialogRef = this.dialog.open(TaskDialogComponent)
+  this.dialogRef.afterClosed()
+}
 
 openTaskDialog(taskId : string){
    this.td.taskId =taskId
@@ -79,6 +91,7 @@ openTaskDialog(taskId : string){
     this.localStorageService.set("currentDescription",myData.body.description)
     this.localStorageService.set("currentPriority",myData.body.priority)
     this.td.openDialog(taskId);
+
   })
 }
 

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, Injectable, OnInit, Self, SkipSelf, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, Injectable, OnInit, Self, SkipSelf, ViewChild, EventEmitter, Output} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {StaticListService} from "../services/static-list.service";
 import {TaskService} from "../services/task.service";
@@ -47,6 +47,9 @@ export class TaskDialogComponent {
 
   constructor(public dialog: MatDialog, private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
               @SkipSelf() private localStorageService: BrowserStorageService,) {}
+@Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
+
+
 
   async openDialog(taskId: string) {
     this.taskId = taskId
@@ -62,9 +65,11 @@ export class TaskDialogComponent {
 
        dialogRef.afterClosed().subscribe(result => {
          console.log(`Dialog result: ${result}`);
+        // window.location.reload()
+          this.change.emit(true)
        });
      })
-
+    this.change.emit(true)
   }
 
 
@@ -77,6 +82,7 @@ export class TaskDialogComponent {
       + this.localStorageService.get("currentTask")+" description "  + this.localStorageService.get("currentDescription")
     this.listIdInput1 = this.localStorageService.get("currentListId")!
     this.setInputFields();
+
   }
 
   setInputFields(){
@@ -103,12 +109,14 @@ export class TaskDialogComponent {
    let update :  TaskUpdate = {body:updateBody,listId:this.listIdInput1,deadline:this.deadlineInput,team:this.teamInput}
     console.log("update is",update)
     this.sls.updateTask(update, this.taskId).then(r => this.dialog.closeAll())
+    this.change.emit(true)
   }
 
   deleteTask(){
 this.sls.deleteTask(this.taskId).then(r => {
   this.localStorageService.setBody("updated",true)
   this.dialog.closeAll()
+  this.change.emit(true)
   window.location.reload()
 })
   }

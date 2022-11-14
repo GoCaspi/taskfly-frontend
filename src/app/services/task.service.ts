@@ -37,7 +37,7 @@ export class TaskService {
 
   async updateTask(task: TaskUpdate, id: string) {
    let taskString = JSON.stringify(task)
-    await this.http.post("localhost:8080/task/" + id, taskString).subscribe(response => console.log(response))
+   this.http.put("http://localhost:8080/task/" + id, taskString, {responseType: 'text'}).subscribe(r => console.log(r))
   }
 
   async deleteTask(id: string) {
