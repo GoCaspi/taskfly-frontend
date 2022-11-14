@@ -7,3 +7,18 @@
 .example-full-width {
   width: 100%;
 }
+
+.priorityBox{
+  display: flex;
+  flex-direction: column;
+  padding-top:1rem ;
+  padding-bottom: 1rem;
+}
+.priorityLabel{
+  margin-bottom: 0.5rem;
+}
+.radioBtn{
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}

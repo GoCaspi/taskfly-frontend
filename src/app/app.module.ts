@@ -32,6 +32,7 @@ import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import { MatNativeDateModule, } from '@angular/material/core';
+import {MatRadioModule} from "@angular/material/radio";
 
 
 
@@ -75,6 +76,7 @@ import { MatNativeDateModule, } from '@angular/material/core';
     OverlayModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatRadioModule,
   ],
 
   providers: [],

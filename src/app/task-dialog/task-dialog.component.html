@@ -1,7 +1,17 @@
 <p>Bearbeite deine Aufgabe</p>
 
+<div class="priorityBox">
+  <mat-label class="priorityLabel">Priorität</mat-label>
+  <mat-radio-group aria-label="Select an option">
+    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="bPriorityInput" [ngModelOptions]="{standalone: true}" value="1">hoch</mat-radio-button>
+    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="bPriorityInput" [ngModelOptions]="{standalone: true}" value="2">mittel</mat-radio-button>
+    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="bPriorityInput" [ngModelOptions]="{standalone: true}" value="2">niedrig</mat-radio-button>
+  </mat-radio-group>
+</div>
 
 <form>
+
+
 <mat-form-field class="example-full-width" appearance="fill">
   <mat-label>List</mat-label>
   <textarea [(ngModel)]="listIdInput1" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..." id="listIdInput" type="text"></textarea>
@@ -11,11 +21,13 @@
     <mat-label>Topic</mat-label>
     <textarea [(ngModel)]="bTopicInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
   </mat-form-field>
-
+<!--
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Priority</mat-label>
     <textarea [(ngModel)]="bPriorityInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
   </mat-form-field>
+  -->
+
 
 
   <mat-form-field class="example-full-width" appearance="fill">
@@ -45,5 +57,8 @@
 
 
 </form>
+
+
+
 <button mat-button color="primary" (click)="sendUpdate()">Send update</button>
 <button mat-button color="warn" (click)="deleteTask()">Delete task</button>
