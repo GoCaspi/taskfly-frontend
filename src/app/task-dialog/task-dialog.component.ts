@@ -1,6 +1,5 @@
-import {Component, ElementRef, Inject, Injectable, OnInit, Self, SkipSelf, ViewChild, EventEmitter, Output} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {StaticListService} from "../services/static-list.service";
+import {Component,  Injectable,  Self, SkipSelf, EventEmitter, Output} from '@angular/core';
+import { MatDialog,} from "@angular/material/dialog";
 import {TaskService} from "../services/task.service";
 import {BROWSER_STORAGE, BrowserStorageService} from "../services/storage.service";
 
@@ -50,39 +49,9 @@ export class TaskDialogComponent {
 @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
 
 
-
-  async openDialog(taskId: string) {
-    this.taskId = taskId
-     this.sls.getTaskById(taskId).subscribe(data => {
-      this.data = <Task>data
-
-      console.log("data out of dialog", this.data)
-
-
-       const dialogRef = this.dialog.open(TaskDialogComponent);
-       console.log("openDialog calles with id :", taskId)
-
-
-       dialogRef.afterClosed().subscribe(result => {
-         console.log(`Dialog result: ${result}`);
-        // window.location.reload()
-          this.change.emit(true)
-       });
-     })
-    this.change.emit(true)
-  }
-
-
-
   ngOnInit(){
     this.taskId = this.localStorageService.get("currentTask")!
-    console.log("Data call from TaskDialog OnInit" , this.localStorageService.get("currentListId"),this.localStorageService.get("currentDeadline")," with id : ",this.localStorageService.get("currentTask"))
-    // @ts-ignore
-    document.getElementById("taskContent").innerHTML = "Liste: "+this.localStorageService.get("currentListId") + " mit id : "
-      + this.localStorageService.get("currentTask")+" description "  + this.localStorageService.get("currentDescription")
-    this.listIdInput1 = this.localStorageService.get("currentListId")!
     this.setInputFields();
-
   }
 
   setInputFields(){
@@ -94,15 +63,6 @@ export class TaskDialogComponent {
     this.bDescriptionInput  = this.localStorageService.get("currentDescription")!;
   }
 
-  @ViewChild("listIdInput") myNameElem! : ElementRef ;
-  getValue() {
-    let elem = document.getElementById('listIdInput');
-    if(typeof elem !== null && elem !== undefined ) {
-    //  document.getElementById("listIdInput")!.innerHTML = "changed";
-      console.log("getVal ", document.getElementById("listIdInput")!.innerHTML)
-      console.log("ngModel Input is : ",this.listIdInput1)
-    }
-  }
 
   sendUpdate(){
     let updateBody : TaskBody = {description:this.bDescriptionInput,topic:this.bTopicInput,priority:this.bPriorityInput}

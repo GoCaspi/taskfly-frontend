@@ -1,14 +1,16 @@
-<p>task-dialog works!</p>
+<p>Bearbeite deine Aufgabe</p>
 
-<p id="dataTxt"> data {{data}}</p>
-<div id="taskContent">
 
-</div>
 <form>
 <mat-form-field class="example-full-width" appearance="fill">
   <mat-label>List</mat-label>
   <textarea [(ngModel)]="listIdInput1" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..." id="listIdInput" type="text"></textarea>
 </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Topic</mat-label>
+    <textarea [(ngModel)]="bTopicInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+  </mat-form-field>
 
 
   <mat-form-field class="example-full-width" appearance="fill">
@@ -18,12 +20,12 @@
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Deadline</mat-label>
-    <textarea [(ngModel)]="deadlineInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..." id="" type="text"></textarea>
+    <textarea [(ngModel)]="deadlineInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
   </mat-form-field>
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Description</mat-label>
-    <textarea [(ngModel)]="bDescriptionInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..." id="" type="text"></textarea>
+    <textarea [(ngModel)]="bDescriptionInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
   </mat-form-field>
 
 </form>

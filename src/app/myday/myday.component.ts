@@ -50,7 +50,6 @@ private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
 }
   async ngOnInit(){
     this.renderMyDayTasks()
- //   this.renderer.appendChild("taskList",)
   }
 
   reRender(event: boolean){
@@ -83,36 +82,15 @@ openTaskDialog(taskId : string){
     this.localStorageService.set("currentTopic",myData.body.topic)
     this.localStorageService.set("currentDescription",myData.body.description)
     this.localStorageService.set("currentPriority",myData.body.priority)
+    this.localStorageService.set("currentTeam",myData.team)
 
     this.dialogRef = this.dialog.open(TaskDialogComponent)
     this.dialogRef.afterClosed().subscribe(r =>{
       this.renderMyDayTasks()
   })
 
-
-
-
   })
 }
-
-openTaskDialog1(taskId : string){
-   this.td.taskId =taskId
-
-   this.setSession("currentTask",taskId)
-  this.setLocal("currentTask",taskId)
-  this.taskService.getTaskById(taskId).subscribe(data =>{
-    let myData = <Task>data
-    this.localStorageService.set("currentListId",myData.listId)
-    this.localStorageService.set("currentDeadline",myData.deadline)
-    this.localStorageService.setBody("currentBody",myData.body)
-    this.localStorageService.set("currentTopic",myData.body.topic)
-    this.localStorageService.set("currentDescription",myData.body.description)
-    this.localStorageService.set("currentPriority",myData.body.priority)
-    this.td.openDialog(taskId);
-
-  })
-}
-
 
 
   setSession(key : string, value : string) {

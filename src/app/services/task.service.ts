@@ -41,6 +41,6 @@ export class TaskService {
   }
 
   async deleteTask(id: string) {
-    await this.http.delete("http://localhost:8080/task/" + id).subscribe(r =>{console.log(r)})
+     this.http.delete("http://localhost:8080/task/" + id, {responseType: 'text'}).subscribe(r =>{console.log(r)})
   }
 }
