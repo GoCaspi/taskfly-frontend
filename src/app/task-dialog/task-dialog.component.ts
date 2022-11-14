@@ -117,7 +117,7 @@ this.sls.deleteTask(this.taskId).then(r => {
   this.localStorageService.setBody("updated",true)
   this.dialog.closeAll()
   this.change.emit(true)
-  window.location.reload()
+ // window.location.reload()
 })
   }
 

@@ -72,12 +72,30 @@ renderMyDayTasks(){
      console.log("tData on Object is :",this.taskData);
    })
 }
-open(){
-  this.dialogRef = this.dialog.open(TaskDialogComponent)
-  this.dialogRef.afterClosed()
+openTaskDialog(taskId : string){
+  this.setSession("currentTask",taskId)
+  this.setLocal("currentTask",taskId)
+  this.taskService.getTaskById(taskId).subscribe(data =>{
+    let myData = <Task>data
+    this.localStorageService.set("currentListId",myData.listId)
+    this.localStorageService.set("currentDeadline",myData.deadline)
+    this.localStorageService.setBody("currentBody",myData.body)
+    this.localStorageService.set("currentTopic",myData.body.topic)
+    this.localStorageService.set("currentDescription",myData.body.description)
+    this.localStorageService.set("currentPriority",myData.body.priority)
+
+    this.dialogRef = this.dialog.open(TaskDialogComponent)
+    this.dialogRef.afterClosed().subscribe(r =>{
+      this.renderMyDayTasks()
+  })
+
+
+
+
+  })
 }
 
-openTaskDialog(taskId : string){
+openTaskDialog1(taskId : string){
    this.td.taskId =taskId
 
    this.setSession("currentTask",taskId)
