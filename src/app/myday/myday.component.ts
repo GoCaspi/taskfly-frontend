@@ -100,5 +100,16 @@ openTaskDialog(taskId : string){
   setLocal(key : string, value : string) {
     this.localStorageService.set(key, value);
   }
+  setBackground1(){
+
+    document.getElementById("main-wrap")!.style.backgroundImage="url(../assets/img/pexels-pixabay-259915.jpg)"
+    let li = document.getElementsByClassName("listElement")
+    if (li){
+      for (let i =0; i< li.length;i++) {
+       li[i].classList.add("bg1")
+      }
+    }
+    console.log("setted backgroud called")
+  }
 
 }
