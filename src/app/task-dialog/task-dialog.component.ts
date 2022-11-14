@@ -42,7 +42,7 @@ export class TaskDialogComponent {
   bPriorityInput : string = "";
   bDescriptionInput : string = "";
   bodyInput : TaskBody = {topic : "", description : "", priority : ""}
-
+  startDate = new Date(2022, 0, 1);
 
   constructor(public dialog: MatDialog, private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
               @SkipSelf() private localStorageService: BrowserStorageService,) {}

@@ -22,16 +22,27 @@
     <mat-label>Team</mat-label>
     <textarea [(ngModel)]="teamInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
   </mat-form-field>
-
+<!--
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Deadline</mat-label>
     <textarea [(ngModel)]="deadlineInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
   </mat-form-field>
+  -->
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Description</mat-label>
     <textarea [(ngModel)]="bDescriptionInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
   </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Deadline</mat-label>
+    <input matInput [(ngModel)]="deadlineInput" [ngModelOptions]="{standalone: true}" [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+  </mat-form-field>
+
+
 
 </form>
 <button mat-button color="primary" (click)="sendUpdate()">Send update</button>

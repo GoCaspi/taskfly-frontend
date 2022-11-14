@@ -30,8 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
-
-
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import { MatNativeDateModule, } from '@angular/material/core';
 
 
 
@@ -51,29 +51,31 @@ import { OverlayModule } from '@angular/cdk/overlay';
     MydayComponent,
     TaskDialogComponent,
   ],
-    imports: [
-        BrowserModule,
-      HttpClientModule,
-        MatToolbarModule,
-        BrowserAnimationsModule,
-        MatSidenavModule,
-        RouterOutlet,
-        MatIconModule,
-        MatButtonModule,
-        FormsModule,
-        RouterLinkWithHref,
-        RouterLink,
-        RouterLinkActive,
-        MatListModule,
-        AppRoutingModule,
-        MatDividerModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatMenuModule,
-      MatDialogModule,
-      OverlayModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    MatToolbarModule,
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    RouterOutlet,
+    MatIconModule,
+    MatButtonModule,
+    FormsModule,
+    RouterLinkWithHref,
+    RouterLink,
+    RouterLinkActive,
+    MatListModule,
+    AppRoutingModule,
+    MatDividerModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    MatDialogModule,
+    OverlayModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
 
   providers: [],
   bootstrap: [AppComponent],
