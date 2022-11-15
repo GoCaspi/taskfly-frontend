@@ -92,6 +92,30 @@ openTaskDialog(taskId : string){
   })
 }
 
+  async openTaskDialog1(taskId: string) {
+    await this.setTaskProps(taskId)
+    this.renderMyDayTasks()
+    this.dialogRef = this.dialog.open(TaskDialogComponent)
+    this.dialogRef.afterClosed().subscribe(r =>{
+      this.renderMyDayTasks()
+    })
+  }
+
+setTaskProps(taskId : string){
+  this.setSession("currentTask",taskId)
+  this.setLocal("currentTask",taskId)
+  this.taskService.getTaskById(taskId).subscribe(data =>{
+    let myData = <Task>data
+    this.localStorageService.set("currentListId",myData.listId)
+    this.localStorageService.set("currentDeadline",myData.deadline)
+    this.localStorageService.setBody("currentBody",myData.body)
+    this.localStorageService.set("currentTopic",myData.body.topic)
+    this.localStorageService.set("currentDescription",myData.body.description)
+    this.localStorageService.set("currentPriority",myData.body.priority)
+    this.localStorageService.set("currentTeam",myData.team)
+
+    })
+}
 
   setSession(key : string, value : string) {
     this.sessionStorageService.set(key, value);

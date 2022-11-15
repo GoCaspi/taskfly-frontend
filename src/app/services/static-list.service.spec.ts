@@ -6,13 +6,29 @@ import {HttpClient} from "@angular/common/http";
 describe('StaticListService', () => {
   let service: StaticListService;
   let httpSpy: Spy<HttpClient>;
+  interface TaskBody{
+    topic : string;
+    priority: string;
+    description: string;
+  }
+
   interface Task{
-    description : string;
+    body: TaskBody;
     userId : string;
     listId : string;
+    taskIdString : string;
+    team : string;
+    deadline : string;
   }
-  let fakeCustomers: Task[] = [{description:"des",userId:"1",listId:"MyDay"},{description:"cript",userId:"1",listId:"MyDay"},{description:"ion",userId:"1",listId:"MyDay"}];
 
+  let fakeBody : TaskBody = {topic:"fakeTopic",priority:"middle",description:"userDescription"}
+  let fakeTask : Task = {body:fakeBody,userId:"1",listId:"MyDay",taskIdString:"1",team:"red",deadline:"01/01/1001"}
+  let fakeCustomers: Task[] = [fakeTask,fakeTask,fakeTask];
+  interface Testcase{
+    taskArr: Task[];
+    listId:string;
+  }
+let testcases:Testcase[] =[{taskArr:fakeCustomers,listId:"myDay"},{taskArr:fakeCustomers,listId:"myDay"},{taskArr:[],listId:"myDay"}]
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ StaticListService, { provide: HttpClient, useValue: createSpyFromClass(HttpClient) }]
@@ -33,6 +49,8 @@ describe('StaticListService', () => {
         expect(httpSpy.get.calls.count()).toBe(1);
   });
 });
+
+
 
   it('getMyDayTasks should return an array with the mocked data from the backend', () => {
     httpSpy.get.and.nextWith(fakeCustomers);
