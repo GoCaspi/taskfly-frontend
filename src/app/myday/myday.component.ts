@@ -49,7 +49,7 @@ private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
   this.user = this.actualUser
 }
   async ngOnInit(){
-    this.renderImportantTasks()
+    this.renderMyDayTasks()
   }
 
   reRender(event: boolean){
@@ -58,7 +58,7 @@ private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
   }
 
 
-renderImportantTasks(){
+renderMyDayTasks(){
   let tData : Task[] = [];
   let myDayTasks : Task[] = [];
    this.sls.getMyDayTasks(this.actualUser.userId).subscribe(response =>{
@@ -86,7 +86,7 @@ openTaskDialog(taskId : string){
 
     this.dialogRef = this.dialog.open(TaskDialogComponent)
     this.dialogRef.afterClosed().subscribe(r =>{
-      this.renderImportantTasks()
+      this.renderMyDayTasks()
   })
 
   })
@@ -94,10 +94,10 @@ openTaskDialog(taskId : string){
 
   async openTaskDialog1(taskId: string) {
     await this.setTaskProps(taskId)
-    this.renderImportantTasks()
+    this.renderMyDayTasks()
     this.dialogRef = this.dialog.open(TaskDialogComponent)
     this.dialogRef.afterClosed().subscribe(r =>{
-      this.renderImportantTasks()
+      this.renderMyDayTasks()
     })
   }
 

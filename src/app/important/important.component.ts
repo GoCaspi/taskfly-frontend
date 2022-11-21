@@ -52,7 +52,7 @@ export class ImportantComponent    implements OnInit {
     this.user = this.actualUser
   }
   async ngOnInit(){
-    this.renderMyDayTasks()
+    this.renderImportantTasks()
   }
 
   reRender(event: boolean){
@@ -61,7 +61,7 @@ export class ImportantComponent    implements OnInit {
   }
 
 
-  renderMyDayTasks(){
+  renderImportantTasks(){
     let tData : Task[] = [];
     let myDayTasks : Task[] = [];
     this.sls.getMyDayTasks(this.actualUser.userId).subscribe(response =>{
@@ -89,7 +89,7 @@ export class ImportantComponent    implements OnInit {
 
       this.dialogRef = this.dialog.open(TaskDialogComponent)
       this.dialogRef.afterClosed().subscribe(r =>{
-        this.renderMyDayTasks()
+        this.renderImportantTasks()
       })
 
     })
@@ -97,10 +97,10 @@ export class ImportantComponent    implements OnInit {
 
   async openTaskDialog1(taskId: string) {
     await this.setTaskProps(taskId)
-    this.renderMyDayTasks()
+    this.renderImportantTasks()
     this.dialogRef = this.dialog.open(TaskDialogComponent)
     this.dialogRef.afterClosed().subscribe(r =>{
-      this.renderMyDayTasks()
+      this.renderImportantTasks()
     })
   }
 
