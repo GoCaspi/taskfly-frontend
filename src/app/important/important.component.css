@@ -27,3 +27,18 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
   font-size: 1.2rem;
   margin-left: 8px;
 }
+
+#buttonWrap{
+
+}
+#listToolbar{
+  display: flex;
+  justify-content: space-between;
+}
+#taskItem:hover{
+  color: grey;
+  cursor: pointer;
+}
+.bg1{
+  color:red;
+}

@@ -79,7 +79,7 @@ import {MatRadioModule} from "@angular/material/radio";
     MatRadioModule,
   ],
 
-  providers: [],
+  providers: [TaskDialogComponent],
   bootstrap: [AppComponent],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA
