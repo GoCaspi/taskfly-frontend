@@ -11,6 +11,9 @@ import {HotToastService} from "@ngneat/hot-toast";
 })
 export class LoginComponent   {
 
+    testemail = ""
+    testpassword = ""
+
   loginForm = new FormGroup({
 
     email: new FormControl('',[Validators.required,Validators.email]),
@@ -18,9 +21,16 @@ export class LoginComponent   {
   });
  constructor(private authservice: AuthenticationService,
              private  route : Router,
-             private toast: HotToastService
- ) {}
+             private toast: HotToastService,
 
+ ) {}
+  testlogin(){
+   let  info = {
+     password :this.testpassword,
+     email : this.testemail
+   }
+   this.authservice.getLoginByEmail(info.password,info.email)
+}
 
 ngOnInit():void{}
 
