@@ -26,6 +26,12 @@ import { PlannedComponent } from './planned/planned.component';
 import { AssignedComponent } from './assigned/assigned.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { MydayComponent } from './myday/myday.component';
+import {initializeApp, provideFirebaseApp} from "@angular/fire/app";
+import {getAuth, provideAuth} from "@angular/fire/auth";
+import {environment} from "../environments/environment";
+import { HotToastModule } from '@ngneat/hot-toast';
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {AuthenticationService} from "./serives/authentication.service";
 
 
 
@@ -45,9 +51,11 @@ import { MydayComponent } from './myday/myday.component';
     AssignedComponent,
     TasksComponent,
     MydayComponent,
+
   ],
     imports: [
         BrowserModule,
+      HttpClientModule,
         MatToolbarModule,
         BrowserAnimationsModule,
         MatSidenavModule,
@@ -66,8 +74,9 @@ import { MydayComponent } from './myday/myday.component';
         MatInputModule,
         MatMenuModule,
 
-
-
+     provideFirebaseApp(()=> initializeApp(environment.firebase)),
+      provideAuth(()=>getAuth()),
+      HotToastModule.forRoot()
 
     ],
 
