@@ -26,6 +26,8 @@ import { PlannedComponent } from './planned/planned.component';
 import { AssignedComponent } from './assigned/assigned.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { MydayComponent } from './myday/myday.component';
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+
 
 
 
@@ -65,6 +67,7 @@ import { MydayComponent } from './myday/myday.component';
         MatFormFieldModule,
         MatInputModule,
         MatMenuModule,
+      HttpClientModule,
 
 
 
