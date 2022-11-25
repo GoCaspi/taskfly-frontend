@@ -6,7 +6,7 @@
       <button mat-button><mat-icon>home</mat-icon><a routerLink="/sign-up">Home</a></button>
       <div class="spacer"></div>
       <div>
-        <ng-container *ngIf="authService.currentUser$ | async as user; else loginButton">
+        <ng-container>
           <button mat-button (click)="logout()">
             <mat-icon>Logout</mat-icon>
             Logout

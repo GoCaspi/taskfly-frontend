@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from "./serives/authentication.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -10,11 +11,10 @@ import {AuthenticationService} from "./serives/authentication.service";
 })
 export class AppComponent {
   opened=false;
-constructor(public authService: AuthenticationService) {
+constructor(public authService: AuthenticationService,private router:Router) {
 }
 logout(){
-  this.authService.logout().subscribe(()=>{
-    //this.router.navigate(['']);
-  })
-}
+
+  }
+
 }
