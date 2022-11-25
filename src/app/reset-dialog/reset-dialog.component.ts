@@ -15,8 +15,8 @@ export class ResetDialogComponent implements OnInit {
   }
 
   resetPwd(){
-    let resetBody = {lastName:"2",email:"abc"}
-   // let resetBody = {lastName:this.lastNameInput,email:this.emailInput}
+   // let resetBody = {lastName:"2",email:"abc"}
+    let resetBody = {lastName:this.lastNameInput,email:this.emailInput}
     let resetBodyString = JSON.stringify(resetBody)
     this.http.post("http://localhost:8080/reset/", resetBodyString, {responseType: 'text'}).subscribe(r => console.log(r))
   }
