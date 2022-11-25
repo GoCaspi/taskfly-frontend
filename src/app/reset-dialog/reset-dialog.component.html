@@ -1,0 +1,22 @@
+<form>
+
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Topic</mat-label>
+    <textarea [(ngModel)]="lastNameInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+  </mat-form-field>
+
+
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea [(ngModel)]="emailInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+  </mat-form-field>
+
+
+
+</form>
+
+
+
+<button mat-button color="primary" (click)="resetPwd()">Send reset mail</button>
