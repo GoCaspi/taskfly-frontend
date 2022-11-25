@@ -42,3 +42,7 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
 .bg1{
   color:red;
 }
+#main-wrap{
+  width: 90%;
+  margin-left: 5%;
+}
