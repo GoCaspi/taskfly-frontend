@@ -16,20 +16,14 @@ public loginUserFromRemote(user :User):Observable<any>{
   login(email: string | null | undefined, password: string | null | undefined){
 
     let headers_object = new HttpHeaders();
-
     headers_object.append("Authorization", "Basic " + btoa(email +":"+ password));
-
     const httpOptions = {
       headers: headers_object
     };
-
-    this.http.post("http://localhost:8080/user/login" ,httpOptions).subscribe(r => console.log(r))
-
-
+   return  this.http.post<any>("http://localhost:8080/user/login" ,null,{headers:headers_object});
   }
 
-  logout(){
-  }
+  logout(){}
 
   getLoginByEmail(email:string | null | undefined , password: string | null | undefined){
 

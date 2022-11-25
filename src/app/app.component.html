@@ -6,19 +6,12 @@
       <button mat-button><mat-icon>home</mat-icon><a routerLink="/sign-up">Home</a></button>
       <div class="spacer"></div>
       <div>
-        <ng-container>
-          <button mat-button (click)="logout()">
-            <mat-icon>Logout</mat-icon>
-            Logout
-          </button>
-        </ng-container>
 
-        <ng-template #loginButton>
           <button mat-button routerLink="/login">
             <mat-icon>login</mat-icon>
             Login
           </button>
-        </ng-template>
+
 
       </div>
     </mat-toolbar>

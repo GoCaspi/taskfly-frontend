@@ -1,7 +1,6 @@
 export class User {
-   id : number;
-   emailId: string;
-   userName:string;
-   password:string;
-   constructor() {}
+  id: number | undefined;
+  userName: string | undefined;
+  password: string | undefined;
+  email: string | undefined;
 }

@@ -37,8 +37,7 @@ export class LoginComponent  implements OnInit {
     this.authservice.getLoginByEmail(info.password, info.email)
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   get email() {
     return this.loginForm.get('email');
