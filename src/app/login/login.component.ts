@@ -1,21 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Self, SkipSelf} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../serives/authentication.service";
 import {Router, RouterEvent} from "@angular/router";
 import {HotToastService} from "@ngneat/hot-toast";
 import {User} from "../user";
-import {user} from "@angular/fire/auth";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers:[BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
+
 })
 export class LoginComponent  implements OnInit {
   user = new User();
   testemail = ""
   testpassword = ""
+
+  userEmail=""
+  userPassword=""
 
   loginForm = new FormGroup({
 
@@ -25,7 +29,8 @@ export class LoginComponent  implements OnInit {
 
   constructor(private authservice: AuthenticationService,
               private router: Router,
-              private toast: HotToastService,
+              private toast: HotToastService,@Self() private sessionStorageService: BrowserStorageService,
+              @SkipSelf() private localStorageService: BrowserStorageService
   ) {
   }
 
@@ -48,9 +53,10 @@ export class LoginComponent  implements OnInit {
   }
 
   loginUser() {
-    this.authservice.loginUserFromRemote(this.user).subscribe(
-      data => console.log("response recieved"),
-        error =>console.log("exception recieved")
-    )
+    this.localStorageService.set("email",this.userEmail);
+    this.localStorageService.set("password",this.userPassword);
+    this.authservice.loginUserFromRemote(this.user)
+
+    console.log("Test Email save:",this.localStorageService.get("email"))
   }
 }
