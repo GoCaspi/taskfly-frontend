@@ -31,3 +31,6 @@ export class BrowserStorageService {
     this.storage.clear();
   }
 }
+
+export class StorageService {
+}

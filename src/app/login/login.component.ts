@@ -53,10 +53,12 @@ export class LoginComponent  implements OnInit {
   }
 
   loginUser() {
-    this.localStorageService.set("email",this.userEmail);
-    this.localStorageService.set("password",this.userPassword);
-    this.authservice.loginUserFromRemote(this.user)
 
-    console.log("Test Email save:",this.localStorageService.get("email"))
+    this.authservice.login(this.userEmail,this.userPassword).subscribe(res =>{
+                 this.localStorageService.set("email",this.userEmail),
+                 this.localStorageService.set("password",this.userPassword)
+            });
+
+   console.log("Test Email save:",this.localStorageService.get("email"))
   }
 }
