@@ -58,7 +58,5 @@ export class LoginComponent  implements OnInit {
                  this.localStorageService.set("email",this.userEmail),
                  this.localStorageService.set("password",this.userPassword)
             });
-
-   console.log("Test Email save:",this.localStorageService.get("email"))
   }
 }
