@@ -21,21 +21,6 @@ export class ResetDialogComponent implements OnInit {
     this.http.post("http://localhost:8080/reset/", resetBodyString, {responseType: 'text'}).subscribe(r => console.log(r))
   }
 
-  // TESTING PURPOSE, REMOVE THIS
-  async TestMETHOD() {
-    let taskString = JSON.stringify({
-      "userId":"1",
-      "listId":"MyDay",
-      "team":"blue",
-      "deadline":"11-11-2022",
-      "body":{
-        "topic":"new topic",
-        "priority":"new priority",
-        "description":"new description text"
-      }
 
-    })
-    this.http.post("http://localhost:8080/task/", taskString,{responseType: 'text'}).subscribe(r => console.log(r))
-  }
 
 }

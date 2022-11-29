@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Dialog} from "@angular/cdk/dialog";
+import {By} from "@angular/platform-browser";
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -28,6 +29,16 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('TaskFly-frontend');
+  });
+
+  it('should have a button to reset the password. The inner text of the button element is : "Passwort vergessen?"', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(fixture.debugElement.query(By.css('#openResetButton'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#openResetButton')).nativeElement.innerHTML).toEqual("Passwort vergessen?");
+  });
+  it('should have a button-method openResetDialog, that opens the ResetDialog if clicked', function () {
+
   });
 
 });
