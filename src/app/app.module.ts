@@ -26,6 +26,10 @@ import { PlannedComponent } from './planned/planned.component';
 import { AssignedComponent } from './assigned/assigned.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { MydayComponent } from './myday/myday.component';
+import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
+import { MatDialogModule} from "@angular/material/dialog";
+import { OverlayModule } from '@angular/cdk/overlay';
+import { HttpClientModule} from "@angular/common/http";
 
 
 
@@ -45,6 +49,7 @@ import { MydayComponent } from './myday/myday.component';
     AssignedComponent,
     TasksComponent,
     MydayComponent,
+    ResetDialogComponent,
   ],
     imports: [
         BrowserModule,
@@ -65,6 +70,9 @@ import { MydayComponent } from './myday/myday.component';
         MatFormFieldModule,
         MatInputModule,
         MatMenuModule,
+      MatDialogModule,
+      OverlayModule,
+      HttpClientModule,
 
 
 

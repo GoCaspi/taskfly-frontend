@@ -1,0 +1,23 @@
+<form id="reset-dialog-form">
+<h3>Zurücksetzen des Passworts</h3>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Nachname</mat-label>
+    <textarea id="lastNameUserInput" [(ngModel)]="lastNameInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+  </mat-form-field>
+
+
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Email</mat-label>
+    <textarea id="emailUserInput" [(ngModel)]="emailInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+  </mat-form-field>
+
+
+
+</form>
+
+
+
+<button mat-button id="resetBtn" color="primary" (click)=" resetPwd()">Send reset mail</button>
+<button mat-button id="cancleBtn" color="warn">Abbrechen</button>
