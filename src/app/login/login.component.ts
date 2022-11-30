@@ -15,8 +15,6 @@ import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 })
 export class LoginComponent  implements OnInit {
   user = new User();
-  testemail = ""
-  testpassword = ""
 
   userEmail=""
   userPassword=""
@@ -34,13 +32,13 @@ export class LoginComponent  implements OnInit {
   ) {
   }
 
-  testlogin() {
+ /* testlogin() {
     let info = {
       password: this.testpassword,
       email: this.testemail
     }
     this.authservice.getLoginByEmail(info.password, info.email)
-  }
+  }*/
 
   ngOnInit(): void {}
 

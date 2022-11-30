@@ -20,7 +20,7 @@ export class AuthenticationService {
 
   }
 
-  logout(){}
+ /* logout(){}
 
   getLoginByEmail(email:string | null | undefined , password: string | null | undefined){
 
@@ -31,6 +31,6 @@ export class AuthenticationService {
     this.http.get("http://localhost:8080/user").subscribe(r=>console.log(r))
 
 
-  }
+  }*/
 
 }
