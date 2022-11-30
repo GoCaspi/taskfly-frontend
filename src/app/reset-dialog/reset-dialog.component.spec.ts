@@ -68,29 +68,5 @@ describe('ResetDialogComponent', () => {
     expect(lastNameInput).toBeTruthy()
   });
 
-  it('should save the correct input values of the user to the component', function () {
-   fixture.debugElement.query(By.css('#emailUserInput')).nativeElement.value = "fakeEmail";
-    fixture.debugElement.query(By.css('#lastNameUserInput')).nativeElement.value="fakeLastName";
-    fixture.debugElement.query(By.css('#emailUserInput')).nativeElement.dispatchEvent('input')
-    fixture.debugElement.query(By.css('#lastNameUserInput')).nativeElement.dispatchEvent('input')
 
-    expect(fixture.componentInstance.lastNameInput).toEqual("fakeLastName")
-  });
-
-  it('should bind input text value to Component property', () => {
-    const hostElement = fixture.nativeElement;
-    const nameInput: HTMLInputElement = hostElement.querySelector('#lastNameUserInput');
-    const ageInput: HTMLInputElement = hostElement.querySelector('#emailUserInput');
-
-    fixture.detectChanges();
-
-    nameInput.value = 'Amit Shah';
-    ageInput.value = '20';
-
-    nameInput.dispatchEvent(new Event('input'));
-    ageInput.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-    expect(component.lastNameInput).toBe('Amit Shah');
-    expect(component.emailInput.toString()).toBe('20');
-  });
 });

@@ -27,9 +27,9 @@ import { AssignedComponent } from './assigned/assigned.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { MydayComponent } from './myday/myday.component';
 import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import { MatDialogModule} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { HttpClientModule} from "@angular/common/http";
 
 
 

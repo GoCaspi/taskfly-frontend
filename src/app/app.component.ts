@@ -20,7 +20,7 @@ constructor( public dialog:MatDialog, public rd:ResetDialogComponent) {
 
 openReset(){
   this.dialogRef = this.dialog.open(ResetDialogComponent)
-  this.dialogRef.afterClosed().subscribe(r =>{
+  this.dialogRef.afterClosed().subscribe(() =>{
     console.log("dialog is closed!")
   })
 }
