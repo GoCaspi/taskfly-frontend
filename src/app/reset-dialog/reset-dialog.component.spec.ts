@@ -4,6 +4,7 @@ import { ResetDialogComponent } from './reset-dialog.component';
 import {HttpClient} from "@angular/common/http";
 
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
+import {By} from "@angular/platform-browser";
 
 describe('ResetDialogComponent', () => {
   let component: ResetDialogComponent;
@@ -47,6 +48,49 @@ describe('ResetDialogComponent', () => {
      expect(httpSpy.post.calls.count()).toBe(1);
    //  expect(user).toEqual(fakeUser)
    });
+  });
 
+
+  it('should have a button to send the reset request', function () {
+   let ResetBtn = fixture.debugElement.query(By.css('#resetBtn'))
+    expect(ResetBtn).toBeTruthy()
+  });
+
+  it('should have a button to cancle the reset request', function () {
+    let ResetBtn = fixture.debugElement.query(By.css('#cancleBtn'))
+    expect(ResetBtn).toBeTruthy()
+  });
+
+  it('should have two input fields, one for the email the other for the lastName', function () {
+    let emailInput = fixture.debugElement.query(By.css('#emailUserInput'))
+    let lastNameInput = fixture.debugElement.query(By.css('#lastNameUserInput'))
+    expect(emailInput).toBeTruthy()
+    expect(lastNameInput).toBeTruthy()
+  });
+
+  it('should save the correct input values of the user to the component', function () {
+   fixture.debugElement.query(By.css('#emailUserInput')).nativeElement.value = "fakeEmail";
+    fixture.debugElement.query(By.css('#lastNameUserInput')).nativeElement.value="fakeLastName";
+    fixture.debugElement.query(By.css('#emailUserInput')).nativeElement.dispatchEvent('input')
+    fixture.debugElement.query(By.css('#lastNameUserInput')).nativeElement.dispatchEvent('input')
+
+    expect(fixture.componentInstance.lastNameInput).toEqual("fakeLastName")
+  });
+
+  it('should bind input text value to Component property', () => {
+    const hostElement = fixture.nativeElement;
+    const nameInput: HTMLInputElement = hostElement.querySelector('#lastNameUserInput');
+    const ageInput: HTMLInputElement = hostElement.querySelector('#emailUserInput');
+
+    fixture.detectChanges();
+
+    nameInput.value = 'Amit Shah';
+    ageInput.value = '20';
+
+    nameInput.dispatchEvent(new Event('input'));
+    ageInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    expect(component.lastNameInput).toBe('Amit Shah');
+    expect(component.emailInput.toString()).toBe('20');
   });
 });
