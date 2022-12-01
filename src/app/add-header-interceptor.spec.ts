@@ -5,9 +5,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { HomeserviceService } from './homeservice.service';
 import {AuthenticationService} from "./serives/authentication.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHandler, HttpRequest} from "@angular/common/http";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {BrowserStorageService} from "./storage.service";
+import {Observable} from "rxjs";
 
 describe('AddHeader-Interceptors', () => {
   let inceptor: AddHeaderInterceptor;
@@ -30,9 +31,22 @@ describe('AddHeader-Interceptors', () => {
   });
 
   it('should be created', () => {
+    expect(inceptor).toBeTruthy();
+  });
+
+  it('should be created', () => {
     let fakeInterceptor = new AddHeaderInterceptor(browserStorageSpy,browserStorageSpy);
     expect(fakeInterceptor).toBeTruthy();
-    expect(inceptor).toBeTruthy();
+    let fakeRequest = new HttpRequest("GET","http://localhost:8080/user/")
+    const next: any = {
+      handle: () => {
+        return Observable.create((subscriber: { complete: () => void; }) => {
+          subscriber.complete();
+        });
+      }
+    };
+    fakeInterceptor.intercept(fakeRequest,next)
+    expect(fakeRequest.headers).toBeTruthy()
   });
 
 
