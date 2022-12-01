@@ -1,24 +1,19 @@
 
-    <mat-toolbar color="primary">
-      <mat-toolbar-row>
-        <h4>TaskFly</h4>
+    <mat-toolbar color="primary" id="Toolbar">
+      <h4>TaskFly</h4>
 
-        <button mat-button (click)="opened=!opened" ><mat-icon>menu</mat-icon></button>
+      <button mat-button (click)="opened=!opened" ><mat-icon>menu</mat-icon></button>
       <button mat-button><mat-icon>home</mat-icon><a routerLink="/sign-up">Home</a></button>
-        <div class="spacer"></div>
-        <button mat-button routerLink="login">
-          <mat-icon>login</mat-icon>
-          Login
-        </button>
+      <div class="spacer"></div>
+      <div>
 
-        <!--!!!!!!!!!!!!!!!!!!!! ResetPWD Button start !!!!!!!!!!!!!!!!!!!!!!! -->
+          <button mat-button routerLink="/login">
+            <mat-icon>login</mat-icon>
+            Login
+          </button>
 
         <button id="openResetButton" (click)="openReset()">Passwort vergessen?</button>
-
-
-        <!--!!!!!!!!!!!!!!!!!!!! ResetPWD Button end !!!!!!!!!!!!!!!!!!!!!!! -->
-      </mat-toolbar-row>
-
+      </div>
     </mat-toolbar>
     <mat-sidenav-container>
        <mat-sidenav [(opened)]="opened" mode="side">
