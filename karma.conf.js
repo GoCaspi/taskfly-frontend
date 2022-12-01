@@ -26,15 +26,11 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/task-fly-frontend'),
+      dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
-      reporters: [
-        { type: 'html' },
-        { type: 'text-summary' },
-        { type: 'lcov',subdir:'lcov-report'}
-      ]
+      reporters: [{ type: 'lcov' }],
     },
-    reporters: ['progress', 'kjhtml'],
+   // reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
