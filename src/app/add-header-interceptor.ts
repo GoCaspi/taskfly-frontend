@@ -1,8 +1,6 @@
 import {Injectable, Self, SkipSelf} from '@angular/core';
-import {
-  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders
-} from '@angular/common/http';
-
+import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest,} from '@angular/common/http';
+import { Buffer } from 'buffer';
 import { Observable } from 'rxjs';
 import {BrowserStorageService} from "./storage.service";
 
@@ -20,13 +18,12 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
     // Clone the request and replace the original headers with
     // cloned headers, updated with the authorization.
 
-    let testauth = "Basic " + btoa(this.localStorageService.get("email") + ":" + this.localStorageService.get("password"));
+  //  let testauth = "Basic " + btoa(this.localStorageService.get("email") + ":" + this.localStorageService.get("password"));
+   let cred =  "Basic " + Buffer.from(this.localStorageService.get("email") + ":" + this.localStorageService.get("password")).toString('base64')
 
-    let headers_object = new HttpHeaders({
-      "Authorization" : testauth
-    });
+
     const authReq = req.clone({
-      headers: req.headers.set("authorization", testauth)
+      headers: req.headers.set("authorization", cred)
     });
     return next.handle(authReq);
   }

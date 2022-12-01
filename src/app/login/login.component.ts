@@ -1,7 +1,7 @@
-import {Component, OnInit, Self, SkipSelf} from '@angular/core';
+import {Component, Self, SkipSelf} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../serives/authentication.service";
-import {Router, RouterEvent} from "@angular/router";
+import {Router, } from "@angular/router";
 import {HotToastService} from "@ngneat/hot-toast";
 import {User} from "../user";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
@@ -13,7 +13,7 @@ import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
   providers:[BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
 
 })
-export class LoginComponent  implements OnInit {
+export class LoginComponent {
   user = new User();
 
   userEmail=""
@@ -40,7 +40,7 @@ export class LoginComponent  implements OnInit {
     this.authservice.getLoginByEmail(info.password, info.email)
   }*/
 
-  ngOnInit(): void {}
+
 
   get email() {
     return this.loginForm.get('email');
@@ -52,8 +52,8 @@ export class LoginComponent  implements OnInit {
 
   loginUser() {
 
-    this.authservice.login(this.userEmail,this.userPassword).subscribe(res =>{
-                 this.localStorageService.set("email",this.userEmail),
+    this.authservice.login(this.userEmail,this.userPassword).subscribe(() =>{
+                 this.localStorageService.set("email",this.userEmail);
                  this.localStorageService.set("password",this.userPassword)
             });
   }

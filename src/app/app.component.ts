@@ -13,6 +13,5 @@ export class AppComponent {
   opened=false;
 constructor(public authService: AuthenticationService,private router:Router) {
 }
-logout(){}
 
 }
