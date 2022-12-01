@@ -38,7 +38,7 @@ describe('AddHeader-Interceptors', () => {
     browserStorageSpy.get.and.returnValue("testCredentials")
     let fakeInterceptor = new AddHeaderInterceptor(browserStorageSpy,browserStorageSpy);
     expect(fakeInterceptor).toBeTruthy();
-    let fakeRequest = new HttpRequest("GET","http://localhost:8080/user/")
+    let fakeRequest = new HttpRequest("GET","http://localhost:8080/user/",{headers:null})
     const next: any = {
       handle: () => {
         return Observable.create((subscriber: { complete: () => void; }) => {
@@ -47,7 +47,8 @@ describe('AddHeader-Interceptors', () => {
       }
     };
     fakeInterceptor.intercept(fakeRequest,next)
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",fakeRequest.headers)
+
+  // let emptyHeader = fakeRequest.clone({headers:null})
     expect(fakeRequest.headers).toBeTruthy()
   });
 
