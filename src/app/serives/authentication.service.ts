@@ -16,7 +16,7 @@ export class AuthenticationService {
       "Authorization":cred
     });
 
-   return  this.http.post("http://localhost:8080/user/login" ,{},{headers:headers_object,responseType:"text"});
+   return  this.http.post("http://taskflybackend.westeurope.azurecontainer.io:80/user/login" ,{},{headers:headers_object,responseType:"text"});
 
   }
 

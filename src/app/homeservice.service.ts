@@ -9,6 +9,6 @@ export class HomeserviceService {
 
   constructor(private http: HttpClient) { }
   getHomeData(): Observable<any>{
-    return this.http.get('./assts/home.json');
+    return this.http.get('http://taskflybackend.westeurope.azurecontainer.io:80/');
   }
 }

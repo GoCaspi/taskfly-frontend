@@ -3,14 +3,13 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Overlay} from "@angular/cdk/overlay";
 import {AuthenticationService} from "./serives/authentication.service";
-import {Router} from "@angular/router";
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers:[MatDialog,ResetDialogComponent,Overlay]
+  providers:[MatDialog,ResetDialogComponent,Overlay, AuthenticationService]
 })
 export class AppComponent {
   title = 'TaskFly-frontend';
