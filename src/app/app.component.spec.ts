@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+
+import {AuthenticationService} from "./serives/authentication.service";
+
 import {HttpClient} from "@angular/common/http";
 import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
@@ -13,10 +16,17 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,ResetDialogComponent
       ],
-      providers:[HttpClient,ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
-        provide : MAT_DIALOG_SCROLL_STRATEGY,
-        useValue : {}
-      },{provide: Dialog, useValue: {}},{provide:HttpClient,useValue: HttpClient} ]
+      providers: [
+        AuthenticationService,{
+        provide:HttpClient,
+        useValue:HttpClient
+        },
+        HttpClient,ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
+          provide : MAT_DIALOG_SCROLL_STRATEGY,
+          useValue : {}
+        },{provide: Dialog, useValue: {}},{provide:HttpClient,useValue: HttpClient}
+      ],
+
     }).compileComponents();
   });
 

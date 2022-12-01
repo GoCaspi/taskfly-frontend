@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -16,7 +16,7 @@ export class ResetDialogComponent  {
   resetPwd(){
     let resetBody = {lastName:this.lastNameInput,email:this.emailInput}
     let resetBodyString = JSON.stringify(resetBody)
-    return this.http.post("http://localhost:8080/reset/", resetBodyString, {responseType: 'text'})
+    return this.http.post("http://taskflybackend.westeurope.azurecontainer.io:80/reset/", resetBodyString, {responseType: 'text'})
   }
 
 
