@@ -1,0 +1,8 @@
+#reset-dialog-form{
+  min-height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+
+}

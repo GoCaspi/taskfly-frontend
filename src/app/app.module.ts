@@ -26,6 +26,10 @@ import { PlannedComponent } from './planned/planned.component';
 import { AssignedComponent } from './assigned/assigned.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { MydayComponent } from './myday/myday.component';
+import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
+import { MatDialogModule} from "@angular/material/dialog";
+import { OverlayModule } from '@angular/cdk/overlay';
+import { HttpClientModule} from "@angular/common/http";
 import {initializeApp, provideFirebaseApp} from "@angular/fire/app";
 import {getAuth, provideAuth} from "@angular/fire/auth";
 import {environment} from "../environments/environment";
@@ -51,11 +55,10 @@ import { HttpClientModule} from "@angular/common/http";
     AssignedComponent,
     TasksComponent,
     MydayComponent,
-
+    ResetDialogComponent,
   ],
     imports: [
         BrowserModule,
-      HttpClientModule,
         MatToolbarModule,
         BrowserAnimationsModule,
         MatSidenavModule,
@@ -73,10 +76,12 @@ import { HttpClientModule} from "@angular/common/http";
         MatFormFieldModule,
         MatInputModule,
         MatMenuModule,
+      MatDialogModule,
+      OverlayModule,
+      HttpClientModule,
 
-     provideFirebaseApp(()=> initializeApp(environment.firebase)),
-      provideAuth(()=>getAuth()),
-      HotToastModule.forRoot()
+
+
 
     ],
 
