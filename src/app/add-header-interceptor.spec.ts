@@ -35,6 +35,7 @@ describe('AddHeader-Interceptors', () => {
   });
 
   it('should be created', () => {
+    browserStorageSpy.get.and.returnValue("testCredentials")
     let fakeInterceptor = new AddHeaderInterceptor(browserStorageSpy,browserStorageSpy);
     expect(fakeInterceptor).toBeTruthy();
     let fakeRequest = new HttpRequest("GET","http://localhost:8080/user/")
@@ -46,6 +47,7 @@ describe('AddHeader-Interceptors', () => {
       }
     };
     fakeInterceptor.intercept(fakeRequest,next)
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",fakeRequest.headers)
     expect(fakeRequest.headers).toBeTruthy()
   });
 

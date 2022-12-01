@@ -15,16 +15,13 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
 
-    // Clone the request and replace the original headers with
-    // cloned headers, updated with the authorization.
-
-  //  let testauth = "Basic " + btoa(this.localStorageService.get("email") + ":" + this.localStorageService.get("password"));
    let cred =  "Basic " + Buffer.from(this.localStorageService.get("email") + ":" + this.localStorageService.get("password")).toString('base64')
 
 
     const authReq = req.clone({
       headers: req.headers.set("authorization", cred)
     });
+
     return next.handle(authReq);
   }
 }
