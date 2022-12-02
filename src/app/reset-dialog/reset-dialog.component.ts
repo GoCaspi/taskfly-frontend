@@ -7,17 +7,22 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./reset-dialog.component.css']
 })
 export class ResetDialogComponent  {
+  baseURL : string| undefined;
   lastNameInput : string = "";
   emailInput : string = "";
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.baseURL = process.env['NG_APP_PROD_URL'];
+  }
 
 
 
   resetPwd(){
     let resetBody = {lastName:this.lastNameInput,email:this.emailInput}
     let resetBodyString = JSON.stringify(resetBody)
-    return this.http.post("https://taskflybackend.azurewebsites.net/reset/", resetBodyString, {responseType: 'text'})
+    this.http.post(this.baseURL+"/reset/", resetBodyString, {responseType: 'text'}).subscribe(r =>{console.log(r)})
+    return this.http.post(this.baseURL+"/reset/", resetBodyString, {responseType: 'text'})
   }
+
 
 
 
