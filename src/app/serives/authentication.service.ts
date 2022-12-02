@@ -6,8 +6,10 @@ import { Buffer } from 'buffer';
 @Injectable()
 export class AuthenticationService {
 
-
-  constructor(private http:HttpClient) { }
+  baseURL : string| undefined;
+  constructor(private http:HttpClient) {
+    this.baseURL = process.env['NG_APP_PROD_URL'];
+  }
 
 
   login(email: string | null | undefined, password: string | null | undefined){
@@ -16,8 +18,7 @@ export class AuthenticationService {
       "Authorization":cred
     });
 
- //  return  this.http.post("http://taskflybackend.westeurope.azurecontainer.io:80/user/login" ,{},{headers:headers_object,responseType:"text"});
-    return  this.http.post("http://localhost:8080/user/login" ,{},{headers:headers_object,responseType:"text"});
+    return  this.http.post(this.baseURL+"/user/login" ,{},{headers:headers_object,responseType:"text"});
 
   }
 

@@ -1,6 +1,5 @@
 import { Component, } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-reset-dialog',
@@ -8,12 +7,11 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
   styleUrls: ['./reset-dialog.component.css']
 })
 export class ResetDialogComponent  {
-
+  baseURL : string| undefined;
   lastNameInput : string = "";
   emailInput : string = "";
   constructor(private http: HttpClient) {
-    let l = process.env['NG_APP_PROD_URL'];
-    console.log(l)
+    this.baseURL = process.env['NG_APP_PROD_URL'];
   }
 
 
@@ -21,8 +19,8 @@ export class ResetDialogComponent  {
   resetPwd(){
     let resetBody = {lastName:this.lastNameInput,email:this.emailInput}
     let resetBodyString = JSON.stringify(resetBody)
-    this.http.post("http://taskflybackend.westeurope.azurecontainer.io:80/reset/", resetBodyString, {responseType: 'text'}).subscribe(r =>{console.log(r)})
-    return this.http.post("http://taskflybackend.westeurope.azurecontainer.io:80/reset/", resetBodyString, {responseType: 'text'})
+    this.http.post(this.baseURL+"/reset/", resetBodyString, {responseType: 'text'}).subscribe(r =>{console.log(r)})
+    return this.http.post(this.baseURL+"/reset/", resetBodyString, {responseType: 'text'})
   }
 
 
