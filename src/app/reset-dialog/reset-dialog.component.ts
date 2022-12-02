@@ -1,5 +1,6 @@
 import { Component, } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-reset-dialog',
@@ -7,6 +8,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./reset-dialog.component.css']
 })
 export class ResetDialogComponent  {
+
   lastNameInput : string = "";
   emailInput : string = "";
   constructor(private http: HttpClient) {
