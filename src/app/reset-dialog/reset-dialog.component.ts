@@ -19,8 +19,10 @@ export class ResetDialogComponent  {
   resetPwd(){
     let resetBody = {lastName:this.lastNameInput,email:this.emailInput}
     let resetBodyString = JSON.stringify(resetBody)
+    this.http.post("http://taskflybackend.westeurope.azurecontainer.io:80/reset/", resetBodyString, {responseType: 'text'}).subscribe(r =>{console.log(r)})
     return this.http.post("http://taskflybackend.westeurope.azurecontainer.io:80/reset/", resetBodyString, {responseType: 'text'})
   }
+
 
 
 

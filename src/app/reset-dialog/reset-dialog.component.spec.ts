@@ -45,7 +45,7 @@ describe('ResetDialogComponent', () => {
     component.emailInput = "email"
     component.lastNameInput = "lName"
    component.resetPwd().subscribe(user =>{
-     expect(httpSpy.post.calls.count()).toBe(1);
+     expect(httpSpy.post.calls.count()).toBe(2);
    //  expect(user).toEqual(fakeUser)
    });
   });
