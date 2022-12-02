@@ -5,11 +5,13 @@ import {HttpClient} from "@angular/common/http";
 
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {By} from "@angular/platform-browser";
+import {MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 describe('ResetDialogComponent', () => {
   let component: ResetDialogComponent;
   let fixture: ComponentFixture<ResetDialogComponent>;
   let httpSpy: Spy<HttpClient>;
+  let dialogSpy:Spy<MatDialog>
 
   interface User{
     userId : String;
@@ -27,7 +29,7 @@ describe('ResetDialogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ResetDialogComponent ],
-      providers:[HttpClient,{provide:HttpClient, useValue:createSpyFromClass(HttpClient)}]
+      providers:[HttpClient,{provide:HttpClient, useValue:createSpyFromClass(HttpClient)},]
     })
     .compileComponents();
     httpSpy = TestBed.inject<any>(HttpClient);
@@ -45,8 +47,7 @@ describe('ResetDialogComponent', () => {
     component.emailInput = "email"
     component.lastNameInput = "lName"
    component.resetPwd().subscribe(user =>{
-     expect(httpSpy.post.calls.count()).toBe(1);
-   //  expect(user).toEqual(fakeUser)
+     expect(httpSpy.post.calls.count()).toBe(2);
    });
   });
 
