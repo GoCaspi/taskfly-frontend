@@ -11,7 +11,8 @@ export const environment = {
     authDomain:'ANGULAR-SIGN-UP-719ED.FIREBASEAPP.COM',
     messagingSenderId:'378550273300',
   },
-  production: false
+  production: false,
+  
 };
 
 /*

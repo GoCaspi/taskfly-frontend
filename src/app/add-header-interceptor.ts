@@ -8,9 +8,10 @@ import {BrowserStorageService} from "./storage.service";
 
 @Injectable()
 export class AddHeaderInterceptor implements HttpInterceptor {
-
+BASE_URL:string|undefined ="";
 constructor(@Self() private sessionStorageService: BrowserStorageService,
             @SkipSelf() private localStorageService: BrowserStorageService) {
+ this.BASE_URL = process.env['NG_APP_PROD_URL'];
 }
   intercept(req: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
@@ -19,6 +20,7 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
 
 
     const authReq = req.clone({
+     url: `${this.BASE_URL}/${req.url}`,
       headers: req.headers.set("authorization", cred)
     });
 
