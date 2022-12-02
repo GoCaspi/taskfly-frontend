@@ -82,11 +82,10 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      - name: Deploy WebApp
-        uses: azure/webapps-deploy@v2
+      - uses: azure/webapps-deploy@v2
         with:
           app-name: "taskflyfrontend"
-          publish-profile: {{secrets.AZURE_WEB_APP_PUBLISH_PROFILE}}
+          publish-profile: ${{secrets.AZURE_WEB_APP_PUBLISH_PROFILE}}
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{github.head_ref || github.ref_name}}
       - name: Configure App Environments
         uses: Azure/appservice-settings@v1
