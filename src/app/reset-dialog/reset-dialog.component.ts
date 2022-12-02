@@ -9,7 +9,10 @@ import {HttpClient} from "@angular/common/http";
 export class ResetDialogComponent  {
   lastNameInput : string = "";
   emailInput : string = "";
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    let l = process.env['NG_APP_PROD_URL'];
+    console.log(l)
+  }
 
 
 
