@@ -7,7 +7,8 @@ module.exports = function (config) {
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
-      require('karma-chrome-launcher'),
+   //   require('karma-chrome-launcher'),
+      require('karma-firefox-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -29,7 +30,8 @@ module.exports = function (config) {
       subdir: '.',
       reporters: [
         { type: 'html' },
-        { type: 'text-summary' }
+        { type: 'text-summary' },
+        { type: 'lcov',subdir:'lcov-report'}
       ]
     },
     reporters: ['progress', 'kjhtml'],
@@ -37,7 +39,8 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+  //  browsers: ['Chrome'],
+    browsers: ['Firefox'],
     singleRun: false,
     restartOnFileChange: true
   });

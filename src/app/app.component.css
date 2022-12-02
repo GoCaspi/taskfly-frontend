@@ -1,14 +1,18 @@
 .spacer{
   flex: 1 1 auto;
 }
-mat-sidenav-container{
-  justify-content: space-between;
-}
 mat-toolbar{
   background: #004a9f;
   color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
+#Toolbar{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
  mat-sidenav{
    width: 200px;
    background:#004a9f;
@@ -21,6 +25,7 @@ mat-toolbar{
  }
 mat-sidenav-container{
   height:calc(100vh - 65px );
+  justify-content: space-between;
 }
  .content{
  height: calc(100vh - 98px);
@@ -28,13 +33,17 @@ mat-sidenav-container{
    margin-left: 32px;
    display: flex;
    justify-content: center;
-   align-items: center;
+   align-items:center;
+   font-size: 1rem;
+   border-radius: 20px;
 
-   font-size: 2rem;
-   color: lightgrey;
-   border-radius: 10px;
 }
- .menu-button{
+.more-vert{
+  flex: 1 1 auto;
+  margin-right: 12px;
+}
+
+.menu-button{
    width: 100%;
    display: flex;
    align-items: center;
@@ -60,3 +69,4 @@ mat-icon{
    margin-bottom: 16px;
    background-color: rgba(255, 255, 255, 0.5);
  }
+
