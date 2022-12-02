@@ -88,18 +88,8 @@ jobs:
           app-settings-json: |
             [
                 {
-                    "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
-                    "value": "${{ secrets.REGISTRY_PASSWORD }}",
-                    "slotSetting": false
-                },
-                {
-                    "name": "DOCKER_REGISTRY_SERVER_URL",
-                    "value": "https://contoso.azurecr.io",
-                    "slotSetting": false
-                },
-                {
-                    "name": "DOCKER_REGISTRY_SERVER_USERNAME",
-                    "value": "${{ secrets.REGISTRY_USERNAME  }}",
+                    "name": "NG_APP_PROD_URL",
+                    "value": "${{ secrets.NG_APP_PROD_URL }}",
                     "slotSetting": false
                 }
             ]
