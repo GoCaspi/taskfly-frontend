@@ -30,6 +30,7 @@ import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
 import { MatDialogModule} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
+import { ListComponent } from './list/list.component';
 
 
 
@@ -53,6 +54,7 @@ import { HttpClientModule} from "@angular/common/http";
     TasksComponent,
     MydayComponent,
     ResetDialogComponent,
+    ListComponent,
   ],
     imports: [
         BrowserModule,
