@@ -1,15 +1,18 @@
 
   <h1>Liste Hinzufügen </h1>
-  <h1 mat-dialog-title></h1>
-  <div mat-dialog-content>
-    <p></p>
-    <mat-form-field appearance="fill">
+  <div mat-dialog-content class="id">
+    <mat-form-field hintLabel="Max 10 characters" appearance="outline">
       <mat-label>Neue Liste</mat-label><mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-      <input matInput>
+      <input matInput #input maxlength="10" placeholder="Ex. Nougat" [(ngModel)]="value">
+      <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-hint align="end">{{input.value.length}}/10</mat-hint>
     </mat-form-field>
   </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Nein,danke</button>
-    <button mat-button cdkFocusInitial>Okay</button>
+  <div mat-dialog-actions class="okay">
+    <button mat-stroked-button (click)="onNoClick()">Nein,danke</button>
+    <button mat-stroked-button cdkFocusInitial  aria-label="snack-bar">Okay</button>
   </div>
+
 

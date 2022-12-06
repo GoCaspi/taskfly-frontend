@@ -14,6 +14,9 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
   border-radius: 16px;
 
 }
+.id{
+  width: 300px;
+}
 .form-container mat-form-field{
   width: 100%;
 }

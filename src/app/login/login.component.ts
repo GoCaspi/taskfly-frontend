@@ -33,15 +33,6 @@ export class LoginComponent {
   ) {
   }
 
- /* testlogin() {
-    let info = {
-      password: this.testpassword,
-      email: this.testemail
-    }
-    this.authservice.getLoginByEmail(info.password, info.email)
-  }*/
-
-
 
   get email() {
     return this.loginForm.get('email');
