@@ -30,6 +30,8 @@ import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
 import { MatDialogModule} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
+import { AddTaskComponent } from './add-task/add-task.component';
+import {MatSelectModule} from "@angular/material/select";
 
 
 
@@ -53,6 +55,8 @@ import { HttpClientModule} from "@angular/common/http";
     TasksComponent,
     MydayComponent,
     ResetDialogComponent,
+    AddTaskComponent,
+    a
   ],
     imports: [
         BrowserModule,
@@ -73,11 +77,10 @@ import { HttpClientModule} from "@angular/common/http";
         MatFormFieldModule,
         MatInputModule,
         MatMenuModule,
-      MatDialogModule,
-      OverlayModule,
-      HttpClientModule,
-
-
+        MatDialogModule,
+        OverlayModule,
+        HttpClientModule,
+        MatSelectModule,
 
 
     ],
