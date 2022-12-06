@@ -31,6 +31,8 @@ import { MatDialogModule} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
 import { ListComponent } from './list/list.component';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 
 
@@ -55,6 +57,7 @@ import { ListComponent } from './list/list.component';
     MydayComponent,
     ResetDialogComponent,
     ListComponent,
+    TaskDialogComponent,
   ],
     imports: [
         BrowserModule,
@@ -75,11 +78,10 @@ import { ListComponent } from './list/list.component';
         MatFormFieldModule,
         MatInputModule,
         MatMenuModule,
-      MatDialogModule,
-      OverlayModule,
-      HttpClientModule,
-
-
+        MatDialogModule,
+        OverlayModule,
+        HttpClientModule,
+        MatDatepickerModule,
 
 
     ],
