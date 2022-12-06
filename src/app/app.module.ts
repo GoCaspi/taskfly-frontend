@@ -53,6 +53,7 @@ import { HttpClientModule} from "@angular/common/http";
     TasksComponent,
     MydayComponent,
     ResetDialogComponent,
+
   ],
     imports: [
         BrowserModule,
@@ -76,6 +77,7 @@ import { HttpClientModule} from "@angular/common/http";
       MatDialogModule,
       OverlayModule,
       HttpClientModule,
+
 
 
 

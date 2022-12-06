@@ -3,6 +3,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Overlay} from "@angular/cdk/overlay";
 import {AuthenticationService} from "./serives/authentication.service";
+import {HomeComponent} from "./home/home.component";
 
 
 @Component({
@@ -16,9 +17,15 @@ export class AppComponent {
   opened=false;
   private dialogRef: MatDialogRef<ResetDialogComponent> | undefined
 
-constructor( public authService: AuthenticationService,public dialog:MatDialog, public rd:ResetDialogComponent) {
+constructor( public authService: AuthenticationService,public dialog:MatDialog, public rd:ResetDialogComponent,public dialoge: MatDialog) {
 }
-
+  openDialoge(){
+    this.dialoge.open(HomeComponent,{
+      width:'500px',
+      height:"350px",
+      data:"right click"
+    })
+  }
 openReset(){
   this.dialogRef = this.dialog.open(ResetDialogComponent)
   this.dialogRef.afterClosed().subscribe(() =>{

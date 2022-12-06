@@ -34,10 +34,14 @@
          </button><br>
          <button mat-raised-button class="menu-button">
            <mat-icon>comment</mat-icon><a routerLink="/tasks">Aufgaben</a>
-         </button><br><br><br><br><br><br><br><br><br>
+         </button>
+         <li *ngIf="">
 
-         <button mat-raised-button class="menu-button">
-           <mat-icon>add</mat-icon><a routerLink="/home">Neue Liste</a>
+         </li>
+         <br><br><br><br><br><br><br><br><br>
+
+         <button mat-raised-button class="menu-button"(click)="openDialoge()">
+           <mat-icon>add</mat-icon><a>Neue Liste</a>
          </button><br>
 
 

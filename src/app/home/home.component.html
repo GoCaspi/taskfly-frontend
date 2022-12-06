@@ -1,3 +1,15 @@
 
-  <h1>Hallo</h1>
+  <h1>Liste Hinzufügen </h1>
+  <h1 mat-dialog-title></h1>
+  <div mat-dialog-content>
+    <p></p>
+    <mat-form-field appearance="fill">
+      <mat-label>Neue Liste</mat-label><mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      <input matInput>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Nein,danke</button>
+    <button mat-button cdkFocusInitial>Okay</button>
+  </div>
 
