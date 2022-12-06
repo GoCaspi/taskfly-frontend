@@ -30,6 +30,7 @@ import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
 import { MatDialogModule} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
 
@@ -55,35 +56,33 @@ import { HttpClientModule} from "@angular/common/http";
     ResetDialogComponent,
 
   ],
-    imports: [
-        BrowserModule,
-        MatToolbarModule,
-        BrowserAnimationsModule,
-        MatSidenavModule,
-        RouterOutlet,
-        MatIconModule,
-        MatButtonModule,
-        FormsModule,
-        RouterLinkWithHref,
-        RouterLink,
-        RouterLinkActive,
-        MatListModule,
-        AppRoutingModule,
-        MatDividerModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatMenuModule,
-      MatDialogModule,
-      OverlayModule,
-      HttpClientModule,
-      MatSnackBarModule,
+  imports: [
+    BrowserModule,
+    MatToolbarModule,
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    RouterOutlet,
+    MatIconModule,
+    MatButtonModule,
+    FormsModule,
+    RouterLinkWithHref,
+    RouterLink,
+    RouterLinkActive,
+    MatListModule,
+    AppRoutingModule,
+    MatDividerModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    MatDialogModule,
+    OverlayModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    MatProgressBarModule,
 
 
-
-
-
-    ],
+  ],
 
   providers: [],
   bootstrap: [AppComponent],
