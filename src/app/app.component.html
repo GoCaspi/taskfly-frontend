@@ -6,7 +6,7 @@
       <button mat-button><mat-icon>home</mat-icon><a routerLink="/sign-up">Home</a></button>
       <div class="spacer"></div>
       <div>
-          <button mat-button routerLink="/login" *ngIf="loginStatus">
+          <button mat-button routerLink="/login" *ngIf="!loginStatus">
             <mat-icon>login</mat-icon>
             Login
           </button>
