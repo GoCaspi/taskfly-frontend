@@ -16,8 +16,10 @@ import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 export class LoginComponent {
   user = new User();
 
+  loginStatus: boolean | undefined = false;
   userEmail=""
   userPassword=""
+
 
   loginForm = new FormGroup({
 
@@ -32,17 +34,6 @@ export class LoginComponent {
               @SkipSelf() private localStorageService: BrowserStorageService
   ) {
   }
-
- /* testlogin() {
-    let info = {
-      password: this.testpassword,
-      email: this.testemail
-    }
-    this.authservice.getLoginByEmail(info.password, info.email)
-  }*/
-
-
-
   get email() {
     return this.loginForm.get('email');
   }
@@ -52,12 +43,16 @@ export class LoginComponent {
   }
 
   loginUser() {
-
-    this.authservice.login(this.userEmail,this.userPassword).subscribe(() =>{
-                 this.localStorageService.set("email",this.userEmail);
-                 this.localStorageService.set("password",this.userPassword)
-                  this.router.navigate(['myday']).then(r =>console.log(r) )
-            });
-
+    this.authservice.login(this.userEmail, this.userPassword).pipe(
+      this.toast.observe({
+        success: 'Logged in successfully',
+        loading: 'Logging in...',
+        error: 'There was an error'
+      })
+    ).subscribe(() =>{
+      this.localStorageService.set("email",this.userEmail);
+      this.localStorageService.set("password",this.userPassword)
+      this.router.navigate(['myday']).then(r =>console.log(r))
+    });
   }
 }

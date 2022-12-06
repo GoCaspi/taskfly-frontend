@@ -1,0 +1,27 @@
+html,body{height: 100%;}
+body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif;}
+.form-container{
+  display: block;
+  max-width: 400px;
+  margin: auto;
+
+  background: #eceff1;
+  padding: 100px;
+  border-radius: 16px;
+}
+
+.form-container mat-form-field{
+  width: 100%;
+}
+
+.large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  height: 300px;
+  width: 400px;
+}
+

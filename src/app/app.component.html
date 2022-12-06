@@ -7,12 +7,29 @@
       <div class="spacer"></div>
       <div>
 
+        <ng-container *ngIf="authService.currentUser$ | async as user, else loginButton">
+          <button mat-button (click)="logout()")>
+            <mat-icon>logout</mat-icon>
+            Logout
+          </button>
+        </ng-container>
+
+        <ng-template #loginButton>
           <button mat-button routerLink="/login">
             <mat-icon>login</mat-icon>
             Login
           </button>
+        </ng-template>
 
-        <button mat-button id="openResetButton" (click)="openReset()">Passwort vergessen?</button>
+        <button (click)="test()"> Test </button>
+
+        <button mat-button id="openResetButton" (click)="openReset()" *ngIf="!loginStatus">Passwort vergessen?</button>
+
+        <button mat-button [matMenuTriggerFor]="menu">"Username oder E-Mail"</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Logout</button>
+          <button mat-menu-item ><a routerLink="/userSetting">Settings</a></button>
+        </mat-menu>
       </div>
     </mat-toolbar>
     <mat-sidenav-container>

@@ -9,6 +9,7 @@ import {MydayComponent} from "./myday/myday.component";
 import {TasksComponent} from "./tasks/tasks.component";
 import {PlannedComponent} from "./planned/planned.component";
 import {AssignedComponent} from "./assigned/assigned.component";
+import {UserSettingsComponent} from "./user-settings/user-settings.component";
 
 const routes: Routes =[
   {
@@ -48,6 +49,10 @@ const routes: Routes =[
   {
     path:"home",
     component:HomeComponent
+  },
+  {
+    path:"userSetting",
+    component:UserSettingsComponent
   }
 ];
 @NgModule({
