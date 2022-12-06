@@ -32,8 +32,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
 import { ListComponent } from './list/list.component';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
-import {MatDatepickerModule} from "@angular/material/datepicker";
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 
@@ -82,7 +82,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
         OverlayModule,
         HttpClientModule,
         MatDatepickerModule,
-
+      MatNativeDateModule
 
     ],
 

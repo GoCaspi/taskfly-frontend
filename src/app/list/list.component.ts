@@ -58,8 +58,8 @@ export class ListComponent implements OnInit {
 
 
   openTaskDialog(taskId : string){
-  //  this.setSession("currentTask",taskId)
-   // this.setLocal("currentTask",taskId)
+    this.setSession("currentTask",taskId)
+    this.setLocal("currentTask",taskId)
     this.taskService.getTaskById(taskId).subscribe(data =>{
       let myData = <Task>data
       this.localStorageService.set("currentListId",myData.listId)
@@ -76,6 +76,13 @@ export class ListComponent implements OnInit {
       })
 
     })
+  }
+  setSession(key : string, value : string) {
+    this.sessionStorageService.set(key, value);
+  }
+
+  setLocal(key : string, value : string) {
+    this.localStorageService.set(key, value);
   }
 
 }
