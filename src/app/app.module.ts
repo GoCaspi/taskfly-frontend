@@ -32,9 +32,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import {MatTabsModule} from "@angular/material/tabs";
-import {AuthModule, getAuth, provideAuth} from "@angular/fire/auth";
-import {initializeApp, provideFirebaseApp} from "@angular/fire/app";
-import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -75,10 +72,6 @@ import {environment} from "../environments/environment";
         OverlayModule,
         HttpClientModule,
         MatTabsModule,
-        AuthModule,
-      provideFirebaseApp(()=> initializeApp(environment.firebase)),
-      provideAuth(() => getAuth())
-
     ],
 
   providers: [],

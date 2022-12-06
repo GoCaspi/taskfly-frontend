@@ -43,16 +43,22 @@ export class LoginComponent {
   }
 
   loginUser() {
-    this.authservice.login(this.userEmail, this.userPassword).pipe(
-      this.toast.observe({
-        success: 'Logged in successfully',
-        loading: 'Logging in...',
-        error: 'There was an error'
-      })
-    ).subscribe(() =>{
-      this.localStorageService.set("email",this.userEmail);
-      this.localStorageService.set("password",this.userPassword)
-      this.router.navigate(['myday']).then(r =>console.log(r))
-    });
+   let status = this.sessionStorageService.get("loginStatus");
+
+    if(status == "false"){
+      this.authservice.login(this.userEmail, this.userPassword).pipe(
+        this.toast.observe({
+          success: 'Logged in successfully',
+          loading: 'Logging in...',
+          error: 'There was an error'
+        })
+      ).subscribe(() =>{
+        this.localStorageService.set("email",this.userEmail)
+        this.localStorageService.set("password",this.userPassword)
+        this.localStorageService.set("loginStatus", "true")
+        this.router.navigate(['myday']).then(r =>console.log(r))
+      });
+    }
+
   }
 }

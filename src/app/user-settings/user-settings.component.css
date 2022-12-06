@@ -4,7 +4,7 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif;}
   display: block;
   max-width: 400px;
   margin: auto;
-
+  min-height: 400px;
   background: #eceff1;
   padding: 100px;
   border-radius: 16px;
@@ -14,14 +14,4 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif;}
   width: 100%;
 }
 
-.large {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 16px;
-  padding: 16px;
-  border-radius: 8px;
-  height: 300px;
-  width: 400px;
-}
 
