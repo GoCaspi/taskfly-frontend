@@ -60,7 +60,9 @@ getUIdOfCurrentUser(){
     this.localStorageService.set("loggedInUserId",data.id);
     console.log(this.localStorageService.get("loggedInUserId"))
   })
-
+  this.listServicce.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
+    console.log("ListDData from service",listData)
+  })
 }
 
   ngOnInit(): void {
