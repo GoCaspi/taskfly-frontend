@@ -13,10 +13,10 @@
 
         <button mat-button id="openResetButton" (click)="openReset()" *ngIf="!loginStatus">Passwort vergessen?</button>
 
-        <button mat-button [matMenuTriggerFor]="menu">"Username oder E-Mail"</button>
+        <button mat-button [matMenuTriggerFor]="menu" *ngIf="loginStatus">Menu</button>
         <mat-menu #menu="matMenu">
           <button mat-menu-item routerLink="/login" (click)="logout()">Logout</button>
-          <button mat-menu-item ><a routerLink="/userSetting">Settings</a></button>
+          <button mat-menu-item routerLink="/userSetting">Settings</button>
         </mat-menu>
       </div>
     </mat-toolbar>

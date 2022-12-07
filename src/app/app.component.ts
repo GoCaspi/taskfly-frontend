@@ -35,8 +35,7 @@ export class AppComponent implements OnInit{
         this.loginStatus = true;
       }
     },1000)
-        throw new Error('Method not implemented.');
-    }
+  }
 
   openReset() {
     this.dialogRef = this.dialog.open(ResetDialogComponent)

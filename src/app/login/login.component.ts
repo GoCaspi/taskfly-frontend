@@ -45,7 +45,7 @@ export class LoginComponent {
   loginUser() {
    let status = this.sessionStorageService.get("loginStatus");
 
-    if(status == "false"){
+    if(status == "false" || status == undefined){
       this.authservice.login(this.userEmail, this.userPassword).pipe(
         this.toast.observe({
           success: 'Logged in successfully',

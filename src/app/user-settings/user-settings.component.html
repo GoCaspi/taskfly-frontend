@@ -3,12 +3,10 @@
 <form [formGroup]="Settings">
 <mat-tab-group dynamicHeight>
   <mat-tab label="tabUser">
-    <div class="large ">
       <ng-template mat-tab-label>
         User Settings
         <mat-icon class="icon">settings</mat-icon>
       </ng-template>
-      {{getTimeLoaded(2) | date:'medium'}}
 
       <mat-form-field>
         <input matInput placeholder="Name" formControlName="name"/>
@@ -21,18 +19,29 @@
       <mat-form-field>
         <input matInput placeholder="Passwort" formControlName="psw"/>
       </mat-form-field>
-    </div>
-
+    <div class="center margin-top">
+      <button mat-raised-button color="primary">
+        Update !
+      </button>
+    </div><br>
   </mat-tab>
 
   <mat-tab label="tabTeam">
-    <div class="large">
     <ng-template mat-tab-label>
       Team Management
       <mat-icon class="icon">perm_identity</mat-icon>
     </ng-template>
-    {{getTimeLoaded(2) | date:'medium'}}
-    </div>
+    <mat-form-field>
+      <input matInput placeholder="Team Name" formControlName="teamName"/>
+    </mat-form-field><br>
+    <mat-form-field>
+      <input matInput placeholder="Team Member" formControlName="teamMember"/>
+    </mat-form-field><br>
+    <div class="center margin-top">
+      <button mat-raised-button color="primary">
+        Create !
+      </button>
+    </div><br>
   </mat-tab>
 </mat-tab-group>
 </form>
