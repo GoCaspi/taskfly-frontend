@@ -21,7 +21,8 @@ interface User{
 export class AppComponent implements OnInit{
   title = 'TaskFly-frontend';
   opened=false;
-  private dialogRef: MatDialogRef<ResetDialogComponent> | undefined
+  private dialogRef: MatDialogRef<ResetDialogComponent> | undefined;
+  allLists:any;
 
 constructor( public authService: AuthenticationService,public dialog:MatDialog, public rd:ResetDialogComponent,private http: HttpClient,public listServicce:ListService,@SkipSelf() private localStorageService: BrowserStorageService) {
 }
@@ -34,7 +35,10 @@ openReset(){
 }
 
 fetchAllListsOfUser(userId:string){
-    this.listServicce.getAllListsByUserId(userId)
+  this.listServicce.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
+    this.allLists = listData;
+    console.log("ListDData from service",listData)
+  })
 }
 
 getUIdOfCurrentUser(){
@@ -60,12 +64,21 @@ getUIdOfCurrentUser(){
     this.localStorageService.set("loggedInUserId",data.id);
     console.log(this.localStorageService.get("loggedInUserId"))
   })
-  this.listServicce.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
-    console.log("ListDData from service",listData)
-  })
+//  this.listServicce.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
+//    console.log("ListDData from service",listData)
+//  })
 }
 
-  ngOnInit(): void {
+  async ngOnInit(){
+    if(!(this.localStorageService.get("loggedInUserId") == undefined || this.localStorageService.get("loggedInUserId") == "")){
+     await this.fetchAllListsOfUser(this.localStorageService.get("loggedInUserId")!)
+      console.log("All Lists of the current user are : ",this.allLists)
+    }
+  }
+
+  saveCurrentListId(listId:string){
+  this.localStorageService.set("inspectedList",listId)
+    console.log("the ispected list is :", this.localStorageService.get("inspectedList"))
   }
 
 }

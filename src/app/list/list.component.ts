@@ -43,12 +43,17 @@ export class ListComponent implements OnInit {
     this.renderMyDayTasks()
   }
   renderMyDayTasks(){
+    let checkId = this.localStorageService.get("inspectedList")
+
+    let staticOrDynamic = this.IAmStatic()
+    console.log("Clicked list check for static or dynamic is: ", staticOrDynamic)
+    console.log("In ListComponent following listId is choosen: ",checkId)
     let tData : Task[] = [];
     let myDayTasks : Task[] = [];
     this.listService.getTasksOfList(this.actualUser.userId).subscribe(response =>{
       tData = <Task[]>response;
       tData.forEach(t =>{
-        if (t.listId == "MyDay"){myDayTasks.push(t);}
+        if (t.listId == checkId){myDayTasks.push(t);}
       })
 
       this.taskData = myDayTasks
@@ -83,6 +88,14 @@ export class ListComponent implements OnInit {
 
   setLocal(key : string, value : string) {
     this.localStorageService.set(key, value);
+  }
+
+  IAmStatic() : boolean{
+    let checkId = this.localStorageService.get("inspectedList")
+    if(checkId == "MyDay" || checkId == "Important" || checkId == ""){
+      return true
+    }
+    return false
   }
 
 }
