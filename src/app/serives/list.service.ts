@@ -10,4 +10,7 @@ export class ListService {
   getTasksOfList(userId: string){
     return this.http.get("http://localhost:8080/task/userId/"+userId);
   }
+  getAllListsByUserId(userId:string){
+    return this.http.get("http://localhost:8080/tc/user/" + userId);
+  }
 }
