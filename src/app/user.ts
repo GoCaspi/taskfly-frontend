@@ -1,6 +1,13 @@
-export class User {
-  id: number | undefined;
-  userName: string | undefined;
-  password: string | undefined;
-  email: string | undefined;
+export interface Body{
+  team: string;
+}
+export interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  srole: string | null;
+  password: string | null;
+  email: string;
+  body: Body;
+
 }

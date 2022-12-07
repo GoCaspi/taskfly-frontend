@@ -3,8 +3,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../serives/authentication.service";
 import {ActivatedRoute, Router,} from "@angular/router";
 import {HotToastService} from "@ngneat/hot-toast";
-import {User} from "../user";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
+import {User} from "../user";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,6 @@ import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 
 })
 export class LoginComponent {
-  user = new User();
 
   loginStatus: boolean | undefined = false;
   userEmail=""
@@ -30,7 +29,8 @@ export class LoginComponent {
   constructor(private authservice: AuthenticationService,
               public route :ActivatedRoute,
               public router: Router,
-              private toast: HotToastService,@Self() private sessionStorageService: BrowserStorageService,
+              private toast: HotToastService,
+              @Self() private sessionStorageService: BrowserStorageService,
               @SkipSelf() private localStorageService: BrowserStorageService
   ) {
   }
@@ -56,9 +56,13 @@ export class LoginComponent {
         this.localStorageService.set("email",this.userEmail)
         this.localStorageService.set("password",this.userPassword)
         this.localStorageService.set("loginStatus", "true")
+        this.authservice.userInfo(this.userEmail, this.userPassword).subscribe((data) =>{
+          this.localStorageService.set("userid", data.id)
+          this.localStorageService.set("firstName", data.firstName)
+          this.localStorageService.set("lastName", data.lastName)
+        })
         this.router.navigate(['myday']).then(r =>console.log(r))
       });
     }
-
   }
 }

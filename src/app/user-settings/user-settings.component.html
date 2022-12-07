@@ -9,18 +9,19 @@
       </ng-template>
 
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name"/>
+        <input matInput placeholder="Fist Name" formControlName="firstName" [(ngModel)]="firstName"/>
       </mat-form-field><br>
+
+    <mat-form-field>
+      <input matInput placeholder="Last Name" formControlName="lastName"/>
+    </mat-form-field>
 
       <mat-form-field>
         <input matInput placeholder="Email address" formControlName="email"/>
       </mat-form-field><br>
 
-      <mat-form-field>
-        <input matInput placeholder="Passwort" formControlName="psw"/>
-      </mat-form-field>
     <div class="center margin-top">
-      <button mat-raised-button color="primary">
+      <button mat-raised-button color="primary" (click)="updateUser()">
         Update !
       </button>
     </div><br>
@@ -34,11 +35,8 @@
     <mat-form-field>
       <input matInput placeholder="Team Name" formControlName="teamName"/>
     </mat-form-field><br>
-    <mat-form-field>
-      <input matInput placeholder="Team Member" formControlName="teamMember"/>
-    </mat-form-field><br>
     <div class="center margin-top">
-      <button mat-raised-button color="primary">
+      <button mat-raised-button color="primary" (click)="updateUser()">
         Create !
       </button>
     </div><br>
