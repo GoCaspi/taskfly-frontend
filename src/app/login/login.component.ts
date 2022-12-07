@@ -14,10 +14,10 @@ import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 
 })
 export class LoginComponent {
-  user = new User();
 
   userEmail=""
   userPassword=""
+  userid=""
 
   loginForm = new FormGroup({
 
@@ -47,6 +47,9 @@ export class LoginComponent {
     this.authservice.login(this.userEmail,this.userPassword).subscribe(() =>{
                  this.localStorageService.set("email",this.userEmail);
                  this.localStorageService.set("password",this.userPassword)
+                 this.authservice.userInfo(this.userEmail,this.userPassword).subscribe((data) =>{
+                       this.localStorageService.set("userid",data.id)
+                 })
                   this.router.navigate(['myday']).then(r =>console.log(r) )
             });
 

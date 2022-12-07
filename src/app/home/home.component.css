@@ -14,8 +14,11 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
   border-radius: 16px;
 
 }
-.id{
+.container{
   width: 300px;
+  padding: 14px;
+  align-items: center;
+  justify-content: right;
 }
 .form-container mat-form-field{
   width: 100%;
@@ -23,12 +26,12 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
 .button-class{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: right;
 }
 .center{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: right;
 }
 .sign-up-link{
   font-size: 1.2rem;
