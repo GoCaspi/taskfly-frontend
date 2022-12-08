@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-
+interface List{
+  id:string;
+  name:string;
+  teamId:string;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +24,7 @@ export class ListService {
     return this.http.get("http://localhost:8080/task/userId/"+userId);
   }
   getAllListsByUserId(userId:string){
-    return this.http.get("http://localhost:8080/tc/user/" + userId);
+    return this.http.get<List>("http://localhost:8080/tc/user/" + userId);
   }
   toggleRender(){
     this.renderCheck.next(!this.checkListSwitch)

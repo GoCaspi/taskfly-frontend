@@ -12,6 +12,12 @@ interface User{
   id:string;
 }
 
+interface List{
+  id:string;
+  name:string;
+  teamId:string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,6 +29,8 @@ export class AppComponent implements OnInit{
   opened=false;
   private dialogRef: MatDialogRef<ResetDialogComponent> | undefined;
   allLists:any;
+  allStaticList:any =[];
+  allDynamicLists:any=[];
 
 constructor( public authService: AuthenticationService,public dialog:MatDialog, public rd:ResetDialogComponent,private http: HttpClient,public listService:ListService,@SkipSelf() private localStorageService: BrowserStorageService) {
 }
@@ -37,6 +45,14 @@ openReset(){
 fetchAllListsOfUser(userId:string){
   this.listService.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
     this.allLists = listData;
+    this.allLists.forEach((list: List) =>{
+      if(list.name == "MyDay" || list.name == "Important" ){
+        this.allStaticList.push(list)
+      }
+      else{
+        this.allDynamicLists.push(list)
+      }
+    })
     console.log("ListDData from service",listData)
   })
 }
