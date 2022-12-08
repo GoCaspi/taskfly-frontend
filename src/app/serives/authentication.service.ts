@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Buffer } from 'buffer';
 import {BrowserStorageService} from "../storage.service";
 import {User} from "../user";
+import {Team} from "../team";
 
 @Injectable()
 export class AuthenticationService {
@@ -22,20 +23,11 @@ export class AuthenticationService {
   }
 
   userUpdate(firstName: string, lastName: string, email: string){
-    /*let psw = this.sessionStorageService.get("password")
-    let pswValue = "";
-    if(psw != undefined){
-      let cred =  "Basic " + Buffer.from(email +":"+ this.sessionStorageService.get("password")).toString('base64')
-      let headers_object = new HttpHeaders({
-        "Authorization":cred
-      });
-    }*/
     let userid = this.sessionStorageService.get("userid")
 
     let body: User = {
       "id": this.sessionStorageService.get("userid") || "",
       "srole": this.sessionStorageService.get("srole"),
-      "password": this.sessionStorageService.get("password"),
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
@@ -43,7 +35,18 @@ export class AuthenticationService {
         "team": this.sessionStorageService.get("team") || ""
       }
     }
-    return this.http.put<User>(this.baseURL + "/user/" + userid, body)
+    return this.http.put<User>(this.baseURL + "/user/" + userid, body, {responseType:"json"})
+  }
+
+  createTeam(teamName: string, member: string[]){
+    let userid = this.sessionStorageService.get("userid") || ""
+
+    let body: Team ={
+      "userID": userid,
+      "teamName": teamName,
+      "members": member,
+    }
+    return this.http.post<Team>(this.baseURL + "/teammanagement", body,{responseType:'json'})
   }
 
   userInfo(email: string | null | undefined, password: string | null | undefined){

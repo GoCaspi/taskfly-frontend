@@ -13,11 +13,11 @@
       </mat-form-field><br>
 
     <mat-form-field>
-      <input matInput placeholder="Last Name" formControlName="lastName"/>
+      <input matInput placeholder="Last Name" formControlName="lastName" [(ngModel)]="lastName"/>
     </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Email address" formControlName="email"/>
+        <input matInput placeholder="Email address" formControlName="email" [(ngModel)]="emaill"/>
       </mat-form-field><br>
 
     <div class="center margin-top">
@@ -32,14 +32,21 @@
       Team Management
       <mat-icon class="icon">perm_identity</mat-icon>
     </ng-template>
+
     <mat-form-field>
-      <input matInput placeholder="Team Name" formControlName="teamName"/>
+      <input matInput placeholder="Team Name" formControlName="teamName" [(ngModel)]="teamName"/>
     </mat-form-field><br>
+
+    <mat-form-field>
+      <input matInput placeholder="Team Members" formControlName="members" [(ngModel)]="membersInput"/>
+    </mat-form-field><br>
+
     <div class="center margin-top">
-      <button mat-raised-button color="primary" (click)="updateUser()">
+      <button mat-raised-button color="primary" (click)="createTeam()">
         Create !
       </button>
     </div><br>
+
   </mat-tab>
 </mat-tab-group>
 </form>
