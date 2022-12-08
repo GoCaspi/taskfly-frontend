@@ -45,16 +45,5 @@ openReset(){
   })
 }
 
-  /*getUserList(){
-    let userid = this.localStorageService.get("userid")
-    let cred =  "Basic " + Buffer.from(this.localStorageService.get("email") +":"+this.localStorageService.get("password")).toString('base64')
-    let headers_object = new HttpHeaders({
-      "Authorization":cred
-    });
-    this.http.get<[]>(this.baseURL+"/tc/user/"+userid,{headers:headers_object}).subscribe((data)=>{
-      console.log(data)
-      this.sideList.next(data)
-    })
-  }*/
 
 }

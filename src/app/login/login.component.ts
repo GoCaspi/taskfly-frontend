@@ -50,7 +50,6 @@ export class LoginComponent {
                  this.localStorageService.set("password",this.userPassword)
                  this.authservice.userInfo(this.userEmail,this.userPassword).subscribe((data) =>{
                    this.localStorageService.set("userid",data.id)
-                 //  this.appComponent.getUserList()
                  })
                   this.router.navigate(['myday']).then(r =>console.log(r) )
             });

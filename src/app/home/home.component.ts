@@ -5,6 +5,7 @@ import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {Buffer} from "buffer";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {HotToastService} from "@ngneat/hot-toast";
 
 
 
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit{
   });
 
   constructor(
-    public dialogRef: MatDialogRef<HomeComponent>,
+    public dialogRef: MatDialogRef<HomeComponent>,private toast: HotToastService,
 
     @Inject(MAT_DIALOG_DATA) public data:any,@Self() private sessionStorageService: BrowserStorageService,
     @SkipSelf() private localStorageService: BrowserStorageService,private http:HttpClient,private _snackBar: MatSnackBar
@@ -36,6 +37,7 @@ get list(){
 
 
   ngOnInit() {}
+
   openSnackBar(message:string, action:string) {
     this._snackBar.open(message,action,{
       duration:2000,
@@ -56,7 +58,13 @@ kollectionUser(){
     "Authorization":cred
   });
     console.log(body)
-  this.http.post(this.baseURL+"/tc",body,{headers:headers_object,responseType:"text"}).subscribe(()=>{
+  this.http.post(this.baseURL+"/tc",body,{headers:headers_object,responseType:"text"}).pipe(
+    this.toast.observe({
+      success : "List wurde zugefügt",
+      loading :'Logging in...',
+      error : "There was an error"
+    })
+  ).subscribe(()=>{
     this.dialogRef.close()
   })
 }
