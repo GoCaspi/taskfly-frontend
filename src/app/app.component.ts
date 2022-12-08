@@ -79,6 +79,7 @@ getUIdOfCurrentUser(){
   saveCurrentListId(listId:string){
   this.localStorageService.set("inspectedList",listId)
     console.log("the ispected list is :", this.localStorageService.get("inspectedList"))
+    this.listServicce.toggleRender()
   }
 
 }

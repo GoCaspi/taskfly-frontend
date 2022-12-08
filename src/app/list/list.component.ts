@@ -41,6 +41,12 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.renderMyDayTasks()
+    this.listService.renderCheck.subscribe(statement =>{
+      console.log("RenderCheck from Service is ", statement)
+      if(statement){
+        this.renderMyDayTasks()
+      }
+    })
   }
   renderMyDayTasks(){
     let checkId = this.localStorageService.get("inspectedList")
