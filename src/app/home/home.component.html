@@ -1,20 +1,21 @@
 
   <h1 >Liste Hinzufügen </h1>
   <div layout="row" class="container">
-    <form>
+
+    <form [formGroup]="KollectionForm" (ngSubmit)="kollectionUser()">
   <div mat-dialog-content >
-    <mat-form-field hintLabel="Max 10 characters" appearance="outline">
+    <mat-form-field hintLabel="Max 10 characters" appearance="outline" class="test">
       <mat-label>Neue Liste</mat-label><mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-      <input matInput #input maxlength="10" placeholder="Ex. Nougat" [(ngModel)]="value" class="form-control" name="first">
-      <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-        <mat-icon>close</mat-icon>
-      </button>
+      <input matInput #input maxlength="10" placeholder="Ex. Nougat" formControlName ="list" class="form-control" name="first">
       <mat-hint align="end">{{input.value.length}}/10</mat-hint>
     </mat-form-field>
   </div>
-  <div mat-dialog-actions class="okay" >
-    <button mat-stroked-button (click)="onNoClick()">Nein,danke</button>
-    <button mat-stroked-button cdkFocusInitial  aria-label="snack-bar" class="button">Okay</button>
+
+  <div mat-dialog-actions class="okay">
+
+    <button mat-stroked-button [mat-dialog-close]="dialogRef"(click)="openSnackBar('Saved Failed!','Try Again')">Nein,danke</button>
+
+    <button mat-stroked-button cdkFocusInitial  aria-label="snack-bar" class="button"type="submit" (click)="openSnackBar('Saved Successfully!','Okay')">Okay</button>
 
   </div><br><br><br><br><br>
 
