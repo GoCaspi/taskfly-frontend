@@ -47,11 +47,8 @@ export class UserSettingsComponent implements OnInit{
   createTeam (){
     let membersArray = this.membersInput.split(",")
 
-    if(membersArray == [""] || this.teamName == ""){
-      this.authentication.createTeam(this.teamName, membersArray).pipe()
-      this.toast.observe({
-        error: 'There was an error'
-      })
+    if(this.membersInput == "" || this.teamName == ""){
+      this.toast.error("Please enter a team name and at least one team member")
     } else {
       this.authentication.createTeam(this.teamName, membersArray).pipe(
         this.toast.observe({
