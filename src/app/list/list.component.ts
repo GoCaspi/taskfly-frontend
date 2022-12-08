@@ -58,9 +58,16 @@ export class ListComponent implements OnInit {
     let myDayTasks : Task[] = [];
     this.listService.getTasksOfList(this.actualUser.userId).subscribe(response =>{
       tData = <Task[]>response;
-      tData.forEach(t =>{
-        if (t.listId == checkId){myDayTasks.push(t);}
-      })
+      if(!staticOrDynamic){
+        tData.forEach(t =>{
+          if (t.listId == checkId){myDayTasks.push(t);}
+        })
+      }
+      else{
+      let staticTasks = this.initStatic(tData,this.localStorageService.get("inspectedListName")!)
+        myDayTasks = staticTasks;
+      }
+
 
       this.taskData = myDayTasks
       console.log("tData on Object is :",this.taskData);
@@ -97,11 +104,20 @@ export class ListComponent implements OnInit {
   }
 
   IAmStatic() : boolean{
-    let checkId = this.localStorageService.get("inspectedList")
+    let checkId = this.localStorageService.get("inspectedListName")
+    console.log("instepected list name from IAMStatic : ",checkId)
     if(checkId == "MyDay" || checkId == "Important" || checkId == ""){
       return true
     }
     return false
+  }
+
+  initStatic(allTasks:Task[],staticType:string):Task[]{
+    let resultArr : Task[] = []
+   allTasks.forEach(t =>{
+      if (t.listId == staticType){resultArr.push(t);}
+    })
+    return resultArr
   }
 
 }

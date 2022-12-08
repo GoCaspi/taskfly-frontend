@@ -42,7 +42,7 @@
 
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <mat-list>
-  <mat-list-item *ngFor="let list of allLists" routerLink="/list" (click)="saveCurrentListId(list.id)">{{list.name}} NAME</mat-list-item>
+  <mat-list-item *ngFor="let list of allLists" routerLink="/list" (click)="saveCurrentListId(list.id,list.name)">{{list.name}} NAME</mat-list-item>
 </mat-list>
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
@@ -56,3 +56,4 @@
     </mat-sidenav-container>
 
 
+<button (click)="test()">Create new List!</button>

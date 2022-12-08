@@ -24,7 +24,7 @@ export class AppComponent implements OnInit{
   private dialogRef: MatDialogRef<ResetDialogComponent> | undefined;
   allLists:any;
 
-constructor( public authService: AuthenticationService,public dialog:MatDialog, public rd:ResetDialogComponent,private http: HttpClient,public listServicce:ListService,@SkipSelf() private localStorageService: BrowserStorageService) {
+constructor( public authService: AuthenticationService,public dialog:MatDialog, public rd:ResetDialogComponent,private http: HttpClient,public listService:ListService,@SkipSelf() private localStorageService: BrowserStorageService) {
 }
 
 openReset(){
@@ -35,7 +35,7 @@ openReset(){
 }
 
 fetchAllListsOfUser(userId:string){
-  this.listServicce.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
+  this.listService.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
     this.allLists = listData;
     console.log("ListDData from service",listData)
   })
@@ -74,12 +74,25 @@ getUIdOfCurrentUser(){
      await this.fetchAllListsOfUser(this.localStorageService.get("loggedInUserId")!)
       console.log("All Lists of the current user are : ",this.allLists)
     }
+
+
+    this.listService.renderCheckList.subscribe(statement =>{
+      console.log("RenderCheck from Service is ", statement)
+      if(statement){
+        this.fetchAllListsOfUser(this.localStorageService.get("loggedInUserId")!)
+      }
+    })
   }
 
-  saveCurrentListId(listId:string){
+  saveCurrentListId(listId:string, listName:string){
   this.localStorageService.set("inspectedList",listId)
+    this.localStorageService.set("inspectedListName",listName)
     console.log("the ispected list is :", this.localStorageService.get("inspectedList"))
-    this.listServicce.toggleRender()
+    this.listService.toggleRender()
+  }
+
+  test(){
+  this.listService.toggleRenderList()
   }
 
 }
