@@ -106,7 +106,7 @@ export class ListComponent implements OnInit {
   IAmStatic() : boolean{
     let checkId = this.localStorageService.get("inspectedListName")
     console.log("instepected list name from IAMStatic : ",checkId)
-    if(checkId == "MyDay" || checkId == "Important" || checkId == ""){
+    if(checkId == "MyDay" || checkId == "Important" || checkId == "" || checkId == "Geplant"){
       return true
     }
     return false

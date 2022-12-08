@@ -32,4 +32,8 @@ export class ListService {
   toggleRenderList(){
     this.renderCheckList.next(!this.checkListUpdate)
   }
+
+  getGeplantTasks(userId:string){
+    return this.http.get<List>("http://localhost:8080/task/scheduled/week/" + userId);
+  }
 }
