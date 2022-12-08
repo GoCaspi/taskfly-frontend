@@ -2,9 +2,14 @@ import {Component,  Injectable,  Self, SkipSelf, EventEmitter, Output} from '@an
 import { MatDialog,} from "@angular/material/dialog";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {TaskService} from "../serives/task.service";
+import {ListService} from "../serives/list.service";
 
 
-
+interface List{
+  id:string;
+  name:string;
+  teamId:string;
+}
 
 interface TaskBody{
   topic : string;
@@ -42,17 +47,24 @@ export class TaskDialogComponent {
   bTopicInput : string = "";
   bPriorityInput : string = "";
   bDescriptionInput : string = "";
+  nameIdMap:Map<string, string>= new Map<string, string>();
   bodyInput : TaskBody = {topic : "", description : "", priority : ""}
   startDate = new Date(2022, 0, 1);
+  allLists:any;
 
   constructor(public dialog: MatDialog, private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
-              @SkipSelf() private localStorageService: BrowserStorageService,) {}
+              @SkipSelf() private localStorageService: BrowserStorageService, private listService:ListService) {}
   @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
 
 
   ngOnInit(){
     this.taskId = this.localStorageService.get("currentTask")!
     this.setInputFields();
+    this.listService.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe((data) =>{
+      this.allLists=data
+      this.nameIdMap=this.nameListIdMap(this.allLists)
+      console.log("NAMEIDMAP key: listname val:listId : ",this.nameIdMap)
+    })
   }
 
   setInputFields(){
@@ -67,8 +79,10 @@ export class TaskDialogComponent {
 
   sendUpdate(){
     let updateBody : TaskBody = {description:this.bDescriptionInput,topic:this.bTopicInput,priority:this.bPriorityInput}
-    let update :  TaskUpdate = {body:updateBody,listId:this.listIdInput1,deadline:this.deadlineInput,team:this.teamInput}
+    console.log("FORMATATION", this.formatListNameToId(this.listIdInput1))
+    let update :  TaskUpdate = {body:updateBody,listId:this.formatListNameToId(this.listIdInput1),deadline:this.deadlineInput,team:this.teamInput}
     console.log("update is",update)
+
     this.sls.updateTask(update, this.taskId).then(r => this.dialog.closeAll())
     this.change.emit(true)
   }
@@ -80,6 +94,26 @@ export class TaskDialogComponent {
       this.change.emit(true)
       // window.location.reload()
     })
+  }
+  nameListIdMap(allLists:List[]){
+    let nameIdMap = new Map();
+    allLists.forEach(list =>{
+      if(nameIdMap.get(list.name) == undefined || nameIdMap.get(list.name) == ""){
+        nameIdMap.set(list.name,list.id)
+      }
+    })
+    return nameIdMap
+  }
+
+  formatListNameToId(name:string):string{
+    if(name == "MyDay" || name == "Important"){
+      return name
+    }
+    let value = this.nameIdMap.get(name)
+    if(value == undefined || value == "" ){
+      return ""
+    }
+    return this.nameIdMap.get(name)!
   }
 
 }

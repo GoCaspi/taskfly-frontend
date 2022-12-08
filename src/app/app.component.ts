@@ -32,6 +32,7 @@ export class AppComponent implements OnInit{
   allStaticList:any =[];
   allDynamicLists:any=[];
 
+
 constructor( public authService: AuthenticationService,public dialog:MatDialog, public rd:ResetDialogComponent,private http: HttpClient,public listService:ListService,@SkipSelf() private localStorageService: BrowserStorageService) {
 }
 
@@ -110,5 +111,7 @@ getUIdOfCurrentUser(){
   test(){
   this.listService.toggleRenderList()
   }
+
+
 
 }

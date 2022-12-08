@@ -42,11 +42,11 @@
 
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <mat-list>
-  <mat-list-item *ngFor="let list of allStaticList" routerLink="/list" (click)="saveCurrentListId(list.id,list.name)">{{list.name}} NAME</mat-list-item>
+  <mat-list-item *ngFor="let list of allStaticList" routerLink="/list" (click)="saveCurrentListId(list.id,list.name)">NAME {{list.name}} with id: {{list.id}} </mat-list-item>
 </mat-list>
          <br><br><br>
          <mat-list>
-           <mat-list-item *ngFor="let list of allDynamicLists" routerLink="/list" (click)="saveCurrentListId(list.id,list.name)">{{list.name}} NAME</mat-list-item>
+           <mat-list-item *ngFor="let list of allDynamicLists" routerLink="/list" (click)="saveCurrentListId(list.id,list.name)">NAME {{list.name}} with id: {{list.id}}</mat-list-item>
          </mat-list>
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
