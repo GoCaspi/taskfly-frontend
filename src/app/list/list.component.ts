@@ -44,6 +44,7 @@ export class ListComponent implements OnInit {
   listTasks: Task[]=[];
   userIsOwner:boolean=false;
   renderListName:string="";
+  staticList:boolean = false;
   private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
   private listDialogRef: MatDialogRef<UpdateListDialogComponent> | undefined
 
@@ -65,8 +66,9 @@ export class ListComponent implements OnInit {
         }
 
         if(this.IAmStatic1()){
+          this.staticList = true;
           console.log("I AM STATIC1")
-        }
+        }else {this.staticList=false;}
       }
     })
 
