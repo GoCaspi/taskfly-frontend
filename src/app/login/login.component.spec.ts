@@ -7,12 +7,16 @@ import {AuthenticationService} from "../serives/authentication.service";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {By} from "@angular/platform-browser";
 import {ActivatedRoute} from "@angular/router";
+import {User, Body} from "../user";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: AuthenticationService;
   let authServiceSpy: Spy<AuthenticationService>;
+  let mockBody: Body = {team: ""}
+  let mockUser: User = {firstName: "", lastName: "", email:"", id:"", body: mockBody, srole: ""}
+
   const fakeActivatedRoute = {
     snapshot: { data: {} }
   } as ActivatedRoute;
@@ -49,6 +53,7 @@ describe('LoginComponent', () => {
   it('should have a login method. Calling this method calls the service mehtod: login(). if the service doesnt return any error then the username and password gets saved to the local storage service.', () => {
     spyOn(component.router, 'navigate').and.returnValue(new Promise(resolve => true))
 
+    authServiceSpy.userInfo.and.nextWith(mockUser)
     authServiceSpy.login.and.nextWith("")
     component.loginUser()
     expect(component).toBeTruthy();

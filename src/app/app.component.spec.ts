@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
 import {AuthenticationService} from "./serives/authentication.service";
-
+import { MatMenuModule } from '@angular/material/menu';
 import {HttpClient} from "@angular/common/http";
 import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
@@ -15,6 +15,9 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         AppComponent,ResetDialogComponent
+      ],
+      imports: [
+        MatMenuModule,
       ],
       providers: [
         AuthenticationService,{
@@ -46,10 +49,12 @@ describe('AppComponent', () => {
   it('should have a button to reset the password. The inner text of the button element is : "Passwort vergessen?"', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-
+    fixture.componentInstance.loginStatus = false
+    fixture.detectChanges()
     expect(fixture.debugElement.query(By.css('#openResetButton'))).toBeTruthy();
     expect(fixture.debugElement.query(By.css('#openResetButton')).nativeElement.innerHTML).toEqual("Passwort vergessen?");
   });
+
   it('should have a button-method openResetDialog, that opens the ResetDialog if clicked', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
