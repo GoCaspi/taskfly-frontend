@@ -45,10 +45,13 @@ openReset(){
 }
 
 fetchAllListsOfUser(userId:string){
+
   this.listService.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
+    this.allDynamicLists = []
+    this.allLists = []
     this.allLists = listData;
     this.allLists.forEach((list: List) =>{
-      if(list.name == "MyDay" || list.name == "Important" || list.name == "Geplant"){
+      if((list.name == "MyDay" || list.name == "Important" || list.name == "Geplant")){
         this.allStaticList.push(list)
       }
       else{
@@ -57,9 +60,7 @@ fetchAllListsOfUser(userId:string){
     })
     console.log("ListDData from service",listData)
   })
-  this.listService.getGeplantTasks(this.localStorageService.get("loggedInUserId")!).subscribe(geplantData =>{
 
-  })
 }
 
 getUIdOfCurrentUser(){

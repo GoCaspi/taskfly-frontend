@@ -135,8 +135,8 @@ export class ListComponent implements OnInit {
     let listId = this.localStorageService.get("inspectedList")!
     this.listService.deleteList(listId).subscribe(response =>{
       console.log("RESPONSE FROM DELETE : ", response)
-      //this.listService.toggleRenderList();
-      this.renderList1()
+      this.listService.toggleRenderList();
+   //   this.renderList1()
 
     })
 //window.location.reload()
