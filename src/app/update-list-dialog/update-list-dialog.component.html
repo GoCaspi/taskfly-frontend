@@ -1,1 +1,23 @@
-<p>update-list-dialog works!</p>
+<p>Bearbeite diese Liste</p>
+
+
+<form>
+
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>List</mat-label>
+    <textarea [(ngModel)]="listName" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..." id="listIdInput" type="text"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Topic</mat-label>
+    <textarea [(ngModel)]="listMembersString" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+  </mat-form-field>
+
+
+
+
+</form>
+
+<button mat-button color="primary" (click)="sendUpdate()">Send update</button>
+<button mat-button color="warn" >Abbrechen</button>

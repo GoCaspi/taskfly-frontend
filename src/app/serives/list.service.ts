@@ -57,4 +57,7 @@ export class ListService {
   getListById(listId:string){
     return this.http.get<List>("http://localhost:8080/tc/id/" + listId);
   }
+  updateListe(listId:string, update:List){
+    return this.http.patch("http://localhost:8080/tc?id="+listId,update)
+  }
 }

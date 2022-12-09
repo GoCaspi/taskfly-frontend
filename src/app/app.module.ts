@@ -35,6 +35,7 @@ import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from "@angular/material/core";
 import { UpdateListDialogComponent } from './update-list-dialog/update-list-dialog.component';
+import {MatRadioModule} from "@angular/material/radio";
 
 
 
@@ -61,32 +62,33 @@ import { UpdateListDialogComponent } from './update-list-dialog/update-list-dial
     TaskDialogComponent,
     UpdateListDialogComponent,
   ],
-    imports: [
-        BrowserModule,
-        MatToolbarModule,
-        BrowserAnimationsModule,
-        MatSidenavModule,
-        RouterOutlet,
-        MatIconModule,
-        MatButtonModule,
-        FormsModule,
-        RouterLinkWithHref,
-        RouterLink,
-        RouterLinkActive,
-        MatListModule,
-        AppRoutingModule,
-        MatDividerModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatMenuModule,
-        MatDialogModule,
-        OverlayModule,
-        HttpClientModule,
-        MatDatepickerModule,
-      MatNativeDateModule
+  imports: [
+    BrowserModule,
+    MatToolbarModule,
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    RouterOutlet,
+    MatIconModule,
+    MatButtonModule,
+    FormsModule,
+    RouterLinkWithHref,
+    RouterLink,
+    RouterLinkActive,
+    MatListModule,
+    AppRoutingModule,
+    MatDividerModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    MatDialogModule,
+    OverlayModule,
+    HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule
 
-    ],
+  ],
 
   providers: [],
   bootstrap: [AppComponent],

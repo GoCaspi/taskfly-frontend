@@ -1,0 +1,27 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.priorityBox{
+  display: flex;
+  flex-direction: column;
+  padding-top:1rem ;
+  padding-bottom: 1rem;
+}
+.priorityLabel{
+  margin-bottom: 0.5rem;
+}
+.radioBtn{
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+.bg1{
+  color: #004a9f;
+}
