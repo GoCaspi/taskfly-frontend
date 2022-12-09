@@ -42,6 +42,7 @@ export class ListComponent implements OnInit {
   taskData : Task[]=[];
   listTasks: Task[]=[];
   userIsOwner:boolean=false;
+  renderListName:string="";
   private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
   constructor(private http: HttpClient, private listService:ListService, private taskService:TaskService,@Self() private sessionStorageService: BrowserStorageService,
   @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog) { }
@@ -108,7 +109,8 @@ export class ListComponent implements OnInit {
   renderList1(){
     let checkId = this.localStorageService.get("inspectedList")!
     this.listService.getListById(checkId).subscribe(list =>{
-this.taskData = list.tasks
+      this.taskData = list.tasks
+      this.renderListName = list.name;
     })
   }
 
