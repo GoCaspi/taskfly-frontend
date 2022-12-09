@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 
 describe('AuthenticationService', () => {
+
   let service: AuthenticationService;
   let httpSpy: Spy<HttpClient>;
   let fakeResponseFromAPI =""
@@ -29,6 +30,14 @@ describe('AuthenticationService', () => {
       expect(httpSpy.post.calls.count()).toBe(1);
     })
 
+  });
+  it('userinfo test', function (){
+    httpSpy.get.and.nextWith(fakeResponseFromAPI)
+    let fakeEmail = "testmail@mail.to"
+    let fakePwd = "testpwd"
+    service.userInfo(fakeEmail, fakePwd).subscribe(r=>{
+      expect(httpSpy.get.calls.count()).toBe(1);
+    })
   });
 });
 it('should ', function () {
