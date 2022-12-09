@@ -34,6 +34,7 @@ import { ListComponent } from './list/list.component';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from "@angular/material/core";
+import { UpdateListDialogComponent } from './update-list-dialog/update-list-dialog.component';
 
 
 
@@ -58,6 +59,7 @@ import {MatNativeDateModule} from "@angular/material/core";
     ResetDialogComponent,
     ListComponent,
     TaskDialogComponent,
+    UpdateListDialogComponent,
   ],
     imports: [
         BrowserModule,

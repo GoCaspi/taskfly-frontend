@@ -5,6 +5,7 @@ import {TaskService} from "../serives/task.service";
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 import {BROWSER_STORAGE, BrowserStorageService} from '../storage.service';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {UpdateListDialogComponent} from "../update-list-dialog/update-list-dialog.component";
 
 interface List{
   id:string;
@@ -35,7 +36,7 @@ interface Task  {
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css'],
-  providers: [TaskDialogComponent, BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
+  providers: [TaskDialogComponent, BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage },UpdateListDialogComponent]
 })
 export class ListComponent implements OnInit {
   actualUser : User = {userId:"1"};
@@ -44,6 +45,8 @@ export class ListComponent implements OnInit {
   userIsOwner:boolean=false;
   renderListName:string="";
   private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
+  private listDialogRef: MatDialogRef<UpdateListDialogComponent> | undefined
+
   constructor(private http: HttpClient, private listService:ListService, private taskService:TaskService,@Self() private sessionStorageService: BrowserStorageService,
   @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog) { }
 
@@ -114,6 +117,17 @@ export class ListComponent implements OnInit {
     })
   }
 
+  openListDialog(){
+    let listId = this.localStorageService.get("inspectedList")!
+    this.listService.getListById(listId).subscribe(list =>{
+      this.localStorageService.set("inspectedListMembers", list.members.join())
+      this.listDialogRef = this.dialog.open(UpdateListDialogComponent)
+      this.listDialogRef.afterClosed().subscribe(r =>{
+        //   this.renderMyDayTasks()
+        this.renderList1()
+      })
+    })
+  }
 
 
   openTaskDialog(taskId : string){
@@ -131,7 +145,8 @@ export class ListComponent implements OnInit {
 
       this.dialogRef = this.dialog.open(TaskDialogComponent)
       this.dialogRef.afterClosed().subscribe(r =>{
-        this.renderMyDayTasks()
+     //   this.renderMyDayTasks()
+        this.renderList1()
       })
 
     })

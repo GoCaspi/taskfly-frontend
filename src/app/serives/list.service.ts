@@ -21,6 +21,7 @@ interface List{
   name:string;
   teamId:string;
   tasks:Task[]
+  members:string[];
 }
 @Injectable({
   providedIn: 'root'
