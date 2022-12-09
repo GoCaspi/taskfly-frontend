@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import {AuthenticationService} from "./serives/authentication.service";
 import { MatMenuModule } from '@angular/material/menu';
 import {HttpClient} from "@angular/common/http";
-import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_SCROLL_STRATEGY, MatDialog} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Dialog} from "@angular/cdk/dialog";
 import {By} from "@angular/platform-browser";
@@ -72,14 +72,12 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent)
     const app = fixture.componentInstance
     const openDialogSpy = spyOn(app.dialog, 'open')
+    fixture.componentInstance.loginStatus = false
+    fixture.detectChanges()
 
     app.openReset()
 
     expect(openDialogSpy).toHaveBeenCalled()
     expect(openDialogSpy).toHaveBeenCalledWith(ResetDialogComponent)
   });
-
-
-
-
 });
