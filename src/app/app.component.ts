@@ -51,10 +51,10 @@ fetchAllListsOfUser(userId:string){
     this.allLists = []
     this.allLists = listData;
     this.allLists.forEach((list: List) =>{
-      if((list.name == "MyDay" || list.name == "Important" || list.name == "Geplant")){
+      if((list.name == "MyDay" || list.name == "Important" || list.name == "Geplant") && this.allStaticList.length < 2){
         this.allStaticList.push(list)
       }
-      else{
+      else if(!(list.name == "MyDay" || list.name == "Important" || list.name == "Geplant")){
         this.allDynamicLists.push(list)
       }
     })
