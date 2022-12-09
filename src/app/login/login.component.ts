@@ -4,7 +4,6 @@ import {AuthenticationService} from "../serives/authentication.service";
 import {ActivatedRoute, Router,} from "@angular/router";
 import {HotToastService} from "@ngneat/hot-toast";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
-import {User} from "../user";
 
 @Component({
   selector: 'app-login',

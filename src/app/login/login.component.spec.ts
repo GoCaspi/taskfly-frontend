@@ -52,6 +52,5 @@ describe('LoginComponent', () => {
     authServiceSpy.login.and.nextWith("")
     component.loginUser()
     expect(component).toBeTruthy();
-
   });
 });

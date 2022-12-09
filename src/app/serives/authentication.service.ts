@@ -14,7 +14,7 @@ export class AuthenticationService {
     this.baseURL = process.env['NG_APP_PROD_URL'];
   }
 
-  login(email: string | null | undefined, password: string | null | undefined){
+  login(email: string, password: string){
     let cred =  "Basic " + Buffer.from(email +":"+ password).toString('base64')
     let headers_object = new HttpHeaders({
       "Authorization":cred
