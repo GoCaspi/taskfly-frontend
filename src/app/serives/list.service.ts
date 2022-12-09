@@ -60,4 +60,7 @@ export class ListService {
   updateListe(listId:string, update:List){
     return this.http.patch("http://localhost:8080/tc?id="+listId,update)
   }
+  deleteList(listId:string){
+    return this.http.delete("http://localhost:8080/tc/"+listId)
+  }
 }

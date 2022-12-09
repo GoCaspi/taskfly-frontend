@@ -131,6 +131,17 @@ export class ListComponent implements OnInit {
     })
   }
 
+  deleteList(){
+    let listId = this.localStorageService.get("inspectedList")!
+    this.listService.deleteList(listId).subscribe(response =>{
+      console.log("RESPONSE FROM DELETE : ", response)
+      //this.listService.toggleRenderList();
+      this.renderList1()
+
+    })
+//window.location.reload()
+  }
+
 
   openTaskDialog(taskId : string){
     this.setSession("currentTask",taskId)
