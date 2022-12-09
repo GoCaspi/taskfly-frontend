@@ -6,7 +6,12 @@ import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 import {BROWSER_STORAGE, BrowserStorageService} from '../storage.service';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
-
+interface List{
+  id:string;
+  name:string;
+  teamId:string;
+  tasks:Task[]
+}
 interface User{
   userId : string;
 
@@ -17,7 +22,7 @@ interface TaskBody{
   description: string;
 }
 
-interface Task{
+interface Task  {
   body: TaskBody;
   userId : string;
   listId : string;
@@ -35,18 +40,32 @@ interface Task{
 export class ListComponent implements OnInit {
   actualUser : User = {userId:"1"};
   taskData : Task[]=[];
+  listTasks: Task[]=[];
+  userIsOwner:boolean=false;
   private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
   constructor(private http: HttpClient, private listService:ListService, private taskService:TaskService,@Self() private sessionStorageService: BrowserStorageService,
   @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog) { }
 
   ngOnInit(): void {
-    this.renderMyDayTasks()
+  //  this.renderMyDayTasks()
+    this.renderList1()
+    this.userIsOwner = this.isOwner();
     this.listService.renderCheck.subscribe(statement =>{
       console.log("RenderCheck from Service is ", statement)
       if(statement){
-        this.renderMyDayTasks()
+    //    this.renderMyDayTasks()
+        this.renderList1()
+        this.userIsOwner = this.isOwner();
+        if(this.userIsOwner){
+          console.log("I AM OWNER!!!")
+        }
+
+        if(this.IAmStatic1()){
+          console.log("I AM STATIC1")
+        }
       }
     })
+
   }
   renderMyDayTasks(){
     let checkId = this.localStorageService.get("inspectedList")
@@ -56,7 +75,7 @@ export class ListComponent implements OnInit {
     console.log("In ListComponent following listId is choosen: ",checkId)
     let tData : Task[] = [];
     let myDayTasks : Task[] = [];
-    this.listService.getTasksOfList(this.actualUser.userId).subscribe(response =>{
+    this.listService.getTasksOfList(this.localStorageService.get("loggedInUserId")!).subscribe(response =>{
       tData = <Task[]>response;
       if(!staticOrDynamic){
         tData.forEach(t =>{
@@ -73,6 +92,26 @@ export class ListComponent implements OnInit {
       console.log("tData on Object is :",this.taskData);
     })
   }
+
+  renderList(){
+    let checkId = this.localStorageService.get("inspectedList")!
+    this.listService.getListById(checkId).subscribe(list =>{
+      list.tasks.forEach(t =>{
+       // this.listTasks.push(t)
+         this.taskData.push(t)
+        console.log("RENDERLIST METHOD :", this.listTasks)
+      })
+    })
+
+}
+
+  renderList1(){
+    let checkId = this.localStorageService.get("inspectedList")!
+    this.listService.getListById(checkId).subscribe(list =>{
+this.taskData = list.tasks
+    })
+  }
+
 
 
   openTaskDialog(taskId : string){
@@ -107,6 +146,24 @@ export class ListComponent implements OnInit {
     let checkId = this.localStorageService.get("inspectedListName")
     console.log("instepected list name from IAMStatic : ",checkId)
     if(checkId == "MyDay" || checkId == "Important" || checkId == "" || checkId == "Geplant"){
+      return true
+    }
+    return false
+  }
+
+  IAmStatic1() : boolean{
+    let checkName = this.localStorageService.get("inspectedListName")
+    let checkId = this.localStorageService.get("loggedInUserId")
+    console.log("instepected list name from IAMStatic : ",checkName)
+    if((checkName == "MyDay" || checkName == "Important" || checkName == "" || checkName == "Geplant") && checkId == this.localStorageService.get("inspectedListOwnerId")){
+      return true
+    }
+    return false
+  }
+
+  isOwner() : boolean{
+    let checkId = this.localStorageService.get("loggedInUserId")
+    if( checkId == this.localStorageService.get("inspectedListOwnerId")){
       return true
     }
     return false

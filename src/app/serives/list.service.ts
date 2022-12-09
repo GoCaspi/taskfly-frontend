@@ -1,10 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
+interface TaskBody{
+  topic : string;
+  priority: string;
+  description: string;
+}
+
+interface Task{
+  body: TaskBody;
+  userId : string;
+  listId : string;
+  taskIdString : string;
+  team : string;
+  deadline : string;
+  id:string;
+}
 interface List{
   id:string;
   name:string;
   teamId:string;
+  tasks:Task[]
 }
 @Injectable({
   providedIn: 'root'
@@ -35,5 +51,9 @@ export class ListService {
 
   getGeplantTasks(userId:string){
     return this.http.get<List>("http://localhost:8080/task/scheduled/week/" + userId);
+  }
+
+  getListById(listId:string){
+    return this.http.get<List>("http://localhost:8080/tc/id/" + listId);
   }
 }

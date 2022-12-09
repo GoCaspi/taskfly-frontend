@@ -16,6 +16,7 @@ interface List{
   id:string;
   name:string;
   teamId:string;
+  ownerID:string;
 }
 
 @Component({
@@ -104,15 +105,18 @@ getUIdOfCurrentUser(){
     })
   }
 
-  saveCurrentListId(listId:string, listName:string){
+  saveCurrentListId(listId:string, listName:string,ownerId:string){
   this.localStorageService.set("inspectedList",listId)
     this.localStorageService.set("inspectedListName",listName)
-    console.log("the ispected list is :", this.localStorageService.get("inspectedList"))
+    this.localStorageService.set("inspectedListOwnerId",ownerId)
+
+    console.log("the ispected list is its ownerId :", this.localStorageService.get("inspectedListOwnerId"))
     this.listService.toggleRender()
   }
 
   test(){
   this.listService.toggleRenderList()
+    this.getUIdOfCurrentUser()
   }
 
 
