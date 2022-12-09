@@ -106,9 +106,9 @@ export class TaskDialogComponent {
   }
 
   formatListNameToId(name:string):string{
-    if(name == "MyDay" || name == "Important"){
-      return name
-    }
+  //  if(name == "MyDay" || name == "Important"){
+  //    return name
+  //  }
     let value = this.nameIdMap.get(name)
     if(value == undefined || value == "" ){
       return ""
