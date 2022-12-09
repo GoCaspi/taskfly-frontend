@@ -48,15 +48,6 @@ export class AppComponent implements OnInit{
       console.log(this.loginStatus)
     }
   }
-
-  test(){
-    let status = this.sessionStorageService.get("loginStatus")
-    if (status == "true") {
-      this.loginStatus = true;
-      console.log(this.loginStatus)
-    }
-  }
-
   logout(){
     let status = this.sessionStorageService.get("loginStatus")
     if(status == "true"){

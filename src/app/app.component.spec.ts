@@ -55,6 +55,8 @@ describe('AppComponent', () => {
     expect(fixture.debugElement.query(By.css('#openResetButton')).nativeElement.innerHTML).toEqual("Passwort vergessen?");
   });
 
+
+
   it('should have a button-method openResetDialog, that opens the ResetDialog if clicked', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
@@ -65,6 +67,18 @@ describe('AppComponent', () => {
     expect(openDialogSpy).toHaveBeenCalled();
     expect(openDialogSpy).toHaveBeenCalledWith(ResetDialogComponent);
   });
+
+  it('logout test', function () {
+    const fixture = TestBed.createComponent(AppComponent)
+    const app = fixture.componentInstance
+    const openDialogSpy = spyOn(app.dialog, 'open')
+
+    app.openReset()
+
+    expect(openDialogSpy).toHaveBeenCalled()
+    expect(openDialogSpy).toHaveBeenCalledWith(ResetDialogComponent)
+  });
+
 
 
 
