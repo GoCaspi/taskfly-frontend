@@ -1,10 +1,10 @@
-import {Component, Inject, OnInit, Self, SkipSelf,} from '@angular/core';
+import {Component, Inject, Self, SkipSelf,} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {Buffer} from "buffer";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 import {HotToastService} from "@ngneat/hot-toast";
 
 
@@ -16,8 +16,9 @@ import {HotToastService} from "@ngneat/hot-toast";
   styleUrls: ['./home.component.css'],
   providers: [BrowserStorageService,{provide: BROWSER_STORAGE,useFactory:()=>sessionStorage}]
 })
-export class HomeComponent implements OnInit{
-
+export class HomeComponent {
+ horizontalPosition: MatSnackBarHorizontalPosition='center';
+ verticalPosition: MatSnackBarVerticalPosition='top';
   baseURL : string| undefined;
    userKollection="";
   KollectionForm = new FormGroup({
@@ -36,11 +37,13 @@ get list(){
 }
 
 
-  ngOnInit() {}
+
 
   openSnackBar(message:string, action:string) {
     this._snackBar.open(message,action,{
-      duration:2000,
+      duration:3000,
+      horizontalPosition:this.horizontalPosition,
+      verticalPosition:this.verticalPosition,
     })
   }
   onNoClick(): void {
@@ -62,7 +65,7 @@ kollectionUser(){
     this.toast.observe({
       success : "List wurde zugefügt",
       loading :'Logging in...',
-      error : "There was an error"
+      error : "Textfeld ist leer"
     })
   ).subscribe(()=>{
     this.dialogRef.close()

@@ -4,7 +4,6 @@ import {AuthenticationService} from "../serives/authentication.service";
 import {ActivatedRoute, Router,} from "@angular/router";
 import {HotToastService} from "@ngneat/hot-toast";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
-import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-login',
@@ -26,7 +25,6 @@ export class LoginComponent {
   });
 
   constructor(private authservice: AuthenticationService,
-              //private appComponent : AppComponent,
               public route :ActivatedRoute,
               public router: Router,
               private toast: HotToastService,@Self() private sessionStorageService: BrowserStorageService,

@@ -1,13 +1,11 @@
-import {Component, Self, SkipSelf} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Overlay} from "@angular/cdk/overlay";
 import {AuthenticationService} from "./serives/authentication.service";
 import {HomeComponent} from "./home/home.component";
 import {BehaviorSubject} from "rxjs";
-import {Buffer} from "buffer";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BrowserStorageService} from "./storage.service";
+
 
 
 @Component({
