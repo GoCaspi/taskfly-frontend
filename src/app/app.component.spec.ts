@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import {AuthenticationService} from "./serives/authentication.service";
 
 import {HttpClient} from "@angular/common/http";
-import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_SCROLL_STRATEGY, MatDialog} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Dialog} from "@angular/cdk/dialog";
 import {By} from "@angular/platform-browser";

@@ -27,7 +27,7 @@ import { AssignedComponent } from './assigned/assigned.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { MydayComponent } from './myday/myday.component';
 import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
-import { MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
@@ -83,9 +83,11 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     MatProgressBarModule,
 
 
+
   ],
 
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA

@@ -1,5 +1,4 @@
-import {Component, Inject, Self, SkipSelf,} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {Component, Self, SkipSelf,} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {Buffer} from "buffer";
@@ -26,9 +25,11 @@ export class HomeComponent {
   });
 
   constructor(
-    public dialogRef: MatDialogRef<HomeComponent>,private toast: HotToastService,
+   // public dialogRef: MatDialogRef<HomeComponent>,
+    private toast: HotToastService,
 
-    @Inject(MAT_DIALOG_DATA) public data:any,@Self() private sessionStorageService: BrowserStorageService,
+  //  @Inject(MAT_DIALOG_DATA) public data:any,
+   @Self() private sessionStorageService: BrowserStorageService,
     @SkipSelf() private localStorageService: BrowserStorageService,private http:HttpClient,private _snackBar: MatSnackBar
   ) { this.baseURL = process.env['NG_APP_PROD_URL'];}
 
@@ -36,18 +37,12 @@ get list(){
     return this.KollectionForm.get('userKollection');
 }
 
-
-
-
   openSnackBar(message:string, action:string) {
     this._snackBar.open(message,action,{
       duration:3000,
       horizontalPosition:this.horizontalPosition,
       verticalPosition:this.verticalPosition,
     })
-  }
-  onNoClick(): void {
-    this.dialogRef.close([]);
   }
 kollectionUser(){
     let name = this.KollectionForm.value.list
@@ -68,7 +63,7 @@ kollectionUser(){
       error : "Textfeld ist leer"
     })
   ).subscribe(()=>{
-    this.dialogRef.close()
+    //this.dialogRef.close()
   })
 }
 

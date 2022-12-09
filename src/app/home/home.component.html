@@ -1,30 +1,32 @@
+<div layout="row" class="container mat-elevation-z10">
+
+  <h1>Liste Hinzufügen </h1>
+
+  <form [formGroup]="KollectionForm" (ngSubmit)="kollectionUser()">
+
+    <div class="textfield">
+
+      <mat-form-field hintLabel="Max 10 characters" appearance="outline" class="test">
+
+        <mat-label>Neue Liste</mat-label><mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+
+        <input matInput #input maxlength="10" placeholder="Ex. Nougat" formControlName ="list" class="form-control" name="first">
+
+        <mat-hint align="end">{{input.value.length}}/10</mat-hint>
+
+      </mat-form-field>
+
+    </div>
+
+    <div mat-dialog-actions class="okay">
+
+      <button mat-stroked-button (click)="openSnackBar('Speichern fehlgeschlagen!','Versuch es noch einmal')">Nein,danke</button>
+
+      <button mat-stroked-button cdkFocusInitial  aria-label="snack-bar" class="button mat-primary" type="submit">Okay</button>
 
 
+    </div><br><br><br><br><br>
 
-  <div layout="row" class="container mat-elevation-z10">
-
-    <h1 align="center">Liste Hinzufügen </h1>
-
-    <form [formGroup]="KollectionForm" (ngSubmit)="kollectionUser()">
-
-  <div class="textfield" align="center">
-    <mat-form-field hintLabel="Max 10 characters" appearance="outline" class="test">
-      <mat-label>Neue Liste</mat-label><mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-      <input matInput #input maxlength="10" placeholder="Ex. Nougat" formControlName ="list" class="form-control" name="first">
-      <mat-hint align="end">{{input.value.length}}/10</mat-hint>
-    </mat-form-field>
-  </div>
-
-  <div mat-dialog-actions class="okay">
-
-    <button mat-stroked-button [mat-dialog-close]="dialogRef" (click)="openSnackBar('Speichern fehlgeschlagen!','Versuch es noch einmal')">Nein,danke</button>
-
-    <button mat-stroked-button cdkFocusInitial  aria-label="snack-bar" class="button mat-primary" type="submit">Okay</button>
-
-
-  </div><br><br><br><br><br>
-
-      <mat-progress-bar mode="buffer"></mat-progress-bar>
-    </form>
-  </div>
-
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </form>
+</div>
