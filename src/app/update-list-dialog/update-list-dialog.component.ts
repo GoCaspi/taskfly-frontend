@@ -12,7 +12,7 @@ interface List{
 }
 interface TaskBody{
   topic : string;
-  priority: string;
+  highPriority: string;
   description: string;
 }
 

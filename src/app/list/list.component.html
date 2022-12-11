@@ -1,14 +1,15 @@
 <div id="main-wrap">
   <mat-toolbar color="secondary" id="listToolbar">
-    <span>{{renderListName}}</span>
+    <span *ngIf="enabled">{{renderListName}}</span>
+    <span *ngIf="!enabled">Liste : {{renderListName}} wurde erfolgreich gelöscht. Wähle eine andere Liste um fortzufahren!</span>
     <span class="example-spacer"></span>
     <div id="buttonWrap">
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="openListDialog()" *ngIf="!staticList">
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="openListDialog()" *ngIf="!staticList && enabled">
         <mat-icon>share</mat-icon>
       </button>
 
       <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <button mat-icon-button *ngIf="enabled" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
@@ -29,7 +30,7 @@
       <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
 
-      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" *ngIf="userIsOwner && !staticList" (click)="deleteList()">
+      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" *ngIf="userIsOwner && !staticList && enabled" (click)="deleteList()">
         <mat-icon>favorite</mat-icon>
       </button>
     </div>
@@ -39,7 +40,7 @@
 
 
   <mat-list role="list"  id="taskList">
-   <mat-list-item *ngFor="let t of this.taskData" class="listElement" role="listitem" id="taskItem" (click)="openTaskDialog(t.id)">{{t.body.topic}} mit Priorität: {{t.body.priority}}</mat-list-item>
+   <mat-list-item *ngFor="let t of this.taskData" class="listElement {{t.body.highPriority}}" role="listitem" id="taskItem"  (click)="openTaskDialog(t.id)">{{t.body.topic}}</mat-list-item>
  </mat-list>
 
 </div>

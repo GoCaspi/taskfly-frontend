@@ -1,4 +1,4 @@
-import {Component, OnInit, SkipSelf} from '@angular/core';
+import { Component, OnInit, SkipSelf} from '@angular/core';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Overlay} from "@angular/cdk/overlay";
@@ -32,9 +32,12 @@ export class AppComponent implements OnInit{
   allLists:any;
   allStaticList:any =[];
   allDynamicLists:any=[];
+  enabled:boolean=true;
 
 
-constructor( public authService: AuthenticationService,public dialog:MatDialog, public rd:ResetDialogComponent,private http: HttpClient,public listService:ListService,@SkipSelf() private localStorageService: BrowserStorageService) {
+constructor( public authService: AuthenticationService,public dialog:MatDialog,
+             public rd:ResetDialogComponent,private http: HttpClient,public listService:ListService,
+             @SkipSelf() private localStorageService: BrowserStorageService) {
 }
 
 openReset(){
@@ -112,12 +115,13 @@ getUIdOfCurrentUser(){
     this.localStorageService.set("inspectedListOwnerId",ownerId)
 
     this.listService.toggleRender()
+    this.fetchAllListsOfUser()
   }
 
   test(){
-this.localStorageService.clear()
+//this.localStorageService.clear()
+  //  this.reloadTree()
+    this.fetchAllListsOfUser()
   }
-
-
 
 }

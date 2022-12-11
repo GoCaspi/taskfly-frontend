@@ -23,7 +23,7 @@
 
 
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<mat-list>
+<mat-list *ngIf="enabled">
   <mat-list-item *ngFor="let list of allStaticList" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
 </mat-list>
          <br><br><br>

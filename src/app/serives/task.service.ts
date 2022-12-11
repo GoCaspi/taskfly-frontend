@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 
 interface TaskBody{
   topic : string;
-  priority: string;
+  highPriority: string;
   description: string;
 }
 

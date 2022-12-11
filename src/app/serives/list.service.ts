@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 interface TaskBody{
   topic : string;
-  priority: string;
+  highPriority: string;
   description: string;
 }
 

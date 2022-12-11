@@ -43,3 +43,10 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif;min-width: 90% }
   width: 90%;
   margin-left: 5%;
 }
+
+.niedrig{
+  color: green;
+}
+.hoch{
+  color: red;
+}

@@ -1,4 +1,4 @@
-import {Component, OnInit, Self, SkipSelf} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, Self, SkipSelf} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ListService} from "../serives/list.service";
 import {TaskService} from "../serives/task.service";
@@ -19,7 +19,7 @@ interface User{
 }
 interface TaskBody{
   topic : string;
-  priority: string;
+  highPriority: string;
   description: string;
 }
 
@@ -42,6 +42,7 @@ export class ListComponent implements OnInit {
   actualUser : User = {userId:"1"};
   taskData : Task[]=[];
   listTasks: Task[]=[];
+  enabled:boolean = true;
   userIsOwner:boolean=false;
   renderListName:string="";
   staticList:boolean = false;
@@ -73,6 +74,7 @@ export class ListComponent implements OnInit {
   }
 
   renderList1(){
+    this.enabled = true;
     let checkId = this.localStorageService.get("inspectedList")!
     this.listService.getListById(checkId).subscribe(list =>{
       this.taskData = list.tasks
@@ -95,6 +97,8 @@ export class ListComponent implements OnInit {
     let listId = this.localStorageService.get("inspectedList")!
     this.listService.deleteList(listId).subscribe(_response =>{
       this.listService.toggleRenderList();
+     this.listService.toggleRender();
+     this.enabled = false;
     })
   }
 
@@ -109,7 +113,7 @@ export class ListComponent implements OnInit {
       this.localStorageService.setBody("currentBody",myData.body)
       this.localStorageService.set("currentTopic",myData.body.topic)
       this.localStorageService.set("currentDescription",myData.body.description)
-      this.localStorageService.set("currentPriority",myData.body.priority)
+      this.localStorageService.set("currentPriority",myData.body.highPriority)
       this.localStorageService.set("currentTeam",myData.team)
 
       this.dialogRef = this.dialog.open(TaskDialogComponent)
