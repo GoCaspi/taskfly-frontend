@@ -1,6 +1,7 @@
 import {Component, OnInit, SkipSelf} from '@angular/core';
 import {ListService} from "../serives/list.service";
 import {BrowserStorageService} from "../storage.service";
+import {MatDialog} from "@angular/material/dialog";
 interface List{
   id:string;
   name:string;
@@ -32,7 +33,7 @@ interface Task  {
 export class UpdateListDialogComponent implements OnInit {
   listName : string =""
   listMembersString:string =""
-  constructor(private listService:ListService ,@SkipSelf() private localStorageService: BrowserStorageService,) { }
+  constructor(private listService:ListService ,@SkipSelf() private localStorageService: BrowserStorageService,private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.setInputFields()
@@ -48,6 +49,9 @@ export class UpdateListDialogComponent implements OnInit {
     let update:List = {id:"",name:this.listName,members:membersArr,teamId:"",tasks:[],ownerID:this.localStorageService.get("inspectedListOwnerId")!}
     this.listService.updateListe(this.localStorageService.get("inspectedList")!,update).subscribe(response=>{
       console.log("RESPONSE FROM UPDATE LIST ", response)
+      this.listService.toggleRender()
+      this.listService.toggleRenderList()
+      this.dialog.closeAll()
     })
   }
 

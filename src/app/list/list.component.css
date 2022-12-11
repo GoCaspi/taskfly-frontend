@@ -28,9 +28,6 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif;min-width: 90% }
   margin-left: 8px;
 }
 
-#buttonWrap{
-
-}
 #listToolbar{
   display: flex;
   justify-content: space-between;

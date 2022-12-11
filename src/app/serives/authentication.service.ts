@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Buffer } from 'buffer';
+import {User} from "../user";
 
 
 @Injectable()
@@ -21,5 +22,7 @@ export class AuthenticationService {
     return  this.http.post(this.baseURL+"/user/login" ,{},{headers:headers_object,responseType:"text"});
 
   }
+
+
 
 }

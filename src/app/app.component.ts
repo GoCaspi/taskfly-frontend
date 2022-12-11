@@ -3,7 +3,7 @@ import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Overlay} from "@angular/cdk/overlay";
 import {AuthenticationService} from "./serives/authentication.service";
-import {HttpClient, HttpHeaders, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ListService} from "./serives/list.service";
 import {BrowserStorageService} from "./storage.service";
 import {Buffer} from "buffer";
@@ -44,7 +44,7 @@ openReset(){
   })
 }
 
-fetchAllListsOfUser(userId:string){
+fetchAllListsOfUser(){
 
   this.listService.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
     this.allDynamicLists = []
@@ -92,16 +92,16 @@ getUIdOfCurrentUser(){
 }
 
   async ngOnInit(){
+    this.getUIdOfCurrentUser()
     if(!(this.localStorageService.get("loggedInUserId") == undefined || this.localStorageService.get("loggedInUserId") == "")){
-     await this.fetchAllListsOfUser(this.localStorageService.get("loggedInUserId")!)
-      console.log("All Lists of the current user are : ",this.allLists)
+    this.fetchAllListsOfUser()
     }
 
 
     this.listService.renderCheckList.subscribe(statement =>{
       console.log("RenderCheck from Service is ", statement)
       if(statement){
-        this.fetchAllListsOfUser(this.localStorageService.get("loggedInUserId")!)
+        this.fetchAllListsOfUser()
       }
     })
   }
@@ -111,13 +111,11 @@ getUIdOfCurrentUser(){
     this.localStorageService.set("inspectedListName",listName)
     this.localStorageService.set("inspectedListOwnerId",ownerId)
 
-    console.log("the ispected list is its ownerId :", this.localStorageService.get("inspectedListOwnerId"))
     this.listService.toggleRender()
   }
 
   test(){
-  this.listService.toggleRenderList()
-    this.getUIdOfCurrentUser()
+this.localStorageService.clear()
   }
 
 

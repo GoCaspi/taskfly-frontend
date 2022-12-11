@@ -20,25 +20,7 @@
          <h4 class="name">User Name</h4>
          <mat-divider></mat-divider>
           <br>
-         <button mat-raised-button class="menu-button" >
-           <mat-icon>calendar_month</mat-icon><a routerLink="/myday">Mein Tag</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>star</mat-icon><a routerLink="/important">Wichtig</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>event</mat-icon><a routerLink="/planned">Geplant</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>supervisor_account</mat-icon><a routerLink="/assigned">Mir zugewiesen</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>comment</mat-icon><a routerLink="/tasks">Aufgaben</a>
-         </button><br><br><br><br><br><br><br><br><br>
 
-         <button mat-raised-button class="menu-button">
-           <mat-icon>add</mat-icon><a routerLink="/home">Neue Liste</a>
-         </button><br>
 
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <mat-list>
@@ -52,10 +34,9 @@
 
        </mat-sidenav>
       <mat-sidenav-content>
-       <div class="content mat-elevation-z4">
+
          <router-outlet></router-outlet>
-         <button (click)="getUIdOfCurrentUser()">Tester</button>
-       </div>
+
       </mat-sidenav-content>
     </mat-sidenav-container>
 

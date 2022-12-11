@@ -52,13 +52,11 @@ export class ListComponent implements OnInit {
   @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog) { }
 
   ngOnInit(): void {
-  //  this.renderMyDayTasks()
     this.renderList1()
     this.userIsOwner = this.isOwner();
     this.listService.renderCheck.subscribe(statement =>{
       console.log("RenderCheck from Service is ", statement)
       if(statement){
-    //    this.renderMyDayTasks()
         this.renderList1()
         this.userIsOwner = this.isOwner();
         if(this.userIsOwner){
@@ -73,43 +71,6 @@ export class ListComponent implements OnInit {
     })
 
   }
-  renderMyDayTasks(){
-    let checkId = this.localStorageService.get("inspectedList")
-
-    let staticOrDynamic = this.IAmStatic()
-    console.log("Clicked list check for static or dynamic is: ", staticOrDynamic)
-    console.log("In ListComponent following listId is choosen: ",checkId)
-    let tData : Task[] = [];
-    let myDayTasks : Task[] = [];
-    this.listService.getTasksOfList(this.localStorageService.get("loggedInUserId")!).subscribe(response =>{
-      tData = <Task[]>response;
-      if(!staticOrDynamic){
-        tData.forEach(t =>{
-          if (t.listId == checkId){myDayTasks.push(t);}
-        })
-      }
-      else{
-      let staticTasks = this.initStatic(tData,this.localStorageService.get("inspectedListName")!)
-        myDayTasks = staticTasks;
-      }
-
-
-      this.taskData = myDayTasks
-      console.log("tData on Object is :",this.taskData);
-    })
-  }
-
-  renderList(){
-    let checkId = this.localStorageService.get("inspectedList")!
-    this.listService.getListById(checkId).subscribe(list =>{
-      list.tasks.forEach(t =>{
-       // this.listTasks.push(t)
-         this.taskData.push(t)
-        console.log("RENDERLIST METHOD :", this.listTasks)
-      })
-    })
-
-}
 
   renderList1(){
     let checkId = this.localStorageService.get("inspectedList")!
@@ -124,8 +85,7 @@ export class ListComponent implements OnInit {
     this.listService.getListById(listId).subscribe(list =>{
       this.localStorageService.set("inspectedListMembers", list.members.join())
       this.listDialogRef = this.dialog.open(UpdateListDialogComponent)
-      this.listDialogRef.afterClosed().subscribe(r =>{
-        //   this.renderMyDayTasks()
+      this.listDialogRef.afterClosed().subscribe(_r =>{
         this.renderList1()
       })
     })
@@ -133,13 +93,9 @@ export class ListComponent implements OnInit {
 
   deleteList(){
     let listId = this.localStorageService.get("inspectedList")!
-    this.listService.deleteList(listId).subscribe(response =>{
-      console.log("RESPONSE FROM DELETE : ", response)
+    this.listService.deleteList(listId).subscribe(_response =>{
       this.listService.toggleRenderList();
-   //   this.renderList1()
-
     })
-//window.location.reload()
   }
 
 
@@ -157,8 +113,7 @@ export class ListComponent implements OnInit {
       this.localStorageService.set("currentTeam",myData.team)
 
       this.dialogRef = this.dialog.open(TaskDialogComponent)
-      this.dialogRef.afterClosed().subscribe(r =>{
-     //   this.renderMyDayTasks()
+      this.dialogRef.afterClosed().subscribe(_r =>{
         this.renderList1()
       })
 
@@ -172,19 +127,10 @@ export class ListComponent implements OnInit {
     this.localStorageService.set(key, value);
   }
 
-  IAmStatic() : boolean{
-    let checkId = this.localStorageService.get("inspectedListName")
-    console.log("instepected list name from IAMStatic : ",checkId)
-    if(checkId == "MyDay" || checkId == "Important" || checkId == "" || checkId == "Geplant"){
-      return true
-    }
-    return false
-  }
 
   IAmStatic1() : boolean{
     let checkName = this.localStorageService.get("inspectedListName")
     let checkId = this.localStorageService.get("loggedInUserId")
-    console.log("instepected list name from IAMStatic : ",checkName)
     if((checkName == "MyDay" || checkName == "Important" || checkName == "" || checkName == "Geplant") && checkId == this.localStorageService.get("inspectedListOwnerId")){
       return true
     }
@@ -197,14 +143,6 @@ export class ListComponent implements OnInit {
       return true
     }
     return false
-  }
-
-  initStatic(allTasks:Task[],staticType:string):Task[]{
-    let resultArr : Task[] = []
-   allTasks.forEach(t =>{
-      if (t.listId == staticType){resultArr.push(t);}
-    })
-    return resultArr
   }
 
 }

@@ -83,16 +83,15 @@ export class TaskDialogComponent {
     let update :  TaskUpdate = {body:updateBody,listId:this.formatListNameToId(this.listIdInput1),deadline:this.deadlineInput,team:this.teamInput}
     console.log("update is",update)
 
-    this.sls.updateTask(update, this.taskId).then(r => this.dialog.closeAll())
+    this.sls.updateTask(update, this.taskId).then(_r => this.dialog.closeAll())
     this.change.emit(true)
   }
 
   deleteTask(){
-    this.sls.deleteTask(this.taskId).then(r => {
+    this.sls.deleteTask(this.taskId).then(_r => {
       this.localStorageService.setBody("updated",true)
       this.dialog.closeAll()
       this.change.emit(true)
-      // window.location.reload()
     })
   }
   nameListIdMap(allLists:List[]){
@@ -106,9 +105,6 @@ export class TaskDialogComponent {
   }
 
   formatListNameToId(name:string):string{
-  //  if(name == "MyDay" || name == "Important"){
-  //    return name
-  //  }
     let value = this.nameIdMap.get(name)
     if(value == undefined || value == "" ){
       return ""
