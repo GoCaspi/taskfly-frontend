@@ -59,12 +59,13 @@ export class LoginComponent {
     this.authservice.login(this.userEmail,this.userPassword).subscribe(() =>{
                  this.localStorageService.set("email",this.userEmail);
                  this.localStorageService.set("password",this.userPassword)
+      this.setUIdOfCurrentUser()
+      this.listService.toggleRenderList();this.listService.toggleRender();
                   this.router.navigate(['list']).then(_r =>{
                     this.setUIdOfCurrentUser()
                     window.location.reload()
                   })
             });
-
   }
 
   setUIdOfCurrentUser(){
