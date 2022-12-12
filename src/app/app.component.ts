@@ -14,6 +14,7 @@ import {BehaviorSubject} from "rxjs";
   styleUrls: ['./app.component.css'],
   providers:[MatDialog,ResetDialogComponent,Overlay, AuthenticationService]
 })
+
 export class AppComponent {
   baseURL : string| undefined;
   sideList : BehaviorSubject<[]>
