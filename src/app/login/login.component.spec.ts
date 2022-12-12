@@ -2,7 +2,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHandler} from "@angular/common/http";
 import {AuthenticationService} from "../serives/authentication.service";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {By} from "@angular/platform-browser";
@@ -21,7 +21,7 @@ describe('LoginComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       providers: [{provide: ActivatedRoute, useValue: fakeActivatedRoute},
-        {provide:AuthenticationService,useValue: createSpyFromClass(AuthenticationService)}
+        {provide:AuthenticationService,useValue: createSpyFromClass(AuthenticationService)},HttpClient,HttpHandler
         ],
 
     })
