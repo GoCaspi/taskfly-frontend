@@ -29,12 +29,5 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
- /* it('userinfo test', function (){
-    httpSpy.post.and.nextWith(fakeResponseFromAPI)
-    let fakeName = "Test"
-    let fakeUserId = "123"
-    service.(fakeName, fakeName).subscribe(r=>{
-      expect(httpSpy.get.calls.count()).toBe(1);
-    })
-  });*/
+
 });

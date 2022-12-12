@@ -1,10 +1,11 @@
-<div layout="row" class="container mat-elevation-z10">
 
-  <h1>Liste Hinzufügen </h1>
 
-  <form [formGroup]="KollectionForm" (ngSubmit)="kollectionUser()">
 
-    <div class="textfield">
+<h1 class="title">Liste Hinzufügen </h1><br>
+  <form [formGroup]="KollectionForm" (ngSubmit)="kollectionUser()" id="reset-dialog-form">
+
+
+
 
       <mat-form-field hintLabel="Max 10 characters" appearance="outline" class="test">
 
@@ -16,8 +17,8 @@
 
       </mat-form-field>
 
-    </div>
 
+  </form>
     <div mat-dialog-actions class="okay">
 
       <button mat-stroked-button (click)="openSnackBar('Speichern fehlgeschlagen!','Versuch es noch einmal')">Nein,danke</button>
@@ -28,5 +29,5 @@
     </div><br><br><br><br><br>
 
     <mat-progress-bar mode="buffer"></mat-progress-bar>
-  </form>
-</div>
+
+
