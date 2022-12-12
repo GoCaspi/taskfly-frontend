@@ -68,7 +68,7 @@ describe('AppComponent', () => {
     expect(openDialogSpy).toHaveBeenCalledWith(ResetDialogComponent);
   });
 
-  it('logout test', function () {
+ /* it('logout test', function () {
     const fixture = TestBed.createComponent(AppComponent)
     const app = fixture.componentInstance
     const openDialogSpy = spyOn(app.dialog, 'open')
@@ -79,5 +79,5 @@ describe('AppComponent', () => {
 
     expect(openDialogSpy).toHaveBeenCalled()
     expect(openDialogSpy).toHaveBeenCalledWith(ResetDialogComponent)
-  });
+  });*/
 });

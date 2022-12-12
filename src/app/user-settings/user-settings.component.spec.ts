@@ -3,6 +3,14 @@ import {Spy} from "jasmine-auto-spies";
 import {UserSettingsComponent } from './user-settings.component';
 import {AuthenticationService} from "../serives/authentication.service";
 import {HttpClient, HttpHandler} from "@angular/common/http";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatTabsModule} from "@angular/material/tabs";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 describe('UserSettingsComponent', () => {
   let component: UserSettingsComponent;
@@ -14,6 +22,9 @@ describe('UserSettingsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ UserSettingsComponent ],
       providers: [AuthenticationService, HttpClient, HttpHandler],
+      imports: [MatMenuModule, MatTabsModule, BrowserAnimationsModule, MatFormFieldModule,
+        ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+        FormsModule, MatInputModule, MatButtonModule, MatIconModule]
     })
     .compileComponents();
 
@@ -25,6 +36,20 @@ describe('UserSettingsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should update user',() => {
+    component.Settings.controls['firstName'].setValue("test")
+    component.Settings.controls['lastName'].setValue("test1")
+    component.Settings.controls['email'].setValue("test@gmail.com")
+    expect(component.Settings.valid).toBeFalsy()
+  });
+
+  it('should create Team',() => {
+    component.Settings.controls['teamName'].setValue("test")
+    component.Settings.controls['members'].setValue("test1")
+    expect(component.Settings.valid).toBeFalsy()
+  });
+
 /*
   it('should create input fields for firstName, lastName and email of the user, who wants to update Information', function () {
     let emailInput = fixture.debugElement.query(By.css('#emailInput'))
