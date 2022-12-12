@@ -35,10 +35,12 @@ interface List{
   members:string[];
 }
 describe('AppComponent', () => {
-  let httpSpy: Spy<ListService>
+  let listServiceSpy: Spy<ListService>
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
   let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  let mockWichtigList : List = {id:"123",name:"Important",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -56,7 +58,7 @@ describe('AppComponent', () => {
       ],
 
     }).compileComponents();
-    httpSpy = TestBed.inject<any>(ListService);
+    listServiceSpy = TestBed.inject<any>(ListService);
   });
 
   it('should create the app', () => {
@@ -93,11 +95,28 @@ describe('AppComponent', () => {
   it('fetch all lists of user', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-  //  const openDialogSpy = spyOn(app, 'fetchAllListsOfUser').and.returnValue({afterClosed: () => EMPTY} as any)
-    httpSpy.getAllListsByUserId.and.nextWith(mockList)
-    app.fetchAllListsOfUser();
+    let listResponseDynamic_MyDay_Important : List[] = [mockList,mockMyDayList,mockWichtigList];
 
-    expect(app.allLists).toEqual([])
+    interface Testcase{
+      listServiceReturn:List[];
+      expectedStaticLists:List[];
+      expectedDynamicList:List[];
+      expectedAllLists:List[];
+    };
+
+    let testcases:Testcase[] =[
+      {listServiceReturn:listResponseDynamic_MyDay_Important,expectedStaticLists:[mockMyDayList,mockWichtigList],expectedDynamicList:[mockList],expectedAllLists:listResponseDynamic_MyDay_Important}
+    ]
+
+    testcases.forEach(tc =>{
+      listServiceSpy.getAllListsByUserId.and.nextWith(tc.listServiceReturn)
+      app.fetchAllListsOfUser();
+
+
+      expect(app.allLists).toEqual(tc.expectedAllLists);
+      expect(app.allStaticList).toEqual(tc.expectedStaticLists)
+      expect(app.allDynamicLists).toEqual(tc.expectedDynamicList)
+    })
 
   });
 

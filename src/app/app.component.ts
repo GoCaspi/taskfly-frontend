@@ -29,7 +29,7 @@ export class AppComponent implements OnInit{
   title = 'TaskFly-frontend';
   opened=false;
   private dialogRef: MatDialogRef<ResetDialogComponent> | undefined;
-  allLists:any;
+  allLists:any=[];
   allStaticList:any =[];
   allDynamicLists:any=[];
   enabled:boolean=true;
