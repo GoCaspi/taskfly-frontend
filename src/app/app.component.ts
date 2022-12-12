@@ -29,7 +29,7 @@ constructor( public authService: AuthenticationService,
 ) {
                 this.sideList = new BehaviorSubject([])
 }
-  openDialoge(){
+openDialoge(){
     this.dialoge.open(HomeComponent,{
       width:'500px',
       height:"350px",
