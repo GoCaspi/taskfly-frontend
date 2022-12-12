@@ -52,7 +52,7 @@ export class UserSettingsComponent implements OnInit{
   createTeam (){
     let membersArray = this.membersInput.split(",")
 
-    if(this.membersInput == "" || this.teamName == "" && this.membersInput != this.sessionStorageService.get("email")){
+    if(this.membersInput == "" || this.teamName == ""){
       this.toast.error("Please enter a team name and at least one team member")
     } else {
       this.authentication.createTeam(this.teamName, membersArray).pipe(
