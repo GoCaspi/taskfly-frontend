@@ -55,7 +55,9 @@ describe('AppComponent', () => {
     expect(fixture.debugElement.query(By.css('#openResetButton')).nativeElement.innerHTML).toEqual("Passwort vergessen?");
   });
 
+  it('Test ngOnInit', function (){
 
+  });
 
   it('should have a button-method openResetDialog, that opens the ResetDialog if clicked', function () {
     const fixture = TestBed.createComponent(AppComponent);
@@ -63,21 +65,21 @@ describe('AppComponent', () => {
     const openDialogSpy = spyOn(app.dialog, 'open').and.returnValue({afterClosed: () => EMPTY} as any)
 
     app.openReset();
+    fixture.componentInstance.loginStatus = true
 
     expect(openDialogSpy).toHaveBeenCalled();
     expect(openDialogSpy).toHaveBeenCalledWith(ResetDialogComponent);
   });
 
- /* it('logout test', function () {
-    const fixture = TestBed.createComponent(AppComponent)
-    const app = fixture.componentInstance
-    const openDialogSpy = spyOn(app.dialog, 'open')
-    fixture.componentInstance.loginStatus = false
-    fixture.detectChanges()
+  it('logout test', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
 
-    app.openReset()
+    if(fixture.componentInstance.loginStatus == true){
+      fixture.componentInstance.loginStatus = false
+      fixture.detectChanges()
+    }
 
-    expect(openDialogSpy).toHaveBeenCalled()
-    expect(openDialogSpy).toHaveBeenCalledWith(ResetDialogComponent)
-  });*/
+    app.logout();
+  });
 });
