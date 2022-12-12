@@ -16,7 +16,11 @@
       </div>
     </mat-toolbar>
     <mat-sidenav-container>
-       <mat-sidenav [(opened)]="opened" mode="side">
+
+
+
+
+      <mat-sidenav [(opened)]="opened" mode="side">
          <h4 class="name">User Name</h4>
          <mat-divider></mat-divider>
           <br>
@@ -24,7 +28,7 @@
            <mat-icon>calendar_month</mat-icon><a routerLink="/myday">Mein Tag</a>
          </button><br>
          <button mat-raised-button class="menu-button">
-           <mat-icon>star</mat-icon><a routerLink="/important">Wichtig</a>
+           <mat-icon>star</mat-icon><a routerLink="/important" >Wichtig</a>
          </button><br>
          <button mat-raised-button class="menu-button">
            <mat-icon>event</mat-icon><a routerLink="/planned">Geplant</a>
@@ -33,13 +37,27 @@
            <mat-icon>supervisor_account</mat-icon><a routerLink="/assigned">Mir zugewiesen</a>
          </button><br>
          <button mat-raised-button class="menu-button">
-           <mat-icon>comment</mat-icon><a routerLink="/tasks">Aufgaben</a>
+           <mat-icon>comment</mat-icon>C
          </button><br><br><br><br><br><br><br><br><br>
 
          <button mat-raised-button class="menu-button">
            <mat-icon>add</mat-icon><a routerLink="/home">Neue Liste</a>
          </button><br>
 
+
        </mat-sidenav>
+
+
+
+      <app-add-task>
+
+      </app-add-task>
+
+
+
     </mat-sidenav-container>
+
+
+
+
 

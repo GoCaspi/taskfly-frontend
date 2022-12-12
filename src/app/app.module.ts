@@ -32,6 +32,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
 import { AddTaskComponent } from './add-task/add-task.component';
 import {MatSelectModule} from "@angular/material/select";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 
@@ -56,7 +58,7 @@ import {MatSelectModule} from "@angular/material/select";
     MydayComponent,
     ResetDialogComponent,
     AddTaskComponent,
-    a
+
   ],
     imports: [
         BrowserModule,
@@ -81,6 +83,8 @@ import {MatSelectModule} from "@angular/material/select";
         OverlayModule,
         HttpClientModule,
         MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule
 
 
     ],

@@ -16,6 +16,7 @@ export class AppComponent {
   opened=false;
   private dialogRef: MatDialogRef<ResetDialogComponent> | undefined
 
+
 constructor( public authService: AuthenticationService,public dialog:MatDialog, public rd:ResetDialogComponent) {
 }
 
