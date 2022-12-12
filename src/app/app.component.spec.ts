@@ -3,14 +3,42 @@ import { AppComponent } from './app.component';
 
 import {AuthenticationService} from "./serives/authentication.service";
 
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHandler, HttpHeaders} from "@angular/common/http";
 import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Dialog} from "@angular/cdk/dialog";
 import {By} from "@angular/platform-browser";
 import {EMPTY} from "rxjs";
+import {createSpyFromClass, Spy} from "jasmine-auto-spies";
+import {ListService} from "./serives/list.service";
 
+interface TaskBody{
+  topic : string;
+  highPriority: string;
+  description: string;
+}
+
+interface Task{
+  body: TaskBody;
+  userId : string;
+  listId : string;
+  taskIdString : string;
+  team : string;
+  deadline : string;
+  id:string;
+}
+interface List{
+  id:string;
+  name:string;
+  teamId:string;
+  tasks:Task[]
+  members:string[];
+}
 describe('AppComponent', () => {
+  let httpSpy: Spy<ListService>
+  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
+  let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -24,10 +52,11 @@ describe('AppComponent', () => {
         HttpClient,ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
           provide : MAT_DIALOG_SCROLL_STRATEGY,
           useValue : {}
-        },{provide: Dialog, useValue: {}},{provide:HttpClient,useValue: HttpClient}
+        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: createSpyFromClass(ListService)},HttpClient,HttpHandler
       ],
 
     }).compileComponents();
+    httpSpy = TestBed.inject<any>(ListService);
   });
 
   it('should create the app', () => {
@@ -61,6 +90,16 @@ describe('AppComponent', () => {
     expect(openDialogSpy).toHaveBeenCalledWith(ResetDialogComponent);
   });
 
+  it('fetch all lists of user', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+  //  const openDialogSpy = spyOn(app, 'fetchAllListsOfUser').and.returnValue({afterClosed: () => EMPTY} as any)
+    httpSpy.getAllListsByUserId.and.nextWith(mockList)
+    app.fetchAllListsOfUser();
+
+    expect(app.allLists).toEqual([])
+
+  });
 
 
 });
