@@ -42,5 +42,9 @@ describe('HomeComponent', () => {
     expect(app).toBeTruthy()
     component.kollectionUser()
   })
+  it('should get list ', function () {
+    httpSpy.get.and.nextWith()
+
+  });
 
 });

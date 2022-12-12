@@ -2,10 +2,7 @@
 
 
 <h1 class="title">Liste Hinzufügen </h1><br>
-  <form [formGroup]="KollectionForm" (ngSubmit)="kollectionUser()" id="reset-dialog-form">
-
-
-
+  <form [formGroup]="KollectionForm" id="reset-dialog-form">
 
       <mat-form-field hintLabel="Max 10 characters" appearance="outline" class="test">
 
@@ -21,9 +18,9 @@
   </form>
     <div mat-dialog-actions class="okay">
 
-      <button mat-stroked-button (click)="openSnackBar('Speichern fehlgeschlagen!','Versuch es noch einmal')">Nein,danke</button>
+      <button mat-stroked-button (click)="openSnackBar('Speichern fehlgeschlagen!','Versuch es noch einmal')" matDialogClose="">Nein,danke</button>
 
-      <button mat-stroked-button cdkFocusInitial  aria-label="snack-bar" class="button mat-primary" type="submit">Okay</button>
+      <button mat-stroked-button cdkFocusInitial  aria-label="snack-bar" class="button mat-primary" (click)="kollectionUser()">Okay</button>
 
 
     </div><br><br><br><br><br>

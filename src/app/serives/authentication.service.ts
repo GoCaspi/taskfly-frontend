@@ -32,6 +32,4 @@ export class AuthenticationService {
     });
     return  this.http.get<User>(this.baseURL+"/user/userInfo?email="+email,{headers:headers_object});
   }
-
-
 }
