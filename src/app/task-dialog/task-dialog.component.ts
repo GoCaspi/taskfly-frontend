@@ -89,11 +89,10 @@ export class TaskDialogComponent {
   }
 
   deleteTask(){
-    this.sls.deleteTask(this.taskId).then(_r => {
+    this.sls.deleteTask(this.taskId)
       this.localStorageService.setBody("updated",true)
       this.dialog.closeAll()
       this.change.emit(true)
-    })
   }
   nameListIdMap(allLists:List[]){
     let nameIdMap = new Map();
