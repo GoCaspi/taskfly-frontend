@@ -45,14 +45,13 @@ describe('TaskService', () => {
     ]
 
     testcases.forEach(tc =>{
+      httpSpy.get.and.nextWith(mockTask)
+      service.getTaskById(tc.taskId)
       if(tc.undefiendId){
-        httpSpy.get.and.nextWith(mockTask)
-     //   let spy = spyOn(httpSpy.get)
-        service.getTaskById(tc.taskId)
-        expect(httpSpy.get).not.toHaveBeenCalled()
+
+        expect(httpSpy.get).toHaveBeenCalledWith('http://localhost:8080/task/taskId/')
       }else{
-        httpSpy.get.and.nextWith(mockTask)
-        service.getTaskById(tc.taskId)
+
         expect(httpSpy.get).toHaveBeenCalledWith('http://localhost:8080/task/taskId/' + tc.taskId )
       }
     })
