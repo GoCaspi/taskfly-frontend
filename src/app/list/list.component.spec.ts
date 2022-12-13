@@ -51,6 +51,18 @@ describe('ListComponent', () => {
       const todos = mockList;
       return of( todos );
     },
+    deleteList(id:string) {
+      const todos = mockList;
+      return of( todos );
+    },
+   toggleRenderList() {
+      const todos = mockList;
+      return of( todos );
+    },
+    toggleRender() {
+      const todos = mockList;
+      return of( todos );
+    },
 renderCheck:new BehaviorSubject(true)
   };
 
@@ -77,8 +89,6 @@ renderCheck:new BehaviorSubject(true)
   });
 
   it('should create', () => {
-  //  listSpy.getListById.and.nextWith(mockList)
-   // spyOn<any>(listSpy, 'getListById').and.returnValue(new Promise(resolve => true))
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
@@ -89,10 +99,20 @@ renderCheck:new BehaviorSubject(true)
  //   listSpy.getListById.and.resolveTo(mockList)
 
     component.openListDialog()
-    expect(component).toBeTruthy();
+    expect(openDialogSpy).toHaveBeenCalled()
   });
 
-
+  it('should deleteList', () => {
+    const app = fixture.componentInstance;
+    const toggleRenderSpy = spyOn(todosServiceStub, 'toggleRender')
+    const toggleRenderListSpy = spyOn(todosServiceStub, 'toggleRenderList')
+    storageSpy.get.and.returnValue("123")
+    component.deleteList()
+    expect(app).toBeTruthy();
+    expect(toggleRenderSpy).toHaveBeenCalled()
+    expect(toggleRenderListSpy).toHaveBeenCalled()
+    expect(component.enabled).toEqual(false)
+  });
 
   it('openTaskDialog', function (){
     let fakeId = ""
