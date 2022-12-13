@@ -61,6 +61,4 @@ describe('AppComponent', () => {
     expect(openDialogSpy).toHaveBeenCalledWith(ResetDialogComponent);
   });
 
-
-
 });

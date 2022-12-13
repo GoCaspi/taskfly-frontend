@@ -40,7 +40,7 @@ openDialoge(){
 openReset(){
   this.dialogRef = this.dialog.open(ResetDialogComponent)
   this.dialogRef.afterClosed().subscribe(() =>{
-    console.log("dialog is closed!")
+
   })
 }
 
