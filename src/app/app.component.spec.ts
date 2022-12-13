@@ -9,8 +9,11 @@ import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Dialog} from "@angular/cdk/dialog";
 import {By} from "@angular/platform-browser";
 import {EMPTY} from "rxjs";
+import {BrowserStorageService, StorageService} from "./storage.service";
+import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 
 describe('AppComponent', () => {
+  let storagespy: Spy<BrowserStorageService>
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -24,6 +27,9 @@ describe('AppComponent', () => {
         provide:HttpClient,
         useValue:HttpClient
         },
+        {
+          provide:BrowserStorageService, useValue:createSpyFromClass(BrowserStorageService)
+        },
         HttpClient,ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
           provide : MAT_DIALOG_SCROLL_STRATEGY,
           useValue : {}
@@ -31,6 +37,7 @@ describe('AppComponent', () => {
       ],
 
     }).compileComponents();
+    storagespy = TestBed.inject<any>(BrowserStorageService)
   });
 
   it('should create the app', () => {
@@ -56,7 +63,7 @@ describe('AppComponent', () => {
   });
 
   it('Test ngOnInit', function (){
-
+    storagespy.get.and.returnValue("false")
   });
 
   it('should have a button-method openResetDialog, that opens the ResetDialog if clicked', function () {
@@ -74,12 +81,10 @@ describe('AppComponent', () => {
   it('logout test', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-
-    if(fixture.componentInstance.loginStatus == true){
-      fixture.componentInstance.loginStatus = false
-      fixture.detectChanges()
-    }
-
+    storagespy.get.and.returnValue("true")
+    storagespy.set.and.returnValue("false")
+    //storagespy.storage.setItem("loginStatus", "true");
     app.logout();
+    expect(storagespy.get("loginStatus")).toEqual("true");
   });
 });
