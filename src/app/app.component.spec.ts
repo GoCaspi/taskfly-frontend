@@ -8,7 +8,7 @@ import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} fr
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Dialog} from "@angular/cdk/dialog";
 import {By} from "@angular/platform-browser";
-import {EMPTY, Observable} from "rxjs";
+import {BehaviorSubject, EMPTY, Observable} from "rxjs";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {ListService} from "./serives/list.service";
 import {BrowserStorageService} from "./storage.service";
@@ -37,6 +37,7 @@ interface List{
 }
 describe('AppComponent', () => {
   let listServiceSpy: Spy<ListService>
+  let listServiceSpy2: Spy<ListService>
   let httpSpy : Spy<HttpClient>
   let storageSpy:Spy<BrowserStorageService>
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
@@ -62,6 +63,7 @@ describe('AppComponent', () => {
 
     }).compileComponents();
     listServiceSpy = TestBed.inject<any>(ListService);
+    listServiceSpy2 = TestBed.inject<any>(ListService);
     httpSpy = TestBed.inject<any>(HttpClient)
     storageSpy = TestBed.inject<any>(BrowserStorageService)
   });
@@ -148,6 +150,37 @@ describe('AppComponent', () => {
     app.getUIdOfCurrentUser()
     expect(storageSpy.get("loggedInUserId")).toEqual("")
   });
+
+  it('saveCurrentListId', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    let emailReturn = "mockMail"
+    let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+    listServiceSpy.getAllListsByUserId.and.nextWith([mockList])
+    storageSpy.get.and.returnValue("")
+    storageSpy.set.and.returnValue({})
+    httpSpy.get.and.nextWith(mockUser)
+    app.saveCurrentListId("","","")
+    expect(storageSpy.get("inspectedList")).toEqual("")
+  });
+/*
+  it('ngOnInit', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    let emailReturn = "mockMail"
+    let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+    listServiceSpy2.renderCheckList.next(true)
+    listServiceSpy.getAllListsByUserId.and.nextWith([mockList])
+
+ //  const spion = spyOn(listServiceSpy,"renderCheckList")
+    storageSpy.get.and.returnValue("")
+    storageSpy.set.and.returnValue({})
+    httpSpy.get.and.nextWith(mockUser)
+    app.ngOnInit()
+    expect(storageSpy.get("inspectedList")).toEqual("")
+  });
+
+ */
 
 
 
