@@ -48,7 +48,7 @@ describe('ListComponent', () => {
 
   const todosServiceStub = {
     getListById(id:string) {
-      const todos = [{id: 1}];
+      const todos = mockList;
       return of( todos );
     },
 renderCheck:new BehaviorSubject(true)
@@ -85,8 +85,8 @@ renderCheck:new BehaviorSubject(true)
 
   it('should openListDialog', () => {
     storageSpy.get.and.returnValue("123")
-
-    listSpy.getListById.and.resolveTo(mockList)
+    const openDialogSpy = spyOn(component.dialog, 'open').and.returnValue({afterClosed: () => EMPTY} as any)
+ //   listSpy.getListById.and.resolveTo(mockList)
 
     component.openListDialog()
     expect(component).toBeTruthy();
