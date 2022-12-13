@@ -4,7 +4,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { MatSidenavModule} from "@angular/material/sidenav";
 import {RouterLinkActive, RouterLinkWithHref, RouterOutlet,RouterLink} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
@@ -27,9 +27,11 @@ import { AssignedComponent } from './assigned/assigned.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { MydayComponent } from './myday/myday.component';
 import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
-import { MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+
 
 
 
@@ -53,36 +55,39 @@ import { HttpClientModule} from "@angular/common/http";
     TasksComponent,
     MydayComponent,
     ResetDialogComponent,
+
   ],
-    imports: [
-        BrowserModule,
-        MatToolbarModule,
-        BrowserAnimationsModule,
-        MatSidenavModule,
-        RouterOutlet,
-        MatIconModule,
-        MatButtonModule,
-        FormsModule,
-        RouterLinkWithHref,
-        RouterLink,
-        RouterLinkActive,
-        MatListModule,
-        AppRoutingModule,
-        MatDividerModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatMenuModule,
-      MatDialogModule,
-      OverlayModule,
-      HttpClientModule,
+  imports: [
+    BrowserModule,
+    MatToolbarModule,
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    RouterOutlet,
+    MatIconModule,
+    MatButtonModule,
+    FormsModule,
+    RouterLinkWithHref,
+    RouterLink,
+    RouterLinkActive,
+    MatListModule,
+    AppRoutingModule,
+    MatDividerModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    MatDialogModule,
+    OverlayModule,
+    HttpClientModule,
+    MatSnackBarModule,
+    MatProgressBarModule,
 
 
 
+  ],
 
-    ],
-
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA

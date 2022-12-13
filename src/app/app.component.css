@@ -43,30 +43,41 @@ mat-sidenav-container{
   margin-right: 12px;
 }
 
-.menu-button{
-   width: 100%;
-   display: flex;
-   align-items: center;
-   justify-content: flex-start;
-   font-size: 1rem;
-
- }
-mat-icon{
-  margin-right: 8px;
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1rem;
 }
+   mat-icon{
+     margin-right: 8px;
+   }
+
+
+.newlistbutton{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1rem;
+  flex: 1 1 auto;
+}
+
  .name{
-   margin: 0;
+
    margin-top: 8px;
-   font-weight:normal ;
+   font-weight: normal ;
  }
- .designation{
-   margin-top: 2px;
-   font-size: 0.7rem;
-   color: lightgrey;
- }
+
  mat-divider{
-   margin-top: 16px;
-   margin-bottom: 16px;
+   margin-top: 100px;
+   margin-bottom: 10px;
    background-color: rgba(255, 255, 255, 0.5);
  }
 
+.designation{
+  margin-top: 20px;
+  font-size: 0.7rem;
+  color: lightgrey;
+}
