@@ -1,9 +1,6 @@
 html,body{height: 100%; }
 body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
 
-#reset-dialog-form{
-
-}
 
 .form-container{
   display: block;
@@ -34,5 +31,22 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
   margin-left: 8px;
 }
 
+td {
+  display: table-cell;
+  vertical-align: inherit;
+  text-transform: full-size-kana;
+  color: #d92f2f;
+  text-indent: 50px;
+  text-align: justify;
+  letter-spacing: 3px;
+}
 
+.mat-form-field input {
+  height: 20px;
+  transition: height ease-in-out 400ms;
+}
 
+.mat-form-field input:focus {
+  height: 50px;
+  transition: height ease-in-out 400ms;
+}

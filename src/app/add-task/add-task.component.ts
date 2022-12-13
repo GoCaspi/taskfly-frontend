@@ -55,7 +55,6 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
 
   task($event: any){
 
-
     let id = this.localStorageService.get("email");  //userId kommt statt email
     console.log("von der test methode",this.tasks);
     console.log("Date von dateinput", this.date);
