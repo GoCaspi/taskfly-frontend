@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AddTaskComponent } from './add-task.component';
 import {AddTaskService} from "../add-task.service";
-import {createSpyFromClass, Spy} from "jasmine-auto-spies";
+import {createSpyFromClass, Spy} from "jasmine-auto-spies"
+
 
 describe('AddTaskComponent', () => {
   let component: AddTaskComponent;
@@ -34,6 +34,23 @@ describe('AddTaskComponent', () => {
     //authServiceSpy.createTask.and.nextWith()
     component.task(event);
     expect(component).toBeTruthy();
+
+
+  });
+
+  it('onSubmit', function () {
+
+    component.onSubmit();
+    expect(component).toBeTruthy();
+
+
+  });
+
+  it('ngOnInit', function () {
+
+    component.ngOnInit();
+    expect(component).toBeTruthy();
+
 
 
   });

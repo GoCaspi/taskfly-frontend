@@ -22,13 +22,8 @@ export class AddTaskComponent implements OnInit{
   hidden: boolean = false;
 
 
-
-
-
-
   onSubmit(): void{
 
-    console.warn('Erfolgreich gespeichert.');
 
   }
 
@@ -79,12 +74,6 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
     stringArray.forEach((letter,index) =>  {if (letter == "T"){stringArray[index]=" "}});
     let formatedDate = stringArray.join("");
     return formatedDate;
-
-  }
-
-  toggleButtons(){
-
-    this.hidden = !this.hidden;
 
   }
 
