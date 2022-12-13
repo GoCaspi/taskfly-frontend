@@ -18,12 +18,25 @@ describe('TaskDialogComponent', () => {
   let taskServiceSpy: Spy<TaskService>;
   let storageSpy: Spy<BrowserStorageService>
   let mockList: List[] = [{id: "test", name: "test", teamId:"test"}]
+  let body: TaskBody = {topic:"", highPriority: "", description: ""}
+  let update: TaskUpdate ={body, deadline: "", listId: "", team: ""}
   let nameIdMap:Map<string, string>= new Map<string, string>();
 
   interface List{
     id:string;
     name:string;
     teamId:string;
+  }
+  interface TaskUpdate{
+    body: TaskBody;
+    listId : string;
+    team : string;
+    deadline : string;
+  }
+  interface TaskBody{
+    topic : string;
+    highPriority: string;
+    description: string;
   }
 
   beforeEach(async () => {
@@ -59,14 +72,20 @@ describe('TaskDialogComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('deleteTask', () => {
-    /*taskServiceSpy.deleteTask("test").then(_r =>{
-      storageSpy.setBody("updated", true)
-    })*/
-    const closeDialogSpy = spyOn(component.dialog, 'closeAll').and.returnValue({afterClosed: () => EMPTY} as any)
+  it('sendUpdate', async () =>{
+    taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
+
+    }))
+    component.sendUpdate()
+    expect(component).toBeTruthy()
+  })
+
+  it('deleteTask', async () => {
+   /* const closeDialogSpy = spyOn(component.dialog, 'closeAll').and.returnValue({afterClosed: () => EMPTY} as any)
+    taskServiceSpy.deleteTask.and.returnValue(Promise.resolve())
+    console.log(closeDialogSpy)*/
     taskServiceSpy.deleteTask.and.returnValue(new Promise(resolve => {
       storageSpy.setBody("updated", true)
-      console.log(closeDialogSpy)
     }))
     component.deleteTask()
     expect(component).toBeTruthy()

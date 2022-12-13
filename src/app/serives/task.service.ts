@@ -39,7 +39,7 @@ export class TaskService {
     this.http.put("http://localhost:8080/task/" + id, task, {responseType: 'text'}).subscribe(r => console.log(r))
   }
 
-    deleteTask(id: string) {
+   async deleteTask(id: string) {
     this.http.delete("http://localhost:8080/task/" + id, {responseType: 'text'}).subscribe(r =>{console.log(r)})
   }
 }
