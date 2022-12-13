@@ -7,12 +7,21 @@ import {AuthenticationService} from "../serives/authentication.service";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {By} from "@angular/platform-browser";
 import {ActivatedRoute} from "@angular/router";
+import {AppComponent} from "../app.component";
+import {ListService} from "../serives/list.service";
+import {BrowserStorageService} from "../storage.service";
+import {MAT_DIALOG_SCROLL_STRATEGY} from "@angular/material/dialog";
+import {Dialog} from "@angular/cdk/dialog";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let service: AuthenticationService;
   let authServiceSpy: Spy<AuthenticationService>;
+  let listServiceSpy: Spy<ListService>
+  let listServiceSpy2: Spy<ListService>
+  let httpSpy : Spy<HttpClient>
+  let storageSpy:Spy<BrowserStorageService>
   const fakeActivatedRoute = {
     snapshot: { data: {} }
   } as ActivatedRoute;
@@ -21,13 +30,18 @@ describe('LoginComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       providers: [{provide: ActivatedRoute, useValue: fakeActivatedRoute},
-        {provide:AuthenticationService,useValue: createSpyFromClass(AuthenticationService)},HttpClient,HttpHandler
+        {provide:AuthenticationService,useValue: createSpyFromClass(AuthenticationService)},HttpClient,HttpHandler,{
+          provide : MAT_DIALOG_SCROLL_STRATEGY,
+          useValue : {}
+        },{provide: Dialog, useValue: {}},{provide:BrowserStorageService,useValue: createSpyFromClass(BrowserStorageService)},{provide: HttpClient,useValue: createSpyFromClass(HttpClient)}
         ],
 
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
+    httpSpy = TestBed.inject<any>(HttpClient)
+    storageSpy = TestBed.inject<any>(BrowserStorageService)
     service = TestBed.inject(AuthenticationService);
     authServiceSpy = TestBed.inject<any>(AuthenticationService);
     component = fixture.componentInstance;
@@ -54,4 +68,27 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
 
   });
+
+  it('getUIDOfCurrentUser: case user can be found in the database and the email input was set', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    let emailReturn = "mockMail"
+    let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+    storageSpy.get.and.returnValue(mockUser.id)
+    storageSpy.set.and.returnValue({})
+    httpSpy.get.and.nextWith(mockUser)
+    app.getUIdOfCurrentUser()
+    expect(storageSpy.get("loggedInUserId")).toEqual(mockUser.id)
+  });
+
+  it('getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage', function () {
+    let emailReturn = "mockMail"
+    let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+    storageSpy.get.and.returnValue("")
+    storageSpy.set.and.returnValue({})
+    httpSpy.get.and.nextWith(mockUser)
+    component.setUIdOfCurrentUser()
+    expect(storageSpy.get("loggedInUserId")).toEqual("")
+  });
+
 });

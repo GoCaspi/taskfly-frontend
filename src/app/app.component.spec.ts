@@ -169,9 +169,10 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     let emailReturn = "mockMail"
     let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
-    listServiceSpy2.renderCheckList.next(true)
+//    listServiceSpy2.renderCheckList.next(true)
+    spyOn(listServiceSpy, 'renderCheckList').and.resolveTo()
     listServiceSpy.getAllListsByUserId.and.nextWith([mockList])
-
+    const openDialogSpy = spyOn(listServiceSpy.renderCheckList, 'next').and.returnValue()
  //  const spion = spyOn(listServiceSpy,"renderCheckList")
     storageSpy.get.and.returnValue("")
     storageSpy.set.and.returnValue({})
@@ -181,6 +182,10 @@ describe('AppComponent', () => {
   });
 
  */
+
+
+
+
 
 
 

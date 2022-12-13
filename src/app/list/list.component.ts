@@ -49,7 +49,7 @@ export class ListComponent implements OnInit {
   private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
   private listDialogRef: MatDialogRef<UpdateListDialogComponent> | undefined
 
-  constructor(private http: HttpClient, private listService:ListService, private taskService:TaskService,@Self() private sessionStorageService: BrowserStorageService,
+  constructor( private listService:ListService, private taskService:TaskService,@Self() private sessionStorageService: BrowserStorageService,
   @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog) { }
 
   ngOnInit(): void {

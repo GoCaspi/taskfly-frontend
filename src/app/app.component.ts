@@ -94,7 +94,7 @@ getUIdOfCurrentUser(){
 //  })
 }
 
-  async ngOnInit(){
+   ngOnInit(){
     this.getUIdOfCurrentUser()
     if(!(this.localStorageService.get("loggedInUserId") == undefined || this.localStorageService.get("loggedInUserId") == "")){
     this.fetchAllListsOfUser()
