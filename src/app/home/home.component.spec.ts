@@ -6,6 +6,7 @@ import {Overlay} from "@angular/cdk/overlay";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {AuthenticationService} from "../serives/authentication.service";
 import {User} from "../user";
+import {By} from "@angular/platform-browser";
 describe('HomeComponent', () => {
   let mockuser: User = {firstName:"",lastName:"",password:"",srole:"",id:"",email:"",reseted: true}
   let service: AuthenticationService;
@@ -41,10 +42,12 @@ describe('HomeComponent', () => {
     expect(fixture).toBeTruthy()
     expect(app).toBeTruthy()
     component.kollectionUser()
+    component.list
   })
-  it('should get list ', function () {
-    httpSpy.get.and.nextWith()
+  /*it('should get list ',  () => {
+    let kollectionInput =fixture.debugElement.query(By.css('#kollectionInput'))
+    expect(kollectionInput).toBeTruthy()
+    component.list
 
-  });
-
+  });*/
 });

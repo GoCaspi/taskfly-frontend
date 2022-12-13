@@ -56,7 +56,7 @@ describe('AppComponent', () => {
     const openDialogSpy = spyOn(app.dialog, 'open').and.returnValue({afterClosed: () => EMPTY} as any)
 
     app.openReset();
-
+    app.openDialoge();
     expect(openDialogSpy).toHaveBeenCalled();
     expect(openDialogSpy).toHaveBeenCalledWith(ResetDialogComponent);
   });
