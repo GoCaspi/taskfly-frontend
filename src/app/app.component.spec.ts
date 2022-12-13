@@ -8,9 +8,10 @@ import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} fr
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Dialog} from "@angular/cdk/dialog";
 import {By} from "@angular/platform-browser";
-import {EMPTY} from "rxjs";
+import {EMPTY, Observable} from "rxjs";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {ListService} from "./serives/list.service";
+import {BrowserStorageService} from "./storage.service";
 
 interface TaskBody{
   topic : string;
@@ -36,6 +37,8 @@ interface List{
 }
 describe('AppComponent', () => {
   let listServiceSpy: Spy<ListService>
+  let httpSpy : Spy<HttpClient>
+  let storageSpy:Spy<BrowserStorageService>
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
   let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
@@ -49,16 +52,18 @@ describe('AppComponent', () => {
       providers: [
         AuthenticationService,{
         provide:HttpClient,
-        useValue:HttpClient
-        },
-        HttpClient,ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
+        useValue:createSpyFromClass(HttpClient)
+        },{provide:BrowserStorageService,useValue: createSpyFromClass(BrowserStorageService)},
+        ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
           provide : MAT_DIALOG_SCROLL_STRATEGY,
           useValue : {}
-        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: createSpyFromClass(ListService)},HttpClient,HttpHandler
+        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: createSpyFromClass(ListService)}
       ],
 
     }).compileComponents();
     listServiceSpy = TestBed.inject<any>(ListService);
+    httpSpy = TestBed.inject<any>(HttpClient)
+    storageSpy = TestBed.inject<any>(BrowserStorageService)
   });
 
   it('should create the app', () => {
@@ -119,6 +124,31 @@ describe('AppComponent', () => {
     })
 
   });
+
+  it('getUIDOfCurrentUser: case user can be found in the database and the email input was set', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    let emailReturn = "mockMail"
+    let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+    storageSpy.get.and.returnValue(mockUser.id)
+    storageSpy.set.and.returnValue({})
+    httpSpy.get.and.nextWith(mockUser)
+   app.getUIdOfCurrentUser()
+    expect(storageSpy.get("loggedInUserId")).toEqual(mockUser.id)
+  });
+
+  it('getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    let emailReturn = "mockMail"
+    let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+    storageSpy.get.and.returnValue("")
+    storageSpy.set.and.returnValue({})
+    httpSpy.get.and.nextWith(mockUser)
+    app.getUIdOfCurrentUser()
+    expect(storageSpy.get("loggedInUserId")).toEqual("")
+  });
+
 
 
 });
