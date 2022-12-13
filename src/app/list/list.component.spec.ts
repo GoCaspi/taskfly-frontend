@@ -11,7 +11,7 @@ import {ListService} from "../serives/list.service";
 import {BrowserStorageService} from "../storage.service";
 import {AppComponent} from "../app.component";
 import {TaskService} from "../serives/task.service";
-import {EMPTY, Observable} from "rxjs";
+import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
 
 interface TaskBody{
   topic : string;
@@ -41,10 +41,18 @@ describe('ListComponent', () => {
   let fixture: ComponentFixture<ListComponent>;
   let storageSpy:Spy<BrowserStorageService>
   let taskServiceSpy: Spy<TaskService>;
+  let listSpy:Spy<ListService>
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
   let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
 
+  const todosServiceStub = {
+    getListById(id:string) {
+      const todos = [{id: 1}];
+      return of( todos );
+    },
+renderCheck:new BehaviorSubject(true)
+  };
 
   let body: TaskBody = {topic:"", highPriority: "", description: ""}
   let task: Task = {body: body, deadline: "",userId:"", listId:"", team:"", taskIdString:"", id:""}
@@ -56,7 +64,7 @@ describe('ListComponent', () => {
       imports: [MatMenuModule],
       providers:[MatDialog,Overlay,{provide : MAT_DIALOG_SCROLL_STRATEGY, useValue : {}},
         {provide: Dialog, useValue: {}},ListService,HttpClient,HttpHandler,{provide:BrowserStorageService,useValue: createSpyFromClass(BrowserStorageService)}
-        ,{provide: TaskService, useValue: createSpyFromClass(TaskService)},{provide: TaskService, useValue:createSpyFromClass(TaskService)},
+        ,{provide: TaskService, useValue: createSpyFromClass(TaskService)},{provide: ListService,useValue: todosServiceStub}
        ]
     })
     .compileComponents();
@@ -74,7 +82,7 @@ describe('ListComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-/*
+
   it('should openListDialog', () => {
     storageSpy.get.and.returnValue("123")
 
@@ -84,7 +92,7 @@ describe('ListComponent', () => {
     expect(component).toBeTruthy();
   });
 
- */
+
 
   it('openTaskDialog', function (){
     let fakeId = ""
