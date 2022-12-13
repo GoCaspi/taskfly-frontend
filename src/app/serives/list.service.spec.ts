@@ -81,4 +81,22 @@ describe('ListService', () => {
       expect(httpSpy.delete).toHaveBeenCalledWith('http://localhost:8080/tc/' + mockId)
     })
   });
+
+  it('should getGeplant', () => {
+    let mockId = "123"
+    httpSpy.get.and.nextWith(mockList)
+    service.getGeplantTasks(mockId).subscribe(list =>{
+      expect(list).toEqual(mockList)
+      expect(httpSpy.get).toHaveBeenCalledWith('http://localhost:8080/task/scheduled/week/' + mockId)
+    })
+  });
+
+  it('should getTasksOfList', () => {
+    let mockId = "123"
+    httpSpy.get.and.nextWith(mockList)
+    service.getTasksOfList(mockId).subscribe(list =>{
+      expect(list).toEqual(mockList)
+      expect(httpSpy.get).toHaveBeenCalledWith('http://localhost:8080/task/userId/'+ mockId)
+    })
+  });
 });
