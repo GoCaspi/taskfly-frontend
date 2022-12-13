@@ -91,7 +91,6 @@ export class TaskDialogComponent {
   deleteTask(){
     this.sls.deleteTask(this.taskId).then(_r => this.dialog.closeAll())
     this.localStorageService.setBody("updated",true)
-    this.change.emit(true)
   }
   nameListIdMap(allLists:List[]){
     let nameIdMap = new Map();
