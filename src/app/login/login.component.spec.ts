@@ -14,6 +14,7 @@ import {BrowserStorageService} from "../storage.service";
 import {MAT_DIALOG_SCROLL_STRATEGY} from "@angular/material/dialog";
 import {Dialog} from "@angular/cdk/dialog";
 import {of} from "rxjs";
+import {MatMenuModule} from "@angular/material/menu";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -47,6 +48,7 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
+      imports:[MatMenuModule],
       providers: [{provide: ActivatedRoute, useValue: fakeActivatedRoute},
         {provide:AuthenticationService,useValue: createSpyFromClass(AuthenticationService)},HttpClient,HttpHandler,{
           provide : MAT_DIALOG_SCROLL_STRATEGY,
@@ -146,6 +148,7 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
+      imports:[MatMenuModule],
       providers: [{provide: ActivatedRoute, useValue: fakeActivatedRoute},
         {provide:AuthenticationService,useValue: createSpyFromClass(AuthenticationService)},HttpClient,HttpHandler,{
           provide : MAT_DIALOG_SCROLL_STRATEGY,
