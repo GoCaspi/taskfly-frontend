@@ -14,39 +14,37 @@
 
         <button mat-button id="openResetButton" (click)="openReset()">Passwort vergessen?</button>
       </div>
+
     </mat-toolbar>
     <mat-sidenav-container>
        <mat-sidenav [(opened)]="opened" mode="side">
          <h4 class="name">User Name</h4>
          <mat-divider></mat-divider>
           <br>
-         <button mat-raised-button class="menu-button" >
-           <mat-icon>calendar_month</mat-icon><a routerLink="/myday">Mein Tag</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>star</mat-icon><a routerLink="/important">Wichtig</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>event</mat-icon><a routerLink="/planned">Geplant</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>supervisor_account</mat-icon><a routerLink="/assigned">Mir zugewiesen</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>comment</mat-icon><a routerLink="/tasks">Aufgaben</a>
-         </button>
 
-         <br><br><br><br><br><br><br><br><br>
+
+         <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<mat-list *ngIf="enabled">
+  <mat-list-item class="listElement" *ngFor="let list of allStaticList" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
+</mat-list>
+         <br><br><br>
+         <mat-list>
+           <mat-list-item class="listElement" *ngFor="let list of allDynamicLists" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
+         </mat-list>
+         <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
 
          <button mat-raised-button class="newlistbutton"(click)="openDialoge()">
            <mat-icon>add</mat-icon><a>Neue Liste</a>
          </button><br>
 
-
        </mat-sidenav>
       <mat-sidenav-content>
-       <div class="content mat-elevation-z4">
+
          <router-outlet></router-outlet>
-       </div>
+
       </mat-sidenav-content>
     </mat-sidenav-container>
+
+<!-- here link the create new list button to auto-render the list again -->
+<button (click)="test()">Create new List!</button>

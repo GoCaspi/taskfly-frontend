@@ -30,6 +30,12 @@ import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
+import { ListComponent } from './list/list.component';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from "@angular/material/core";
+import { UpdateListDialogComponent } from './update-list-dialog/update-list-dialog.component';
+import {MatRadioModule} from "@angular/material/radio";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 
@@ -55,7 +61,9 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     TasksComponent,
     MydayComponent,
     ResetDialogComponent,
-
+    ListComponent,
+    TaskDialogComponent,
+    UpdateListDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,15 +87,15 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     MatDialogModule,
     OverlayModule,
     HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
     MatSnackBarModule,
     MatProgressBarModule,
 
+    ],
 
-
-  ],
-
-  providers: [
-  ],
+  providers: [],
   bootstrap: [AppComponent],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA

@@ -46,7 +46,7 @@ get list(){
   }
 kollectionUser(){
     let name = this.KollectionForm.value.list
-    let userid = this.localStorageService.get("userid")
+    let userid = this.localStorageService.get("loggedInUserId")
   let body = {
       "name": name,
       "ownerID": userid
