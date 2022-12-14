@@ -17,7 +17,7 @@ import {ListService} from "../serives/list.service";
 
 })
 export class LoginComponent {
-  user = new User();
+//  user = new User();
 
   userEmail=""
   userPassword=""
