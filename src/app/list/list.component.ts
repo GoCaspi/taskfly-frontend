@@ -1,5 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, Self, SkipSelf} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { Component, OnInit, Self, SkipSelf} from '@angular/core';
 import {ListService} from "../serives/list.service";
 import {TaskService} from "../serives/task.service";
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";

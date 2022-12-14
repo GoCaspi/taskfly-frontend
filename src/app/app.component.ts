@@ -119,8 +119,7 @@ getUIdOfCurrentUser(){
   }
 
   test(){
-//this.localStorageService.clear()
-  //  this.reloadTree()
+
     this.fetchAllListsOfUser()
   }
 

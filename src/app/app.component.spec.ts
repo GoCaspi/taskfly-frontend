@@ -8,7 +8,7 @@ import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} fr
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Dialog} from "@angular/cdk/dialog";
 import {By} from "@angular/platform-browser";
-import {BehaviorSubject, EMPTY, Observable} from "rxjs";
+import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {ListService} from "./serives/list.service";
 import {BrowserStorageService} from "./storage.service";
@@ -183,9 +183,68 @@ describe('AppComponent', () => {
 
  */
 
+});
 
 
 
+describe('AppComponent', () => {
+  let listServiceSpy: Spy<ListService>
+  let listServiceSpy2: Spy<ListService>
+  let httpSpy : Spy<HttpClient>
+  let storageSpy:Spy<BrowserStorageService>
+  const httpStub = {get(){
+    let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+      return of(mockUser)
+    }}
+  const storageStub ={
+    get(){},set(){}
+  }
+  const listServiceStub = {
+    renderCheck:new BehaviorSubject(true),
+    renderCheckList:new BehaviorSubject(true),
+    getAllListsByUserId(){
+      let allLists = [mockList]
+      return of(allLists)
+    }
+  }
+  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
+  let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  let mockWichtigList : List = {id:"123",name:"Important",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        AppComponent,ResetDialogComponent
+      ],
+      providers: [
+        AuthenticationService,{
+          provide:HttpClient,
+          useValue:httpStub
+        },{provide:BrowserStorageService,useValue: storageStub},
+        ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
+          provide : MAT_DIALOG_SCROLL_STRATEGY,
+          useValue : {}
+        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: listServiceStub}
+      ],
+
+    }).compileComponents();
+    listServiceSpy = TestBed.inject<any>(ListService);
+    listServiceSpy2 = TestBed.inject<any>(ListService);
+    httpSpy = TestBed.inject<any>(HttpClient)
+    storageSpy = TestBed.inject<any>(BrowserStorageService)
+  });
+
+
+    it('ngOnInit', function () {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.componentInstance;
+      let emailReturn = "mockMail"
+      let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+      const fetchAllListsSpy = spyOn(app, 'fetchAllListsOfUser')
+      app.ngOnInit()
+      expect(fetchAllListsSpy).toHaveBeenCalled()
+    });
 
 
 

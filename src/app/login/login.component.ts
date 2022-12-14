@@ -1,4 +1,4 @@
-import {Component, Self, SkipSelf} from '@angular/core';
+import {Component, SkipSelf} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../serives/authentication.service";
 import {ActivatedRoute, Router,} from "@angular/router";
@@ -31,7 +31,7 @@ export class LoginComponent {
   constructor(private authservice: AuthenticationService,
               public route :ActivatedRoute,
               public router: Router,
-              private toast: HotToastService,@Self() private sessionStorageService: BrowserStorageService,
+              private toast: HotToastService,
               @SkipSelf() private localStorageService: BrowserStorageService, private http:HttpClient, private listService:ListService
   ) {
   }

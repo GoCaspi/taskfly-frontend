@@ -45,7 +45,8 @@ describe('ListComponent', () => {
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
   let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
-
+  let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  let mockWichtigList : List = {id:"123",name:"Important",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
   const todosServiceStub = {
     getListById(id:string) {
       const todos = mockList;
@@ -69,6 +70,7 @@ renderCheck:new BehaviorSubject(true)
   let body: TaskBody = {topic:"", highPriority: "", description: ""}
   let task: Task = {body: body, deadline: "",userId:"", listId:"", team:"", taskIdString:"", id:""}
   let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task]}
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
