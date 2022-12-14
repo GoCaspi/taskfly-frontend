@@ -96,9 +96,10 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
         MatRadioModule,
         MatSnackBarModule,
         MatProgressBarModule,
+
     ],
 
-  providers: [],
+  providers: [MatMenuModule],
   bootstrap: [AppComponent],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA
