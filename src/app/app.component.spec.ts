@@ -220,7 +220,9 @@ describe('AppComponent', () => {
       return of(mockUser)
     }}
   const storageStub ={
-    get(){},set(){}
+    get(key:string){
+      return ""
+    },set(){}
   }
   const listServiceStub = {
     renderCheck:new BehaviorSubject(true),
@@ -240,6 +242,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,ResetDialogComponent
       ],
+      imports:[MatMenuModule],
       providers: [
         AuthenticationService,{
           provide:HttpClient,
@@ -268,6 +271,17 @@ describe('AppComponent', () => {
       app.ngOnInit()
       expect(fetchAllListsSpy).toHaveBeenCalled()
     });
+
+  it('222222222222222222222 getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    let emailReturn = "mockMail"
+    let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+
+   // httpSpy.get.and.nextWith(mockUser)
+    app.getUIdOfCurrentUser()
+    expect(storageSpy.get("loggedInUserId")).toEqual("")
+  });
 
 
 
