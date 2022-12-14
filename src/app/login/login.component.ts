@@ -1,4 +1,4 @@
-import {Component, SkipSelf} from '@angular/core';
+import {Component, Self, SkipSelf} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../serives/authentication.service";
 import {ActivatedRoute, Router,} from "@angular/router";
@@ -21,6 +21,7 @@ export class LoginComponent {
 
   userEmail=""
   userPassword=""
+  userid=""
 
   loginForm = new FormGroup({
 
@@ -53,6 +54,22 @@ export class LoginComponent {
   get password() {
     return this.loginForm.get('password');
   }
+  /*
+  loginUser() {
+
+    this.authservice.login(this.userEmail,this.userPassword).subscribe(() =>{
+                 this.localStorageService.set("email",this.userEmail);
+                 this.localStorageService.set("password",this.userPassword)
+                 this.authservice.userInfo(this.userEmail,this.userPassword).subscribe((data) =>{
+                   this.localStorageService.set("userid",data.id)
+                 })
+                  this.router.navigate(['myday']).then(r =>console.log(r) )
+            });
+
+  }
+   */
+
+
 
   loginUser() {
 
@@ -97,7 +114,4 @@ export class LoginComponent {
 //    console.log("ListDData from service",listData)
 //  })
   }
-
-
-
 }

@@ -7,6 +7,9 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ListService} from "./serives/list.service";
 import {BrowserStorageService} from "./storage.service";
 import {Buffer} from "buffer";
+import {HomeComponent} from "./home/home.component";
+import {BehaviorSubject} from "rxjs";
+
 
 interface User{
   id:string;
@@ -28,6 +31,7 @@ interface List{
 export class AppComponent implements OnInit{
   title = 'TaskFly-frontend';
   opened=false;
+  sideList : BehaviorSubject<[]>
   private dialogRef: MatDialogRef<ResetDialogComponent> | undefined;
   allLists:any=[];
   allStaticList:any =[];
@@ -38,8 +42,16 @@ export class AppComponent implements OnInit{
 constructor( public authService: AuthenticationService,public dialog:MatDialog,
              public rd:ResetDialogComponent,private http: HttpClient,public listService:ListService,
              @SkipSelf() private localStorageService: BrowserStorageService) {
+  this.sideList = new BehaviorSubject([])
 }
 
+openDialoge(){
+    this.dialog.open(HomeComponent,{
+      width:'500px',
+      height:"350px",
+      data:"right click"
+    })
+  }
 openReset(){
   this.dialogRef = this.dialog.open(ResetDialogComponent)
   this.dialogRef.afterClosed().subscribe(() =>{
