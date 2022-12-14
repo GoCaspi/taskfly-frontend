@@ -1,0 +1,26 @@
+<div id="main-wrap">
+  <mat-toolbar color="secondary" id="listToolbar">
+    <span *ngIf="enabled">{{renderListName}}</span>
+    <span *ngIf="!enabled">Liste : {{renderListName}} wurde erfolgreich gelöscht. Wähle eine andere Liste um fortzufahren!</span>
+    <span class="example-spacer"></span>
+    <div id="buttonWrap">
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="openListDialog()" *ngIf="!staticList && enabled">
+        <mat-icon>share</mat-icon>
+      </button>
+
+
+
+      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" *ngIf="userIsOwner && !staticList && enabled" (click)="deleteList()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+
+
+
+  <mat-list role="list"  id="taskList">
+   <mat-list-item *ngFor="let t of this.taskData" class="listElement {{t.body.highPriority}}" role="listitem" id="taskItem"  (click)="openTaskDialog(t.id)">{{t.body.topic}}</mat-list-item>
+ </mat-list>
+
+</div>

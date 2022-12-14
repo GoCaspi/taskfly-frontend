@@ -10,6 +10,7 @@ import {TasksComponent} from "./tasks/tasks.component";
 import {PlannedComponent} from "./planned/planned.component";
 import {AssignedComponent} from "./assigned/assigned.component";
 import {UserSettingsComponent} from "./user-settings/user-settings.component";
+import {ListComponent} from "./list/list.component";
 
 const routes: Routes =[
   {
@@ -53,7 +54,11 @@ const routes: Routes =[
   {
     path:"userSetting",
     component:UserSettingsComponent
-  }
+  },
+  {
+    path:"list",
+    component:ListComponent
+  },
 ];
 @NgModule({
   imports:[

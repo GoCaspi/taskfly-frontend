@@ -6,6 +6,7 @@ import {User} from "../user";
 import {Team} from "../team";
 
 @Injectable()
+
 export class AuthenticationService {
 
   baseURL : string| undefined;
@@ -23,11 +24,13 @@ export class AuthenticationService {
   }
 
   userUpdate(firstName: string, lastName: string, email: string){
-    let userid = this.sessionStorageService.get("userid")
+    let userid = this.sessionStorageService.get("loggedInUserId")
 
     let body: User = {
-      "id": this.sessionStorageService.get("userid") || "",
+      "id": this.sessionStorageService.get("loggedInUserId") || "",
       "srole": this.sessionStorageService.get("srole"),
+      "password": null,
+      "reseted": false,
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
@@ -39,7 +42,7 @@ export class AuthenticationService {
   }
 
   createTeam(teamName: string, member: string[]){
-    let userid = this.sessionStorageService.get("userid") || ""
+    let userid = this.sessionStorageService.get("loggedInUserId") || ""
 
     let body: Team ={
       "userID": userid,
@@ -49,7 +52,7 @@ export class AuthenticationService {
     return this.http.post<Team>(this.baseURL + "/teammanagement", body,{responseType:'json'})
   }
 
-  userInfo(email: string | null | undefined, password: string | null | undefined){
+  userInfo(email: string , password: string){
     let cred =  "Basic " + Buffer.from(email +":"+ password).toString('base64')
     let headers_object = new HttpHeaders({
       "Authorization":cred

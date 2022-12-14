@@ -1,0 +1,52 @@
+html,body{height: 100%; }
+body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif;min-width: 90% }
+.form-container{
+  display: block;
+  max-width: 300px;
+  margin: auto;
+
+  background: #eceff1;
+  padding: 250px;
+  border-radius: 16px;
+
+}
+.form-container mat-form-field{
+  width: 100%;
+}
+.button-class{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sign-up-link{
+  font-size: 1.2rem;
+  margin-left: 8px;
+}
+
+#listToolbar{
+  display: flex;
+  justify-content: space-between;
+}
+#taskItem:hover{
+  color: grey;
+  cursor: pointer;
+}
+.bg1{
+  color:red;
+}
+#main-wrap{
+  width: 90%;
+  margin-left: 5%;
+}
+
+.niedrig{
+  color: green;
+}
+.hoch{
+  color: red;
+}

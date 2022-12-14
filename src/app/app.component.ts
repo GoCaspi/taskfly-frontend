@@ -5,7 +5,23 @@ import {Overlay} from "@angular/cdk/overlay";
 import {AuthenticationService} from "./serives/authentication.service";
 import {BROWSER_STORAGE, BrowserStorageService} from "./storage.service";
 import {Router} from "@angular/router";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {ListService} from "./serives/list.service";
+import {Buffer} from "buffer";
+import {HomeComponent} from "./home/home.component";
+import {BehaviorSubject} from "rxjs";
 
+
+interface User{
+  id:string;
+}
+
+interface List{
+  id:string;
+  name:string;
+  teamId:string;
+  ownerID:string;
+}
 
 @Component({
   selector: 'app-root',
@@ -19,14 +35,27 @@ export class AppComponent implements OnInit{
   title = 'TaskFly-frontend';
   loginStatus: boolean | undefined = false;
   opened = false;
+  sideList : BehaviorSubject<[]>
+  private dialogRef: MatDialogRef<ResetDialogComponent> | undefined;
+  allLists:any=[];
+  allStaticList:any =[];
+  allDynamicLists:any=[];
+  enabled:boolean=true;
 
-  private dialogRef: MatDialogRef<ResetDialogComponent> | undefined
 
-  constructor(public authService: AuthenticationService, public dialog: MatDialog, public rd: ResetDialogComponent, @Self() private sessionStorageService: BrowserStorageService,
-              @SkipSelf() private localStorageService: BrowserStorageService, public router: Router) {
+  constructor(public authService: AuthenticationService,
+              public dialog: MatDialog,
+              public rd: ResetDialogComponent,
+              @Self() private sessionStorageService: BrowserStorageService,
+              @SkipSelf() private localStorageService: BrowserStorageService,
+              public router: Router,
+              private http: HttpClient,
+              public listService:ListService,
+              ) {
+    this.sideList = new BehaviorSubject([])
   }
 
-  ngOnInit(): void {
+  init(): void {
     setInterval(()=>{
       if(this.sessionStorageService.get("loginStatus") == "false"){
         this.loginStatus = false;
@@ -36,17 +65,97 @@ export class AppComponent implements OnInit{
       }
     },1000)
   }
-
-  openReset() {
-    this.dialogRef = this.dialog.open(ResetDialogComponent)
-    this.dialogRef.afterClosed().subscribe(() => {
-      console.log("dialog is closed!")
-    })
-    let status = this.sessionStorageService.get("loginStatus")
-    if (status == "true") {
-      this.loginStatus = true;
-      console.log(this.loginStatus)
+  ngOnInit() {
+    this.init()
+    this.getUIdOfCurrentUser()
+    if (!(this.sessionStorageService.get("loggedInUserId") == undefined || this.sessionStorageService.get("loggedInUserId") == "")) {
+      this.fetchAllListsOfUser()
+      this.listService.renderCheckList.subscribe(statement => {
+        console.log("RenderCheck from Service is ", statement)
+        if (statement) {
+          this.fetchAllListsOfUser()
+        }
+      })
     }
+  }
+
+openDialoge(){
+    this.dialog.open(HomeComponent,{
+      width:'500px',
+      height:"350px",
+      data:"right click"
+    })
+  }
+openReset(){
+  this.dialogRef = this.dialog.open(ResetDialogComponent)
+  this.dialogRef.afterClosed().subscribe(() =>{
+    console.log("dialog is closed!")
+  })
+  let status = this.sessionStorageService.get("loginStatus")
+  if (status == "true") {
+    this.loginStatus = true;
+    console.log(this.loginStatus)
+  }
+}
+
+fetchAllListsOfUser(){
+
+  this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe(listData =>{
+    this.allDynamicLists = []
+    this.allLists = []
+    this.allLists = listData;
+    this.allLists.forEach((list: List) =>{
+      if((list.name == "MyDay" || list.name == "Important" || list.name == "Geplant") && this.allStaticList.length < 2){
+        this.allStaticList.push(list)
+      }
+      else if(!(list.name == "MyDay" || list.name == "Important" || list.name == "Geplant")){
+        this.allDynamicLists.push(list)
+      }
+    })
+    console.log("ListDData from service",listData)
+  })
+
+}
+
+getUIdOfCurrentUser(){
+    let email= this.sessionStorageService.get("email")
+  if(email == undefined || email == ""){
+    console.log("No email identified")
+    return
+  }
+
+  let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") + ":" + this.sessionStorageService.get("password")).toString('base64')
+  console.log("Identified email is :",email)
+  console.log("Identified pwd is :",this.sessionStorageService.get("password"))
+
+
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': cred
+    })
+  };
+  this.http.get<User>("http://localhost:8080/user/userInfo?email=" + email,httpOptions).subscribe(data=>{
+    console.log(data.id);
+    this.sessionStorageService.set("loggedInUserId",data.id);
+    console.log(this.sessionStorageService.get("loggedInUserId"))
+  })
+//  this.listServicce.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
+//    console.log("ListDData from service",listData)
+//  })
+}
+
+  saveCurrentListId(listId:string, listName:string,ownerId:string){
+  this.sessionStorageService.set("inspectedList",listId)
+    this.sessionStorageService.set("inspectedListName",listName)
+    this.sessionStorageService.set("inspectedListOwnerId",ownerId)
+
+    this.listService.toggleRender()
+    this.fetchAllListsOfUser()
+  }
+
+  test(){
+    this.fetchAllListsOfUser()
   }
   logout(){
     if(this.sessionStorageService.get("loginStatus") == "true"){
@@ -54,5 +163,3 @@ export class AppComponent implements OnInit{
     }
   }
 }
-
-

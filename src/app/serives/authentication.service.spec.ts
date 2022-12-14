@@ -57,5 +57,4 @@ describe('AuthenticationService', () => {
       expect(httpSpy.put.calls.count()).toBe(1);
     })
   });
-
 });
