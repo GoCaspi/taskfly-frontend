@@ -128,13 +128,13 @@ renderCheck:new BehaviorSubject(true)
 
 
 
-  it('should ', function () {
+  it('should 1', function () {
   storageSpy.get.and.returnValue("MyDay")
    let res = component.IAmStatic1()
     expect(res).toEqual(true)
   });
 
-  it('should ', function () {
+  it('should 2', function () {
     storageSpy.set("inspectedListName","MyDay")
     storageSpy.set("loggedInUserId","MyDay")
     storageSpy.set("inspectedListOwnerId","MyDay")
@@ -143,7 +143,7 @@ renderCheck:new BehaviorSubject(true)
     let res = component.isOwner()
     expect(res).toEqual(true)
   });
-  it('should ', function () {
+  it('should 3', function () {
     storageSpy.set("inspectedListName","Important")
     storageSpy.set("loggedInUserId","Important")
     storageSpy.set("inspectedListOwnerId","Important")
@@ -152,7 +152,7 @@ renderCheck:new BehaviorSubject(true)
     let res = component.isOwner()
     expect(res).toEqual(true)
   });
-  it('should ', function () {
+  it('should 4', function () {
     storageSpy.set("inspectedListName","Geplant")
     storageSpy.set("loggedInUserId","Geplant")
     storageSpy.set("inspectedListOwnerId","Geplant")
@@ -161,7 +161,7 @@ renderCheck:new BehaviorSubject(true)
     let res = component.isOwner()
     expect(res).toEqual(true)
   });
-  it('should ', function () {
+  it('should 5', function () {
     storageSpy.set("inspectedListName","Geplant")
     storageSpy.set("loggedInUserId","123")
     storageSpy.set("inspectedListOwnerId","234")

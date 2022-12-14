@@ -55,20 +55,16 @@ describe('AppComponent', () => {
         MatMenuModule,
       ],
       providers: [
-        AuthenticationService,{
-        provide:HttpClient,
-        useValue:HttpClient
-        },
-        {
-          provide:BrowserStorageService, useValue:createSpyFromClass(BrowserStorageService)
-        },
-        HttpClient,ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
-        useValue:createSpyFromClass(HttpClient)
-        },{provide:BrowserStorageService,useValue: createSpyFromClass(BrowserStorageService)},
-        ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
-          provide : MAT_DIALOG_SCROLL_STRATEGY,
-          useValue : {}
-        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: createSpyFromClass(ListService)}
+        AuthenticationService,{provide:HttpClient, useValue:HttpClient},
+        {provide:BrowserStorageService, useValue:createSpyFromClass(BrowserStorageService)},
+        HttpClient,
+        ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},
+        {useValue:createSpyFromClass(HttpClient)},
+        {provide:BrowserStorageService,useValue: createSpyFromClass(BrowserStorageService)},
+        ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},
+        {provide : MAT_DIALOG_SCROLL_STRATEGY,useValue : {}},
+        {provide: Dialog, useValue: {}},
+        {provide:ListService,useValue: createSpyFromClass(ListService)}, HttpClient, HttpHandler
       ],
 
     }).compileComponents();

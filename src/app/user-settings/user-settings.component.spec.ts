@@ -20,7 +20,7 @@ describe('UserSettingsComponent', () => {
   let service: AuthenticationService;
   let authServiceSpy: Spy<AuthenticationService>;
   let mockBody: Body = {team: ""}
-  let mockUser: User = {firstName: "", lastName: "", email:"", id:"", body: mockBody, srole: ""}
+  let mockUser: User = {firstName: "", lastName: "", email:"", id:"", body: mockBody, srole: "", reseted: false, password: ""}
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
