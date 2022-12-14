@@ -2,14 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { AddTaskService } from './add-task.service';
 import {HttpClient} from "@angular/common/http";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
-import {count} from "rxjs";
 
 describe('AddTaskService', () => {
 
   let service: AddTaskService;
   let httpSpy: Spy<HttpClient>;
   let fakeResponseFromAPI ="";
-
 
   beforeEach(() => {
     TestBed.configureTestingModule({ providers: [AddTaskService, HttpClient,{provide:HttpClient, useValue:createSpyFromClass(HttpClient)}]}

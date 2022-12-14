@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
-
 interface TaskBody{
   topic: string;
 }
@@ -10,18 +9,13 @@ interface Task{
   userId : string;
   deadline: string;
   listId : string;
-
-
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AddTaskService {
-
-
   constructor(private http:HttpClient) { }
-
 
   createTask(taskTopic:string, userId:string | null, deadline:string, listId:string){
 
@@ -32,10 +26,6 @@ export class AddTaskService {
     }
 
     return this.http.post("http://localhost:8080/task",body);
-
-
   }
-
-
 
 }

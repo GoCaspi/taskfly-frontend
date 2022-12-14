@@ -2,7 +2,6 @@ import {Component, OnInit, Self, SkipSelf} from '@angular/core';
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {AddTaskService} from "../add-task.service";
 
-
 @Component({
 
   selector: 'app-add-task',
@@ -14,7 +13,6 @@ import {AddTaskService} from "../add-task.service";
 
 export class AddTaskComponent implements OnInit{
   tasks : string ="" ;
-  userId : number = 1;
   date : Date =new Date();
   event: string ="";
   message : string="";
@@ -24,15 +22,12 @@ export class AddTaskComponent implements OnInit{
 
   onSubmit(): void{
 
-
   }
 
 constructor(@Self() private sessionStorageService: BrowserStorageService,
             @SkipSelf() private localStorageService: BrowserStorageService,
             private Service:AddTaskService){
-
 }
-
 
   ngOnInit(): void {
     setInterval(( )=>{
@@ -47,15 +42,14 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
 
   }
 
-
   task($event: any){
-
     let id = this.localStorageService.get("email");  //userId kommt statt email
     console.log("von der test methode",this.tasks);
     console.log("Date von dateinput", this.date);
     let formatDate = this.formatDate(this.date.toISOString());
     //let listId= this.localStorageService.get("inspectedList"); // Es wurde noch nicht gemergt.
     let listId = "1234";
+
     if(this.tasks == '')
     {
       this.message="Das Textfeld ist Leer!";
@@ -74,7 +68,6 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
     stringArray.forEach((letter,index) =>  {if (letter == "T"){stringArray[index]=" "}});
     let formatedDate = stringArray.join("");
     return formatedDate;
-
   }
 
 
