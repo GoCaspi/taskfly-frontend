@@ -44,7 +44,11 @@ get list(){
       verticalPosition:this.verticalPosition,
     })
   }
-kollectionUser(){
+
+  /**
+   * In our example we are going to take a new List and save it in database.
+   */
+  kollectionUser(){
     let name = this.KollectionForm.value.list
     let userid = this.localStorageService.get("userid")
   let body = {
