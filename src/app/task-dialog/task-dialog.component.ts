@@ -60,8 +60,7 @@ export class TaskDialogComponent {
     let stringArray = date.split("");
     stringArray = stringArray.slice(0, stringArray.length-5);
     stringArray.forEach((letter,index) =>  {if (letter == "T"){stringArray[index]=" "}});
-    let formatedDate = stringArray.join("");
-    return formatedDate;
+    return stringArray.join("");
   }
   ngOnInit(){
     this.taskId = this.sessionStorageService.get("currentTask")!

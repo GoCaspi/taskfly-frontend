@@ -20,9 +20,7 @@ export class AddTaskComponent implements OnInit{
   hidden: boolean = false;
 
 
-  onSubmit(): void{
 
-  }
 
 constructor(@Self() private sessionStorageService: BrowserStorageService,
             private Service:AddTaskService){
@@ -41,7 +39,7 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
 
   }
 
-  task($event: any){
+  task(_$event: any){
     let id = this.sessionStorageService.get("loggedInUserId");
     console.log("von der test methode",this.tasks);
     console.log("Date von dateinput", this.date);
@@ -64,8 +62,8 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
     let stringArray = date.split("");
     stringArray = stringArray.slice(0, stringArray.length-5);
     stringArray.forEach((letter,index) =>  {if (letter == "T"){stringArray[index]=" "}});
-    let formatedDate = stringArray.join("");
-    return formatedDate;
+
+    return stringArray.join("");
   }
 
 
