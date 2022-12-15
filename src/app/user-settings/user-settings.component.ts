@@ -42,8 +42,8 @@ export class UserSettingsComponent implements OnInit{
           loading: 'Logging in...',
           error: 'There was an error'
         })
-      ).subscribe((data)=>{
-
+      ).subscribe((_data)=>{
+        console.log("")
       })
     }
 
@@ -61,8 +61,8 @@ export class UserSettingsComponent implements OnInit{
           loading: 'Logging in...',
           error: 'There was an error'
         })
-      ).subscribe((data:Team)=>{
-
+      ).subscribe((_data:Team)=>{
+console.log("")
       })
     }
   }

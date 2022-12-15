@@ -25,6 +25,8 @@ interface List{
   teamId:string;
   tasks:Task[]
   members:string[];
+
+  ownerID:string;
 }
 
 describe('ListService', () => {
@@ -32,7 +34,7 @@ describe('ListService', () => {
   let httpSpy : Spy<HttpClient>
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
-  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:""}
 
   beforeEach(() => {
     TestBed.configureTestingModule({

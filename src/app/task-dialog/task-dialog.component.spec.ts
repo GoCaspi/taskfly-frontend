@@ -73,6 +73,7 @@ describe('TaskDialogComponent', () => {
   });
 
   it('sendUpdate', async () =>{
+    component.deadlineInput = new Date()
     taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
 
     }))

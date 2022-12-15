@@ -1,4 +1,4 @@
-import {Component,  Injectable,  Self, SkipSelf, EventEmitter, Output} from '@angular/core';
+import {Component,  Injectable,  Self, EventEmitter, Output} from '@angular/core';
 import { MatDialog,} from "@angular/material/dialog";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {TaskService} from "../serives/task.service";
@@ -13,7 +13,7 @@ interface List{
 
 interface TaskBody{
   topic : string;
-  highPriority: string;
+  highPriority: boolean;
   description: string;
 }
 interface TaskUpdate{
@@ -43,24 +43,29 @@ export class TaskDialogComponent {
   data: Task | undefined
   listIdInput1 : string ="";
   teamInput : string ="";
-  deadlineInput : string ="";
+  deadlineInput : Date = new Date();
   bTopicInput : string = "";
   bPriorityInput : string = "";
   bDescriptionInput : string = "";
   nameIdMap:Map<string, string>= new Map<string, string>();
-  bodyInput : TaskBody = {topic : "", description : "", highPriority : ""}
+  bodyInput : TaskBody = {topic : "", description : "", highPriority : false}
   startDate = new Date(2022, 0, 1);
   allLists:any;
 
   constructor(public dialog: MatDialog, private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
-              @SkipSelf() private localStorageService: BrowserStorageService, private listService:ListService) {}
+ private listService:ListService) {}
   @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
 
-
+  formatDate(date:string) : string {
+    let stringArray = date.split("");
+    stringArray = stringArray.slice(0, stringArray.length-5);
+    stringArray.forEach((letter,index) =>  {if (letter == "T"){stringArray[index]=" "}});
+    return stringArray.join("");
+  }
   ngOnInit(){
-    this.taskId = this.localStorageService.get("currentTask")!
+    this.taskId = this.sessionStorageService.get("currentTask")!
     this.setInputFields();
-    this.listService.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe((data) =>{
+    this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe((data) =>{
       this.allLists=data
       this.nameIdMap=this.nameListIdMap(this.allLists)
       console.log("NAMEIDMAP key: listname val:listId : ",this.nameIdMap)
@@ -68,20 +73,32 @@ export class TaskDialogComponent {
   }
 
   setInputFields(){
-    this.listIdInput1  = this.localStorageService.get("currentListId")!;
-    this.teamInput  = this.localStorageService.get("currentTeam")!;
-    this.deadlineInput  = this.localStorageService.get("currentDeadline")!;
-    this.bTopicInput  = this.localStorageService.get("currentTopic")!;
-    this.bPriorityInput  = this.localStorageService.get("currentPriority")!;
-    this.bDescriptionInput  = this.localStorageService.get("currentDescription")!;
+    this.listIdInput1  = this.sessionStorageService.get("currentListId")!;
+    this.teamInput  = this.sessionStorageService.get("currentTeam")!;
+    this.deadlineInput  = new Date(this.sessionStorageService.get("currentDeadline")!)
+    this.bTopicInput  = this.sessionStorageService.get("currentTopic")!;
+    this.bPriorityInput  = this.sessionStorageService.get("currentPriority")!;
+    this.bDescriptionInput  = this.sessionStorageService.get("currentDescription")!;
   }
 
 
   sendUpdate(){
+    let format : boolean ;
+    if(this.bPriorityInput == "hoch"){
+
+       format = true
+    }
+    else if(this.bPriorityInput == "niedrig"){
+         format = false
+    }
+    else {
+      format  = false
+    }
     console.log("PRIO INPUT VAL: ", this.bPriorityInput)
-    let updateBody : TaskBody = {description:this.bDescriptionInput,topic:this.bTopicInput,highPriority:this.bPriorityInput}
+    let updateBody : TaskBody = {description:this.bDescriptionInput,topic:this.bTopicInput,highPriority:format}
     console.log("FORMATATION", this.formatListNameToId(this.listIdInput1))
-    let update :  TaskUpdate = {body:updateBody,listId:this.formatListNameToId(this.listIdInput1),deadline:this.deadlineInput,team:this.teamInput}
+    let update :  TaskUpdate = {body:updateBody,listId:this.formatListNameToId(this.listIdInput1),
+      deadline:this.formatDate(this.deadlineInput.toISOString()),team:this.teamInput}
     console.log("update is",update)
 
     this.sls.updateTask(update, this.taskId).then(_r => this.dialog.closeAll())
@@ -92,7 +109,7 @@ export class TaskDialogComponent {
     this.sls.deleteTask(this.taskId).then(_r => {
       this.dialog.closeAll()
     })
-    this.localStorageService.setBody("updated",true)
+    this.sessionStorageService.setBody("updated",true)
   }
   nameListIdMap(allLists:List[]){
     let nameIdMap = new Map();

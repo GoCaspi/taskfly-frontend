@@ -39,7 +39,8 @@ import {MatNativeDateModule} from "@angular/material/core";
 import { UpdateListDialogComponent } from './update-list-dialog/update-list-dialog.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
-
+import { AddTaskComponent } from './add-task/add-task.component';
+import {MatSelectModule} from "@angular/material/select";
 
 
 
@@ -63,6 +64,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     TasksComponent,
     MydayComponent,
     ResetDialogComponent,
+    AddTaskComponent,
     UserSettingsComponent,
     ListComponent,
     TaskDialogComponent,
@@ -96,7 +98,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
         MatRadioModule,
         MatSnackBarModule,
         MatProgressBarModule,
-
+        MatSelectModule,
     ],
 
   providers: [MatMenuModule],

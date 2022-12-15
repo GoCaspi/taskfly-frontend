@@ -44,9 +44,9 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif;min-width: 90% }
   margin-left: 5%;
 }
 
-.niedrig{
+.false{
   color: green;
 }
-.hoch{
+.true{
   color: red;
 }

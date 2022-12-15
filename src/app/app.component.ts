@@ -41,6 +41,7 @@ export class AppComponent implements OnInit{
   allStaticList:any =[];
   allDynamicLists:any=[];
   enabled:boolean=true;
+  baseURL:string | undefined;
 
 
   constructor(public authService: AuthenticationService,
@@ -51,6 +52,7 @@ export class AppComponent implements OnInit{
               private http: HttpClient,
               public listService:ListService,
               ) {
+    this.baseURL = process.env['NG_APP_PROD_URL'];
     this.sideList = new BehaviorSubject([])
   }
 
@@ -98,24 +100,29 @@ openReset(){
 }
 
 fetchAllListsOfUser(){
-
-  this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe(listData =>{
-    this.allDynamicLists = []
-    this.allLists = []
-    this.allLists = listData;
-    this.allLists.forEach((list: List) =>{
-      if((list.name == "MyDay" || list.name == "Important" || list.name == "Geplant") && this.allStaticList.length < 2){
-        this.allStaticList.push(list)
-      }
-      else if(!(list.name == "MyDay" || list.name == "Important" || list.name == "Geplant")){
-        this.allDynamicLists.push(list)
-      }
-    })
-    console.log("ListDData from service",listData)
+  this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe({
+    next: (listData) => this.test123(listData),
+    error: () => this.errorMessage()
   })
-
 }
-
+test123(listData: List[]){
+  this.allDynamicLists = []
+  this.allLists = []
+  this.allLists = listData;
+  this.allLists.forEach((list: List) =>{
+    if((list.name == "MyDay" || list.name == "Important" || list.name == "Geplant") && this.allStaticList.length < 2){
+      this.allStaticList.push(list)
+    }
+    else if(!(list.name == "MyDay" || list.name == "Important" || list.name == "Geplant")){
+      this.allDynamicLists.push(list)
+    }
+  })
+  console.log("ListDData from service",listData)
+}
+errorMessage(){
+  this.allDynamicLists = []
+  this.allLists = []
+}
 getUIdOfCurrentUser(){
     let email= this.sessionStorageService.get("email")
   if(email == undefined || email == ""){
@@ -134,7 +141,7 @@ getUIdOfCurrentUser(){
       'Authorization': cred
     })
   };
-  this.http.get<User>("http://localhost:8080/user/userInfo?email=" + email,httpOptions).subscribe(data=>{
+  this.http.get<User>( this.baseURL+"user/userInfo?email=" + email,httpOptions).subscribe(data=>{
     console.log(data.id);
     this.sessionStorageService.set("loggedInUserId",data.id);
     console.log(this.sessionStorageService.get("loggedInUserId"))
@@ -160,5 +167,7 @@ getUIdOfCurrentUser(){
     if(this.sessionStorageService.get("loginStatus") == "true"){
       this.sessionStorageService.set("loginStatus", "false");
     }
+    window.sessionStorage.clear()
+    window.sessionStorage.setItem("loginStatus", "false")
   }
 }

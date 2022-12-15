@@ -1,4 +1,4 @@
-
+<div id="Wrapper">
     <mat-toolbar color="primary" id="Toolbar">
       <h4>TaskFly</h4>
 
@@ -21,35 +21,39 @@
       </div>
     </mat-toolbar>
     <mat-sidenav-container>
-       <mat-sidenav [(opened)]="opened" mode="side">
+       <mat-sidenav [(opened)]="opened" mode="side" *ngIf="loginStatus">
          <h4 class="name">User Name</h4>
          <mat-divider></mat-divider>
           <br>
 
 
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<mat-list *ngIf="enabled">
+<mat-list *ngIf="enabled && loginStatus">
   <mat-list-item class="listElement" *ngFor="let list of allStaticList" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
 </mat-list>
          <br><br><br>
-         <mat-list>
+         <mat-list *ngIf="loginStatus">
            <mat-list-item class="listElement" *ngFor="let list of allDynamicLists" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
          </mat-list>
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
 
-         <button mat-raised-button class="newlistbutton"(click)="openDialoge()">
+         <button mat-raised-button class="newlistbutton"(click)="openDialoge()" *ngIf="loginStatus">
            <mat-icon>add</mat-icon><a>Neue Liste</a>
          </button><br>
 
 
        </mat-sidenav>
+
       <mat-sidenav-content>
 
          <router-outlet></router-outlet>
-
+        <app-add-task id="Task" *ngIf="loginStatus">
+          TESTESTES
+        </app-add-task>
       </mat-sidenav-content>
     </mat-sidenav-container>
 
 <!-- here link the create new list button to auto-render the list again -->
 <button (click)="test()">Create new List!</button>
+</div>

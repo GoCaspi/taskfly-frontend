@@ -127,13 +127,15 @@ renderCheck:new BehaviorSubject(true)
 
 
 
-
+/*
   it('should 1', function () {
   //storageSpy.get.and.returnValue("MyDay")
     window.sessionStorage.setItem("inspectedListName", "MyDay")
    let res = component.IAmStatic1()
     expect(res).toEqual(true)
   });
+
+ */
 
   it('should 2', function () {
     window.sessionStorage.setItem("loggedInUserId", "MyDay")
