@@ -1,6 +1,6 @@
 
   <div class="form-container">
-    <form  (ngSubmit)="onSubmit()" >
+    <form  >
       <div class ="center" >
         <mat-form-field  appearance="fill" >
           <input type="text" name="task"  id="taskTopicInput" required matInput [(ngModel)]="tasks" placeholder="Aufgabe hinzufügen" (keydown.enter)="task($event)">
