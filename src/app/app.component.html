@@ -6,58 +6,53 @@
       <button mat-button><mat-icon>home</mat-icon><a routerLink="/sign-up">Home</a></button>
       <div class="spacer"></div>
       <div>
-
-          <button mat-button routerLink="/login">
+          <button mat-button routerLink="/login" *ngIf="!loginStatus">
             <mat-icon>login</mat-icon>
             Login
           </button>
 
-        <button mat-button id="openResetButton" (click)="openReset()">Passwort vergessen?</button>
+        <button mat-button id="openResetButton" (click)="openReset()" *ngIf="!loginStatus">Passwort vergessen?</button>
+
+        <button mat-button [matMenuTriggerFor]="menu" *ngIf="loginStatus">Menu</button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="/login" (click)="logout()">Logout</button>
+          <button mat-menu-item routerLink="/userSetting">Settings</button>
+        </mat-menu>
       </div>
     </mat-toolbar>
     <mat-sidenav-container>
-
-
-
-
-      <mat-sidenav [(opened)]="opened" mode="side">
+       <mat-sidenav [(opened)]="opened" mode="side">
          <h4 class="name">User Name</h4>
          <mat-divider></mat-divider>
           <br>
-         <button mat-raised-button class="menu-button" >
-           <mat-icon>calendar_month</mat-icon><a routerLink="/myday">Mein Tag</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>star</mat-icon><a routerLink="/important" >Wichtig</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>event</mat-icon><a routerLink="/planned">Geplant</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>supervisor_account</mat-icon><a routerLink="/assigned">Mir zugewiesen</a>
-         </button><br>
-         <button mat-raised-button class="menu-button">
-           <mat-icon>comment</mat-icon>C
-         </button><br><br><br><br><br><br><br><br><br>
 
-         <button mat-raised-button class="menu-button">
-           <mat-icon>add</mat-icon><a routerLink="/home">Neue Liste</a>
+
+         <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<mat-list *ngIf="enabled">
+  <mat-list-item class="listElement" *ngFor="let list of allStaticList" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
+</mat-list>
+         <br><br><br>
+         <mat-list>
+           <mat-list-item class="listElement" *ngFor="let list of allDynamicLists" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
+         </mat-list>
+         <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+
+         <button mat-raised-button class="newlistbutton"(click)="openDialoge()">
+           <mat-icon>add</mat-icon><a>Neue Liste</a>
          </button><br>
 
 
        </mat-sidenav>
-
-
-
       <app-add-task>
 
       </app-add-task>
+      <mat-sidenav-content>
 
+         <router-outlet></router-outlet>
 
-
+      </mat-sidenav-content>
     </mat-sidenav-container>
 
-
-
-
-
+<!-- here link the create new list button to auto-render the list again -->
+<button (click)="test()">Create new List!</button>

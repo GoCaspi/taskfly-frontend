@@ -1,0 +1,54 @@
+<div class="form-container mat-elevation-z5">
+<h1>Settings</h1>
+<form [formGroup]="Settings">
+<mat-tab-group dynamicHeight>
+  <mat-tab label="tabUser">
+      <ng-template mat-tab-label>
+        User Settings
+        <mat-icon class="icon">settings</mat-icon>
+      </ng-template>
+
+      <mat-form-field>
+        <input matInput placeholder="Fist Name" formControlName="firstName" [(ngModel)]="firstName"/>
+      </mat-form-field><br>
+
+    <mat-form-field>
+      <input matInput placeholder="Last Name" formControlName="lastName" [(ngModel)]="lastName"/>
+    </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Email address" formControlName="email" [(ngModel)]="emaill"/>
+      </mat-form-field><br>
+
+    <div class="center margin-top">
+      <button mat-raised-button color="primary" (click)="updateUser()">
+        Update !
+      </button>
+    </div><br>
+  </mat-tab>
+
+  <mat-tab label="tabTeam">
+    <ng-template mat-tab-label>
+      Team Management
+      <mat-icon class="icon">perm_identity</mat-icon>
+    </ng-template>
+
+    <mat-form-field>
+      <input matInput placeholder="Team Name" formControlName="teamName" [(ngModel)]="teamName"/>
+    </mat-form-field><br>
+
+    <mat-form-field>
+      <input matInput placeholder="Team Members" formControlName="members" [(ngModel)]="membersInput"/>
+    </mat-form-field><br>
+
+    <div class="center margin-top">
+      <button mat-raised-button color="primary" (click)="createTeam()">
+        Create !
+      </button>
+    </div><br>
+    To add more members please separate them with a comma. Example:
+    test@gmail.com, test2@gmail.com
+  </mat-tab>
+</mat-tab-group>
+</form>
+</div>

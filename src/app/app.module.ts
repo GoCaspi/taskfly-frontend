@@ -4,7 +4,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { MatSidenavModule} from "@angular/material/sidenav";
 import {RouterLinkActive, RouterLinkWithHref, RouterOutlet,RouterLink} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
@@ -27,13 +27,20 @@ import { AssignedComponent } from './assigned/assigned.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { MydayComponent } from './myday/myday.component';
 import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
-import { MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
+import { UserSettingsComponent } from './user-settings/user-settings.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { ListComponent } from './list/list.component';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from "@angular/material/core";
+import { UpdateListDialogComponent } from './update-list-dialog/update-list-dialog.component';
+import {MatRadioModule} from "@angular/material/radio";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { AddTaskComponent } from './add-task/add-task.component';
 import {MatSelectModule} from "@angular/material/select";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
 
 
 
@@ -58,7 +65,10 @@ import {MatNativeDateModule} from "@angular/material/core";
     MydayComponent,
     ResetDialogComponent,
     AddTaskComponent,
-
+    UserSettingsComponent,
+    ListComponent,
+    TaskDialogComponent,
+    UpdateListDialogComponent,
   ],
     imports: [
         BrowserModule,
@@ -82,14 +92,16 @@ import {MatNativeDateModule} from "@angular/material/core";
         MatDialogModule,
         OverlayModule,
         HttpClientModule,
-        MatSelectModule,
+        MatTabsModule,
         MatDatepickerModule,
-        MatNativeDateModule
-
-
+        MatNativeDateModule,
+        MatRadioModule,
+        MatSnackBarModule,
+        MatProgressBarModule,
+        MatSelectModule,
     ],
 
-  providers: [],
+  providers: [MatMenuModule],
   bootstrap: [AppComponent],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA
