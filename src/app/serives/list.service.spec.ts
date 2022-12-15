@@ -53,7 +53,7 @@ describe('ListService', () => {
     httpSpy.get.and.nextWith([mockList])
     service.getAllListsByUserId(mockId).subscribe(list =>{
       expect(list).toEqual([mockList])
-      expect(httpSpy.get).toHaveBeenCalledWith('http://localhost:8080/tc/user/' + mockId)
+      expect(httpSpy.get).toHaveBeenCalledWith('undefined/tc/user/' + mockId)
     })
   });
 
@@ -62,7 +62,7 @@ describe('ListService', () => {
     httpSpy.get.and.nextWith(mockList)
     service.getListById(mockId).subscribe(list =>{
       expect(list).toEqual(mockList)
-      expect(httpSpy.get).toHaveBeenCalledWith('http://localhost:8080/tc/id/' + mockId)
+      expect(httpSpy.get).toHaveBeenCalledWith('undefined/tc/id/' + mockId)
     })
   });
 
@@ -71,7 +71,7 @@ describe('ListService', () => {
     httpSpy.patch.and.nextWith(mockList)
     service.updateListe(mockId, mockList).subscribe(list =>{
       expect(list).toEqual(mockList)
-      expect(httpSpy.patch).toHaveBeenCalledWith('http://localhost:8080/tc?id=' + mockId,mockList)
+      expect(httpSpy.patch).toHaveBeenCalledWith('undefined/tc?id=' + mockId,mockList)
     })
   });
 
@@ -80,7 +80,7 @@ describe('ListService', () => {
     httpSpy.delete.and.nextWith(mockList)
     service.deleteList(mockId).subscribe(list =>{
       expect(list).toEqual(mockList)
-      expect(httpSpy.delete).toHaveBeenCalledWith('http://localhost:8080/tc/' + mockId)
+      expect(httpSpy.delete).toHaveBeenCalledWith('undefined/tc/' + mockId)
     })
   });
 
@@ -89,7 +89,7 @@ describe('ListService', () => {
     httpSpy.get.and.nextWith(mockList)
     service.getGeplantTasks(mockId).subscribe(list =>{
       expect(list).toEqual(mockList)
-      expect(httpSpy.get).toHaveBeenCalledWith('http://localhost:8080/task/scheduled/week/' + mockId)
+      expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/scheduled/week/' + mockId)
     })
   });
 
@@ -98,7 +98,7 @@ describe('ListService', () => {
     httpSpy.get.and.nextWith(mockList)
     service.getTasksOfList(mockId).subscribe(list =>{
       expect(list).toEqual(mockList)
-      expect(httpSpy.get).toHaveBeenCalledWith('http://localhost:8080/task/userId/'+ mockId)
+      expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/userId/'+ mockId)
     })
   });
 });
