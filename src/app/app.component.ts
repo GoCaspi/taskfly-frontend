@@ -98,7 +98,6 @@ openReset(){
 }
 
 fetchAllListsOfUser(){
-
   this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe(listData =>{
     this.allDynamicLists = []
     this.allLists = []
@@ -112,6 +111,9 @@ fetchAllListsOfUser(){
       }
     })
     console.log("ListDData from service",listData)
+  }, error => {
+    this.allDynamicLists = []
+    this.allLists = []
   })
 
 }
@@ -160,5 +162,7 @@ getUIdOfCurrentUser(){
     if(this.sessionStorageService.get("loginStatus") == "true"){
       this.sessionStorageService.set("loginStatus", "false");
     }
+    window.sessionStorage.clear()
+    window.sessionStorage.setItem("loginStatus", "false")
   }
 }

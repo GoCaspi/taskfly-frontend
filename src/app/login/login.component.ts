@@ -113,9 +113,11 @@ export class LoginComponent {
           this.sessionStorageService.set("firstName", data.firstName)
           this.sessionStorageService.set("lastName", data.lastName)
         })
+        this.listService.toggleRenderList()
         this.router.navigate(['myday']).then(r =>console.log(r))
       });
       this.setUIdOfCurrentUser()
+
     }
   }
 
