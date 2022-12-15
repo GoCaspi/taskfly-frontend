@@ -28,18 +28,19 @@ interface TaskUpdate{
 })
 
 export class TaskService {
+  baseURL:string|undefined
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) { this.baseURL = process.env['NG_APP_PROD_URL'];}
   getTaskById(id : string|null){
     if(id == null){return this.http.get("http://localhost:8080/task/taskId/")}
     return this.http.get("http://localhost:8080/task/taskId/"+id)
   }
 
   async updateTask(task: TaskUpdate, id: string) {
-    this.http.put("http://localhost:8080/task/" + id, task, {responseType: 'text'}).subscribe(r => console.log(r))
+    this.http.put(this.baseURL+"/task/" + id, task, {responseType: 'text'}).subscribe(r => console.log(r))
   }
 
   async deleteTask(id: string) {
-    this.http.delete("http://localhost:8080/task/" + id, {responseType: 'text'}).subscribe(r =>{console.log(r)})
+    this.http.delete(this.baseURL+"/task/" + id, {responseType: 'text'}).subscribe(r =>{console.log(r)})
   }
 }
