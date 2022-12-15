@@ -6,7 +6,7 @@ import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 
 interface TaskBody{
   topic : string;
-  highPriority: string;
+  highPriority: boolean;
   description: string;
 }
 
@@ -79,7 +79,7 @@ describe('TaskService', () => {
   it('should call the update endpoint of the taskfly api and add the provided userId (param String) as query-parameter', () => {
     let successMsg = "successfully deleted the task"
     let mockID = "123"
-    let mockTaskBody: TaskBody ={topic:"",highPriority:"",description:""}
+    let mockTaskBody: TaskBody ={topic:"",highPriority:false,description:""}
     let mockTask:Task ={body:mockTaskBody,userId:"",listId:"",taskIdString:"",team:"",deadline:""}
     httpSpy.put.and.nextWith(successMsg)
     service.updateTask(mockTask,mockID)
