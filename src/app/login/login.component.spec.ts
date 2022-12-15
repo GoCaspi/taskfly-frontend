@@ -86,7 +86,16 @@ describe('LoginComponent', () => {
   it('should have a login method. Calling this method calls the service mehtod: login(). if the service doesnt return any error then the username and password gets saved to the local storage service.', () => {
     spyOn(component.router, 'navigate').and.returnValue(new Promise(resolve => true))
 
+    window.sessionStorage.setItem("loginStatus", "false")
+    authServiceSpy.userInfo.and.nextWith(mockUser)
+    authServiceSpy.login.and.nextWith("")
+    component.loginUser()
+    expect(component).toBeTruthy();
+  });
+  it('Test login 2', () => {
+    spyOn(component.router, 'navigate').and.returnValue(new Promise(resolve => true))
 
+    window.sessionStorage.setItem("loginStatus", "")
     authServiceSpy.userInfo.and.nextWith(mockUser)
     authServiceSpy.login.and.nextWith("")
     component.loginUser()
@@ -94,14 +103,15 @@ describe('LoginComponent', () => {
   });
 
   it('getUIDOfCurrentUser: case user can be found in the database and the email input was set', function () {
-    const fixture = TestBed.createComponent(AppComponent);
+    const fixture = TestBed.createComponent(LoginComponent);
     const app = fixture.componentInstance;
     let emailReturn = "mockMail"
     let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+    window.sessionStorage.setItem("email", "mockEmail")
   //  storageSpy.get.and.returnValue(mockUser.id)
   //  storageSpy.set.and.returnValue({})
   //  httpSpy.get.and.nextWith(mockUser)
-    app.getUIdOfCurrentUser()
+    app.setUIdOfCurrentUser()
     expect(storageSpy.get("loggedInUserId")).toEqual(mockUser.id)
   });
 /*
@@ -118,10 +128,6 @@ describe('LoginComponent', () => {
  */
 
 });
-
-
-
-
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -183,7 +189,4 @@ describe('LoginComponent', () => {
       component.setUIdOfCurrentUser()
       expect(storageSpy.get("loggedInUserId")).toEqual("")
     });
-
-
-
 });

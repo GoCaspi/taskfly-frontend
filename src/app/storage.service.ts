@@ -22,14 +22,6 @@ export class BrowserStorageService {
   setBody(key : string,value:any){
     this.storage.setItem(key,value)
   }
-
-  remove(key: string) {
-    this.storage.removeItem(key);
-  }
-
-  clear() {
-    this.storage.clear();
-  }
 }
 
 export class StorageService {

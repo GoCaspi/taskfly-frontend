@@ -87,14 +87,14 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('TaskFly-frontend');
   });
 
-  it('should have a button to reset the password. The inner text of the button element is : "Passwort vergessen?"', function () {
+ /* it('should have a button to reset the password. The inner text of the button element is : "Passwort vergessen?"', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     fixture.componentInstance.loginStatus = false
     fixture.detectChanges()
     expect(fixture.debugElement.query(By.css('#openResetButton'))).toBeTruthy();
     expect(fixture.debugElement.query(By.css('#openResetButton')).nativeElement.innerHTML).toEqual("Passwort vergessen?");
-  });
+  });*/
 
   it('Test ngOnInit init()', function (){
     const fixture = TestBed.createComponent(AppComponent);
@@ -125,6 +125,7 @@ describe('AppComponent', () => {
     app.logout();
     expect(storagespy.get("loginStatus")).toEqual("true");
   });
+
   it('fetch all lists of user', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
