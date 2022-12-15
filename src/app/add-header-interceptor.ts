@@ -20,7 +20,6 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
 
 
     const authReq = req.clone({
-     url: `${this.BASE_URL}/${req.url}`,
       headers: req.headers.set("authorization", cred)
     });
 

@@ -1,0 +1,45 @@
+<p>Bearbeite deine Aufgabe</p>
+
+<div class="priorityBox">
+  <mat-label class="priorityLabel">Priorität</mat-label>
+  <mat-radio-group aria-label="Select an option">
+    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="bPriorityInput" [ngModelOptions]="{standalone: true}" value="hoch">hoch</mat-radio-button>
+    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="bPriorityInput" [ngModelOptions]="{standalone: true}" value="niedrig">niedrig</mat-radio-button>
+  </mat-radio-group>
+</div>
+
+<form>
+
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>List</mat-label>
+    <textarea [(ngModel)]="listIdInput1" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..." id="listIdInput" type="text"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Topic</mat-label>
+    <textarea [(ngModel)]="bTopicInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Team</mat-label>
+    <textarea [(ngModel)]="teamInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea [(ngModel)]="bDescriptionInput" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Deadline</mat-label>
+    <input matInput [(ngModel)]="deadlineInput" [ngModelOptions]="{standalone: true}" [matDatepicker]="picker">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+  </mat-form-field>
+
+</form>
+
+<button mat-button color="primary" (click)="sendUpdate()">Send update</button>
+<button mat-button color="warn" (click)="deleteTask()">Delete task</button>
