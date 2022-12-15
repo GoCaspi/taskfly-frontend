@@ -1,4 +1,4 @@
-import {Component, OnInit, Self, SkipSelf} from '@angular/core';
+import {Component, OnInit, Self} from '@angular/core';
 import {ListService} from "../serives/list.service";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {MatDialog} from "@angular/material/dialog";

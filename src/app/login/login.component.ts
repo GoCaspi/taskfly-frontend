@@ -1,4 +1,4 @@
-import {Component, Self, SkipSelf} from '@angular/core';
+import {Component, Self} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../serives/authentication.service";
 import {ActivatedRoute, Router,} from "@angular/router";
@@ -17,7 +17,6 @@ import {ListService} from "../serives/list.service";
 
 })
 export class LoginComponent {
-//  user = new User();
 
   loginStatus: boolean | undefined = false;
   userEmail=""
@@ -35,7 +34,6 @@ export class LoginComponent {
               public route :ActivatedRoute,
               public router: Router,
               private toast: HotToastService,
-              @SkipSelf() private localStorageService: BrowserStorageService,
               @Self() private sessionStorageService: BrowserStorageService,
               private http:HttpClient,
               private listService:ListService
@@ -125,27 +123,27 @@ export class LoginComponent {
     let email= this.sessionStorageService.get("email")
     if(email == undefined || email == ""){
       console.log("No email identified")
-      return
+    } else {
+      let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") + ":" + this.sessionStorageService.get("password")).toString('base64')
+      console.log("Identified email is :",email)
+      console.log("Identified pwd is :",this.sessionStorageService.get("password"))
+
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          'Authorization': cred
+        })
+      };
+      this.http.get<User>("http://localhost:8080/user/userInfo?email=" + email,httpOptions).subscribe(data=>{
+        console.log("test:", data.id);
+        this.sessionStorageService.set("loggedInUserId",data.id);
+        console.log(this.sessionStorageService.get("loggedInUserId"))
+      })
+      this.listService.toggleRenderList();
+      this.listService.toggleRender()
     }
 
-    let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") + ":" + this.sessionStorageService.get("password")).toString('base64')
-    console.log("Identified email is :",email)
-    console.log("Identified pwd is :",this.sessionStorageService.get("password"))
-
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': cred
-      })
-    };
-    this.http.get<User>("http://localhost:8080/user/userInfo?email=" + email,httpOptions).subscribe(data=>{
-      console.log("test:", data.id);
-      this.sessionStorageService.set("loggedInUserId",data.id);
-      console.log(this.sessionStorageService.get("loggedInUserId"))
-    })
-    this.listService.toggleRenderList();
-    this.listService.toggleRender()
 //  this.listServicce.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
 //    console.log("ListDData from service",listData)
 //  })

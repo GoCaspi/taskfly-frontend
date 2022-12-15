@@ -35,6 +35,9 @@ describe('LoginComponent', () => {
   const storageServiceStub ={
     get(key:string){
       let mockVal = "12345"
+      if (key == "loginStatus"){
+        return "false"
+      }
       return mockVal
     },
     set(){}
@@ -82,6 +85,7 @@ describe('LoginComponent', () => {
 
   it('should have a login method. Calling this method calls the service mehtod: login(). if the service doesnt return any error then the username and password gets saved to the local storage service.', () => {
     spyOn(component.router, 'navigate').and.returnValue(new Promise(resolve => true))
+
 
     authServiceSpy.userInfo.and.nextWith(mockUser)
     authServiceSpy.login.and.nextWith("")

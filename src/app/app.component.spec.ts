@@ -96,8 +96,12 @@ describe('AppComponent', () => {
     expect(fixture.debugElement.query(By.css('#openResetButton')).nativeElement.innerHTML).toEqual("Passwort vergessen?");
   });
 
-  it('Test ngOnInit', function (){
-    storagespy.get.and.returnValue("false")
+  it('Test ngOnInit init()', function (){
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+
+    app.init()
+    expect(app).toBeTruthy()
   });
 
   it('should have a button-method openResetDialog, that opens the ResetDialog if clicked', function () {
@@ -282,7 +286,7 @@ describe('AppComponent', () => {
 
    // httpSpy.get.and.nextWith(mockUser)
     app.getUIdOfCurrentUser()
-    expect(storageSpy.get("loggedInUserId")).toEqual("")
+    expect(storageSpy.get("loggedInUserId")).toEqual("123")
   });
 
 
