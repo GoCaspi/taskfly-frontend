@@ -98,26 +98,29 @@ openReset(){
 }
 
 fetchAllListsOfUser(){
-  this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe(listData =>{
-    this.allDynamicLists = []
-    this.allLists = []
-    this.allLists = listData;
-    this.allLists.forEach((list: List) =>{
-      if((list.name == "MyDay" || list.name == "Important" || list.name == "Geplant") && this.allStaticList.length < 2){
-        this.allStaticList.push(list)
-      }
-      else if(!(list.name == "MyDay" || list.name == "Important" || list.name == "Geplant")){
-        this.allDynamicLists.push(list)
-      }
-    })
-    console.log("ListDData from service",listData)
-  }, error => {
-    this.allDynamicLists = []
-    this.allLists = []
+  this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe({
+    next: (listData) => this.test123(listData),
+    error: () => this.errorMessage()
   })
-
 }
-
+test123(listData: List[]){
+  this.allDynamicLists = []
+  this.allLists = []
+  this.allLists = listData;
+  this.allLists.forEach((list: List) =>{
+    if((list.name == "MyDay" || list.name == "Important" || list.name == "Geplant") && this.allStaticList.length < 2){
+      this.allStaticList.push(list)
+    }
+    else if(!(list.name == "MyDay" || list.name == "Important" || list.name == "Geplant")){
+      this.allDynamicLists.push(list)
+    }
+  })
+  console.log("ListDData from service",listData)
+}
+errorMessage(){
+  this.allDynamicLists = []
+  this.allLists = []
+}
 getUIdOfCurrentUser(){
     let email= this.sessionStorageService.get("email")
   if(email == undefined || email == ""){

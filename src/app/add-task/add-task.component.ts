@@ -1,4 +1,4 @@
-import {Component, OnInit, Self, SkipSelf} from '@angular/core';
+import {Component, OnInit, Self} from '@angular/core';
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {AddTaskService} from "../add-task.service";
 
