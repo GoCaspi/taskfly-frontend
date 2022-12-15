@@ -5,10 +5,11 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Overlay} from "@angular/cdk/overlay";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {AuthenticationService} from "../serives/authentication.service";
-import {User} from "../user";
+import {User, Body} from "../user";
 import {By} from "@angular/platform-browser";
 describe('HomeComponent', () => {
-  let mockuser: User = {firstName:"",lastName:"",password:"",srole:"",id:"",email:"",reseted: true}
+  let mockbody: Body = {team: ""}
+  let mockuser: User = {firstName:"",lastName:"",password:"",srole:"",id:"",email:"",reseted: true, body:mockbody}
   let service: AuthenticationService;
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;

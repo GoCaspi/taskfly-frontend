@@ -46,12 +46,12 @@ get list(){
   }
 kollectionUser(){
     let name = this.KollectionForm.value.list
-    let userid = this.localStorageService.get("loggedInUserId")
+    let userid = this.sessionStorageService.get("loggedInUserId")
   let body = {
       "name": name,
       "ownerID": userid
     }
-  let cred =  "Basic " + Buffer.from(this.localStorageService.get("email") +":"+this.localStorageService.get("password")).toString('base64')
+  let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") +":"+this.sessionStorageService.get("password")).toString('base64')
   let headers_object = new HttpHeaders({
     "Authorization":cred
   });

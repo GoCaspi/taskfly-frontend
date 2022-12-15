@@ -1,6 +1,6 @@
-import {Component, OnInit, SkipSelf} from '@angular/core';
+import {Component, OnInit, Self} from '@angular/core';
 import {ListService} from "../serives/list.service";
-import {BrowserStorageService} from "../storage.service";
+import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {MatDialog} from "@angular/material/dialog";
 interface List{
   id:string;
@@ -28,26 +28,28 @@ interface Task  {
 @Component({
   selector: 'app-update-list-dialog',
   templateUrl: './update-list-dialog.component.html',
-  styleUrls: ['./update-list-dialog.component.css']
+  styleUrls: ['./update-list-dialog.component.css'],
+  providers:[BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
 })
 export class UpdateListDialogComponent implements OnInit {
   listName : string =""
   listMembersString:string =""
-  constructor(private listService:ListService ,@SkipSelf() private localStorageService: BrowserStorageService,private dialog:MatDialog) { }
+  constructor(private listService:ListService ,private dialog:MatDialog,
+              @Self() private sessisonStorageService: BrowserStorageService) { }
 
   ngOnInit(): void {
     this.setInputFields()
   }
 
   setInputFields(){
-    this.listName = this.localStorageService.get("inspectedListName")!
-    this.listMembersString = this.localStorageService.get("inspectedListMembers")!
+    this.listName = this.sessisonStorageService.get("inspectedListName")!
+    this.listMembersString = this.sessisonStorageService.get("inspectedListMembers")!
   }
   sendUpdate(){
     let membersArr = this.listMembersString.split(",")
     console.log("LISTMEMBERSIDSTRING : " ,membersArr)
-    let update:List = {id:"",name:this.listName,members:membersArr,teamId:"",tasks:[],ownerID:this.localStorageService.get("inspectedListOwnerId")!}
-    this.listService.updateListe(this.localStorageService.get("inspectedList")!,update).subscribe(response=>{
+    let update:List = {id:"",name:this.listName,members:membersArr,teamId:"",tasks:[],ownerID:this.sessisonStorageService.get("inspectedListOwnerId")!}
+    this.listService.updateListe(this.sessisonStorageService.get("inspectedList")!,update).subscribe(response=>{
       console.log("RESPONSE FROM UPDATE LIST ", response)
       this.listService.toggleRender()
       this.listService.toggleRenderList()

@@ -30,6 +30,8 @@ import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule} from "@angular/common/http";
+import { UserSettingsComponent } from './user-settings/user-settings.component';
+import {MatTabsModule} from "@angular/material/tabs";
 import { ListComponent } from './list/list.component';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -61,41 +63,43 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     TasksComponent,
     MydayComponent,
     ResetDialogComponent,
+    UserSettingsComponent,
     ListComponent,
     TaskDialogComponent,
     UpdateListDialogComponent,
   ],
-  imports: [
-    BrowserModule,
-    MatToolbarModule,
-    BrowserAnimationsModule,
-    MatSidenavModule,
-    RouterOutlet,
-    MatIconModule,
-    MatButtonModule,
-    FormsModule,
-    RouterLinkWithHref,
-    RouterLink,
-    RouterLinkActive,
-    MatListModule,
-    AppRoutingModule,
-    MatDividerModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatMenuModule,
-    MatDialogModule,
-    OverlayModule,
-    HttpClientModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatRadioModule,
-    MatSnackBarModule,
-    MatProgressBarModule,
+    imports: [
+        BrowserModule,
+        MatToolbarModule,
+        BrowserAnimationsModule,
+        MatSidenavModule,
+        RouterOutlet,
+        MatIconModule,
+        MatButtonModule,
+        FormsModule,
+        RouterLinkWithHref,
+        RouterLink,
+        RouterLinkActive,
+        MatListModule,
+        AppRoutingModule,
+        MatDividerModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatMenuModule,
+        MatDialogModule,
+        OverlayModule,
+        HttpClientModule,
+        MatTabsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatRadioModule,
+        MatSnackBarModule,
+        MatProgressBarModule,
 
     ],
 
-  providers: [],
+  providers: [MatMenuModule],
   bootstrap: [AppComponent],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA

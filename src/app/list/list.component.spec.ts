@@ -128,47 +128,51 @@ renderCheck:new BehaviorSubject(true)
 
 
 
-  it('should ', function () {
-  storageSpy.get.and.returnValue("MyDay")
+  it('should 1', function () {
+  //storageSpy.get.and.returnValue("MyDay")
+    window.sessionStorage.setItem("inspectedListName", "MyDay")
    let res = component.IAmStatic1()
     expect(res).toEqual(true)
   });
 
-  it('should ', function () {
-    storageSpy.set("inspectedListName","MyDay")
-    storageSpy.set("loggedInUserId","MyDay")
-    storageSpy.set("inspectedListOwnerId","MyDay")
+  it('should 2', function () {
+    window.sessionStorage.setItem("loggedInUserId", "MyDay")
+    window.sessionStorage.setItem("inspectedListName", "MyDay")
+    window.sessionStorage.setItem("inspectedListOwnerId", "MyDay")
     fixture.detectChanges()
    // storageSpy.get("")!.and.returnValue("MyDay")
     let res = component.isOwner()
     expect(res).toEqual(true)
   });
-  it('should ', function () {
-    storageSpy.set("inspectedListName","Important")
-    storageSpy.set("loggedInUserId","Important")
-    storageSpy.set("inspectedListOwnerId","Important")
+  it('should 3', function () {
+    window.sessionStorage.setItem("loggedInUserId", "Important")
+    window.sessionStorage.setItem("inspectedListName", "Important")
+    window.sessionStorage.setItem("inspectedListOwnerId", "Important")
     fixture.detectChanges()
     // storageSpy.get("")!.and.returnValue("MyDay")
     let res = component.isOwner()
     expect(res).toEqual(true)
   });
-  it('should ', function () {
-    storageSpy.set("inspectedListName","Geplant")
-    storageSpy.set("loggedInUserId","Geplant")
-    storageSpy.set("inspectedListOwnerId","Geplant")
+  it('should 4', function () {
+    window.sessionStorage.setItem("loggedInUserId", "Geplant")
+    window.sessionStorage.setItem("inspectedListName", "Geplant")
+    window.sessionStorage.setItem("inspectedListOwnerId", "Geplant")
     fixture.detectChanges()
     // storageSpy.get("")!.and.returnValue("MyDay")
     let res = component.isOwner()
     expect(res).toEqual(true)
   });
-  it('should ', function () {
-    storageSpy.set("inspectedListName","Geplant")
+  it('should 5', function () {
+    /*storageSpy.set("inspectedListName","Geplant")
     storageSpy.set("loggedInUserId","123")
-    storageSpy.set("inspectedListOwnerId","234")
+    storageSpy.set("inspectedListOwnerId","234")*/
+    window.sessionStorage.setItem("loggedInUserId", "123")
+    window.sessionStorage.setItem("inspectedListName", "Geplant")
+    window.sessionStorage.setItem("inspectedListOwnerId", "234")
     fixture.detectChanges()
     // storageSpy.get("")!.and.returnValue("MyDay")
     let res = component.isOwner()
-    expect(res).toEqual(true)
+    expect(res).toEqual(false)
   });
 
 
