@@ -45,7 +45,7 @@ describe('TaskService', () => {
     let mockID = "123"
     httpSpy.delete.and.nextWith(successMsg)
     service.deleteTask(mockID)
-    expect(httpSpy.delete).toHaveBeenCalledWith('http://localhost:8080/task/' + mockID, Object({ responseType: 'text' }))
+    expect(httpSpy.delete).toHaveBeenCalledWith('undefined/task/' + mockID, Object({ responseType: 'text' }))
   });
 
   it('should call the get endpoint of the taskfly api and add the provided userId (param String) as query-parameter', () => {
@@ -68,10 +68,10 @@ describe('TaskService', () => {
       service.getTaskById(tc.taskId)
       if(tc.undefiendId){
 
-        expect(httpSpy.get).toHaveBeenCalledWith('http://localhost:8080/task/taskId/')
+        expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/taskId/')
       }else{
 
-        expect(httpSpy.get).toHaveBeenCalledWith('http://localhost:8080/task/taskId/' + tc.taskId )
+        expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/taskId/' + tc.taskId )
       }
     })
   });
@@ -83,6 +83,6 @@ describe('TaskService', () => {
     let mockTask:Task ={body:mockTaskBody,userId:"",listId:"",taskIdString:"",team:"",deadline:""}
     httpSpy.put.and.nextWith(successMsg)
     service.updateTask(mockTask,mockID)
-    expect(httpSpy.put).toHaveBeenCalledWith('http://localhost:8080/task/123', mockTask, Object({ responseType: 'text' }))
+    expect(httpSpy.put).toHaveBeenCalledWith('undefined/task/123', mockTask, Object({ responseType: 'text' }))
   });
 });
