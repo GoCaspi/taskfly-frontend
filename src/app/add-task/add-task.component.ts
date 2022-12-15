@@ -25,7 +25,6 @@ export class AddTaskComponent implements OnInit{
   }
 
 constructor(@Self() private sessionStorageService: BrowserStorageService,
-            @SkipSelf() private localStorageService: BrowserStorageService,
             private Service:AddTaskService){
 }
 
@@ -43,12 +42,11 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
   }
 
   task($event: any){
-    let id = this.localStorageService.get("email");  //userId kommt statt email
+    let id = this.sessionStorageService.get("loggedInUserId");
     console.log("von der test methode",this.tasks);
     console.log("Date von dateinput", this.date);
     let formatDate = this.formatDate(this.date.toISOString());
-    //let listId= this.localStorageService.get("inspectedList"); // Es wurde noch nicht gemergt.
-    let listId = "1234";
+    let listId= this.sessionStorageService.get("inspectedList")!;
 
     if(this.tasks == '')
     {

@@ -6,7 +6,7 @@ interface TaskBody{
 }
 interface Task{
   body : TaskBody;
-  userId : string;
+  userId : string | null;
   deadline: string;
   listId : string;
 }
@@ -19,8 +19,7 @@ export class AddTaskService {
 
   createTask(taskTopic:string, userId:string | null, deadline:string, listId:string){
 
-    let newUserId = "123";
-    let body : Task = {body:{topic:taskTopic},userId:newUserId,deadline, listId};
+    let body : Task = {body:{topic:taskTopic},userId:userId,deadline, listId};
     if(userId != null){
       body = {body:{topic:taskTopic},userId:userId,deadline, listId};
     }
