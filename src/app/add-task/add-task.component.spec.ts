@@ -47,10 +47,6 @@ describe('AddTaskComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('onSubmit', function () {
-    component.onSubmit();
-    expect(component).toBeTruthy();
-  });
 
 
   it('should ', function () {
