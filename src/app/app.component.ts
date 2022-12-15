@@ -41,6 +41,7 @@ export class AppComponent implements OnInit{
   allStaticList:any =[];
   allDynamicLists:any=[];
   enabled:boolean=true;
+  baseURL:string | undefined;
 
 
   constructor(public authService: AuthenticationService,
@@ -51,6 +52,7 @@ export class AppComponent implements OnInit{
               private http: HttpClient,
               public listService:ListService,
               ) {
+    this.baseURL = process.env['NG_APP_PROD_URL'];
     this.sideList = new BehaviorSubject([])
   }
 
@@ -139,7 +141,7 @@ getUIdOfCurrentUser(){
       'Authorization': cred
     })
   };
-  this.http.get<User>("http://localhost:8080/user/userInfo?email=" + email,httpOptions).subscribe(data=>{
+  this.http.get<User>( this.baseURL+"user/userInfo?email=" + email,httpOptions).subscribe(data=>{
     console.log(data.id);
     this.sessionStorageService.set("loggedInUserId",data.id);
     console.log(this.sessionStorageService.get("loggedInUserId"))

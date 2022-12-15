@@ -22,6 +22,7 @@ export class LoginComponent {
   userEmail=""
   userPassword=""
   userid=""
+  baseURL:string|undefined;
 
 
   loginForm = new FormGroup({
@@ -38,6 +39,7 @@ export class LoginComponent {
               private http:HttpClient,
               private listService:ListService
   ) {
+    this.baseURL = process.env['NG_APP_PROD_URL']
   }
 
  /* testlogin() {
@@ -112,8 +114,10 @@ export class LoginComponent {
           this.sessionStorageService.set("loggedInUserId", data.id)
           this.sessionStorageService.set("firstName", data.firstName)
           this.sessionStorageService.set("lastName", data.lastName)
+          this.listService.toggleRenderList()
+          this.listService.toggleRender()
         })
-        this.listService.toggleRenderList()
+
         this.router.navigate(['myday']).then(r =>console.log(r))
       });
       this.setUIdOfCurrentUser()
@@ -137,13 +141,14 @@ export class LoginComponent {
           'Authorization': cred
         })
       };
-      this.http.get<User>("http://localhost:8080/user/userInfo?email=" + email,httpOptions).subscribe(data=>{
+      this.http.get<User>( this.baseURL+"/user/userInfo?email=" + email,httpOptions).subscribe(data=>{
         console.log("test:", data.id);
         this.sessionStorageService.set("loggedInUserId",data.id);
         console.log(this.sessionStorageService.get("loggedInUserId"))
+        this.listService.toggleRenderList();
+        this.listService.toggleRender()
       })
-      this.listService.toggleRenderList();
-      this.listService.toggleRender()
+
     }
 
 //  this.listServicce.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{

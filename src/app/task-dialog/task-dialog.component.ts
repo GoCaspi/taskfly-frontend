@@ -13,7 +13,7 @@ interface List{
 
 interface TaskBody{
   topic : string;
-  highPriority: string;
+  highPriority: boolean;
   description: string;
 }
 interface TaskUpdate{
@@ -48,7 +48,7 @@ export class TaskDialogComponent {
   bPriorityInput : string = "";
   bDescriptionInput : string = "";
   nameIdMap:Map<string, string>= new Map<string, string>();
-  bodyInput : TaskBody = {topic : "", description : "", highPriority : ""}
+  bodyInput : TaskBody = {topic : "", description : "", highPriority : false}
   startDate = new Date(2022, 0, 1);
   allLists:any;
 
@@ -84,8 +84,19 @@ export class TaskDialogComponent {
 
 
   sendUpdate(){
+    let format : boolean ;
+    if(this.bPriorityInput == "hoch"){
+
+       format = true
+    }
+    else if(this.bPriorityInput == "niedrig"){
+         format = false
+    }
+    else {
+      format  = false
+    }
     console.log("PRIO INPUT VAL: ", this.bPriorityInput)
-    let updateBody : TaskBody = {description:this.bDescriptionInput,topic:this.bTopicInput,highPriority:this.bPriorityInput}
+    let updateBody : TaskBody = {description:this.bDescriptionInput,topic:this.bTopicInput,highPriority:format}
     console.log("FORMATATION", this.formatListNameToId(this.listIdInput1))
     let update :  TaskUpdate = {body:updateBody,listId:this.formatListNameToId(this.listIdInput1),
       deadline:this.formatDate(this.deadlineInput.toISOString()),team:this.teamInput}

@@ -20,4 +20,4 @@
 </form>
 
 <button mat-button color="primary" (click)="sendUpdate()">Send update</button>
-<button mat-button color="warn" >Abbrechen</button>
+<button mat-button color="warn" [mat-dialog-close]="true">Abbrechen</button>
