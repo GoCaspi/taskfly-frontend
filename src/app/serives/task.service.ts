@@ -32,8 +32,8 @@ export class TaskService {
 
   constructor(private http:HttpClient) { this.baseURL = process.env['NG_APP_PROD_URL'];}
   getTaskById(id : string|null){
-    if(id == null){return this.http.get("http://localhost:8080/task/taskId/")}
-    return this.http.get("http://localhost:8080/task/taskId/"+id)
+    if(id == null){return this.http.get(this.baseURL+"/task/taskId/")}
+    return this.http.get(this.baseURL+"/task/taskId/"+id)
   }
 
   async updateTask(task: TaskUpdate, id: string) {
