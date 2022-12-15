@@ -43,7 +43,7 @@ export class TaskDialogComponent {
   data: Task | undefined
   listIdInput1 : string ="";
   teamInput : string ="";
-  deadlineInput : string ="";
+  deadlineInput : Date = new Date();
   bTopicInput : string = "";
   bPriorityInput : string = "";
   bDescriptionInput : string = "";
@@ -56,7 +56,13 @@ export class TaskDialogComponent {
  private listService:ListService) {}
   @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
 
-
+  formatDate(date:string) : string {
+    let stringArray = date.split("");
+    stringArray = stringArray.slice(0, stringArray.length-5);
+    stringArray.forEach((letter,index) =>  {if (letter == "T"){stringArray[index]=" "}});
+    let formatedDate = stringArray.join("");
+    return formatedDate;
+  }
   ngOnInit(){
     this.taskId = this.sessionStorageService.get("currentTask")!
     this.setInputFields();
@@ -70,7 +76,7 @@ export class TaskDialogComponent {
   setInputFields(){
     this.listIdInput1  = this.sessionStorageService.get("currentListId")!;
     this.teamInput  = this.sessionStorageService.get("currentTeam")!;
-    this.deadlineInput  = this.sessionStorageService.get("currentDeadline")!;
+    this.deadlineInput  = new Date(this.sessionStorageService.get("currentDeadline")!)
     this.bTopicInput  = this.sessionStorageService.get("currentTopic")!;
     this.bPriorityInput  = this.sessionStorageService.get("currentPriority")!;
     this.bDescriptionInput  = this.sessionStorageService.get("currentDescription")!;
@@ -81,7 +87,8 @@ export class TaskDialogComponent {
     console.log("PRIO INPUT VAL: ", this.bPriorityInput)
     let updateBody : TaskBody = {description:this.bDescriptionInput,topic:this.bTopicInput,highPriority:this.bPriorityInput}
     console.log("FORMATATION", this.formatListNameToId(this.listIdInput1))
-    let update :  TaskUpdate = {body:updateBody,listId:this.formatListNameToId(this.listIdInput1),deadline:this.deadlineInput,team:this.teamInput}
+    let update :  TaskUpdate = {body:updateBody,listId:this.formatListNameToId(this.listIdInput1),
+      deadline:this.formatDate(this.deadlineInput.toISOString()),team:this.teamInput}
     console.log("update is",update)
 
     this.sls.updateTask(update, this.taskId).then(_r => this.dialog.closeAll())
