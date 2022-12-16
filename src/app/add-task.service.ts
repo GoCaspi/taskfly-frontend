@@ -15,7 +15,10 @@ interface Task{
   providedIn: 'root'
 })
 export class AddTaskService {
-  constructor(private http:HttpClient) { }
+  baseURL:string|undefined;
+  constructor(private http:HttpClient) {
+    this.baseURL=process.env['NG_APP_PROD_URL']
+  }
 
   createTask(taskTopic:string, userId:string | null, deadline:string, listId:string){
 
@@ -24,7 +27,7 @@ export class AddTaskService {
       body = {body:{topic:taskTopic},userId:userId,deadline, listId};
     }
 
-    return this.http.post("http://localhost:8080/task",body);
+    return this.http.post(this.baseURL+"/task",body);
   }
 
 }
