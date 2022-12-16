@@ -1,9 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
+/**
+ * interface of TaskBody
+ */
 interface TaskBody{
   topic: string;
 }
+
+/**
+ * interface of Task
+ */
 interface Task{
   body : TaskBody;
   userId : string | null;

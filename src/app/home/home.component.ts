@@ -7,8 +7,9 @@ import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition}
 import {HotToastService} from "@ngneat/hot-toast";
 
 
-
-
+/**
+ * class of HomeComponent
+ */
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -32,11 +33,19 @@ export class HomeComponent {
    @Self() private sessionStorageService: BrowserStorageService,
     @SkipSelf() private localStorageService: BrowserStorageService,private http:HttpClient,private _snackBar: MatSnackBar
   ) { this.baseURL = process.env['NG_APP_PROD_URL'];}
-
-get list(){
+  /**
+   * return the userKollection that it gets
+   */
+  get list(){
     return this.KollectionForm.get('userKollection');
 }
 
+  /**
+   * a message box opens when an action is performed
+   *
+   * @param message
+   * @param action
+   */
   openSnackBar(message:string, action:string) {
     this._snackBar.open(message,action,{
       duration:3000,
@@ -44,7 +53,11 @@ get list(){
       verticalPosition:this.verticalPosition,
     })
   }
-kollectionUser(){
+
+  /**
+   * In the method, a list is added when something is entered in the text field. if the text field is empty, an error message is thrown.
+   */
+  kollectionUser(){
     let name = this.KollectionForm.value.list
     let userid = this.sessionStorageService.get("loggedInUserId")
   let body = {

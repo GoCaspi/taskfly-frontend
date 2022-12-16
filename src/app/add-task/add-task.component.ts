@@ -10,7 +10,9 @@ import {AddTaskService} from "../add-task.service";
   providers:[BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
 
 })
-
+/**
+ * class of AddTaskComponent that implements OnInit
+ */
 export class AddTaskComponent implements OnInit{
   tasks : string ="" ;
   date : Date =new Date();
@@ -20,12 +22,18 @@ export class AddTaskComponent implements OnInit{
   hidden: boolean = false;
 
 
-
-
-constructor(@Self() private sessionStorageService: BrowserStorageService,
+  /**
+   *
+   * @param sessionStorageService
+   * @param Service
+   */
+  constructor(@Self() private sessionStorageService: BrowserStorageService,
             private Service:AddTaskService){
 }
 
+  /**
+   * an if query is performed here if there are no tasks available it should be displayed and not otherwise
+   */
   ngOnInit(): void {
     setInterval(( )=>{
       if(this.tasks == ""){
@@ -39,6 +47,12 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
 
   }
 
+  /**
+   * In the method the ID of the loggedin user is stored in a variable just like the list iD
+   * Then the service is passed the id, the darum and the listid to create a task. if not the textfield for task is filled an error is thrown
+   *
+   * @param _$event
+   */
   task(_$event: any){
     let id = this.sessionStorageService.get("loggedInUserId");
     console.log("von der test methode",this.tasks);
@@ -58,6 +72,10 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
 
   }
 
+  /**
+   * Here the format of the date is adapted as it is stored in MongoDB
+   * @param date
+   */
   formatDate(date:string) : string {
     let stringArray = date.split("");
     stringArray = stringArray.slice(0, stringArray.length-5);

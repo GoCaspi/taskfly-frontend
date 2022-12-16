@@ -50,12 +50,15 @@ export class LoginComponent {
     this.authservice.getLoginByEmail(info.password, info.email)
   }*/
 
-
-
+  /**
+   * return the email that it gets
+   */
   get email() {
     return this.loginForm.get('email');
   }
-
+  /**
+   * return the passwort that it gets
+   */
   get password() {
     return this.loginForm.get('password');
   }
@@ -96,6 +99,11 @@ export class LoginComponent {
             });
   }
   */
+  /**
+   * The login is displayed only if the login status is false. If this is the case it is checked if the email address with the password
+   * exists if this is the case the login is successful if this is not the case an error is thrown.
+   * If the login was successful the status is set to true and the user id, firstname and lastname are stored in the sessionStorage.
+   */
   loginUser() {
     let status = this.sessionStorageService.get("loginStatus");
 
@@ -125,6 +133,11 @@ export class LoginComponent {
     }
   }
 
+  /**
+   * It will check at the beginning if an email address exists if not it will show on the console that no email address
+   * was identified. If an email address is identified, the console will display the email and password. and the
+   * sessionstorage will store the loggedInUserId.
+   */
   setUIdOfCurrentUser(){
     let email= this.sessionStorageService.get("email")
     if(email == undefined || email == ""){

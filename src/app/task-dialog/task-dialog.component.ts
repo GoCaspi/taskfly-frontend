@@ -38,6 +38,9 @@ interface Task{
   styleUrls: ['./task-dialog.component.css'],
   providers:[BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
 })
+/**
+ * class of TaskDialogComponent
+ */
 export class TaskDialogComponent {
   taskId : string ="";
   data: Task | undefined
@@ -56,6 +59,10 @@ export class TaskDialogComponent {
  private listService:ListService) {}
   @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
 
+  /**
+   * Here the format of the date is adapted as it is stored in MongoDB
+   * @param date
+   */
   formatDate(date:string) : string {
     let stringArray = date.split("");
     stringArray = stringArray.slice(0, stringArray.length-5);
@@ -72,6 +79,9 @@ export class TaskDialogComponent {
     })
   }
 
+  /**
+   * In the method, the text fields are filled with the information from the database
+   */
   setInputFields(){
     this.listIdInput1  = this.sessionStorageService.get("currentListId")!;
     this.teamInput  = this.sessionStorageService.get("currentTeam")!;
@@ -81,7 +91,9 @@ export class TaskDialogComponent {
     this.bDescriptionInput  = this.sessionStorageService.get("currentDescription")!;
   }
 
-
+  /**
+   * In this method an object of the task and the TaskId is passed to the service to update a task.
+   */
   sendUpdate(){
     let format : boolean ;
     if(this.bPriorityInput == "hoch"){
@@ -105,6 +117,9 @@ export class TaskDialogComponent {
     this.change.emit(true)
   }
 
+  /**
+   * In this method a TaskId is passed to the service to delete a task with the assigned id.
+   */
   deleteTask(){
     this.sls.deleteTask(this.taskId).then(_r => {
       this.dialog.closeAll()

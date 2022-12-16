@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+/**
+ * class of SideNavComponent
+ */
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',

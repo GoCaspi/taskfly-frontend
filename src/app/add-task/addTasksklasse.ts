@@ -1,4 +1,6 @@
-
+/**
+ * class of AddTasksklasse
+ */
 export class AddTasksklasse{
 
   constructor(

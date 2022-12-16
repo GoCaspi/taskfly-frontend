@@ -10,6 +10,9 @@ import {Team} from "../team";
   styleUrls: ['./user-settings.component.css'],
   providers:[BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
 })
+/**
+ * class of UserSettingsComponent that implements OnInit
+ */
 export class UserSettingsComponent implements OnInit{
 
   firstName: string = ""
@@ -32,6 +35,10 @@ export class UserSettingsComponent implements OnInit{
     members: new FormControl('', Validators.required),
   })
 
+  /**
+   * Here the service is passed the firstname, lastname and email to update a user. if not all fields are filled an
+   * error is thrown all fields must be filled to update a user.
+   */
   updateUser(){
     if(this.emaill == "" || this.firstName == "" || this.lastName == ""){
       this.toast.error("All fields must be filled in")
@@ -49,6 +56,10 @@ export class UserSettingsComponent implements OnInit{
 
   }
 
+  /**
+   * Here the teamName and the members are passed to the service to create a team. if not all fields are filled an
+   * error is thrown all fields must be filled to create a team.
+   */
   createTeam (){
     let membersArray = this.membersInput.split(",")
 
@@ -66,12 +77,22 @@ console.log("")
       })
     }
   }
+  /**
+   * return the password that it gets
+   */
   get password() {
     return this.Settings.get('password');
   }
+  /**
+   * return the email that it gets
+   */
   get email() {
     return this.Settings.get('email');
   }
+
+  /**
+   * Fills the text fields with the data passed at login
+   */
   ngOnInit(): void {
     this.firstName = this.sessionStorageService.get("firstName") || ""
     this.lastName = this.sessionStorageService.get("lastName") || ""

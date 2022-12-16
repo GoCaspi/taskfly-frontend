@@ -5,6 +5,9 @@ import { Component } from '@angular/core';
   templateUrl: './assigned.component.html',
   styleUrls: ['./assigned.component.css']
 })
+/**
+ * class of AssignedComponent
+ */
 export class AssignedComponent {
 
   }

@@ -56,6 +56,9 @@ export class AppComponent implements OnInit{
     this.sideList = new BehaviorSubject([])
   }
 
+  /**
+   * here it is checked if the login status is true or false and sets the login status to the correct value accordingly
+   */
   init(): void {
     setInterval(()=>{
       if(this.sessionStorageService.get("loginStatus") == "false"){
@@ -87,7 +90,11 @@ openDialoge(){
       data:"right click"
     })
   }
-openReset(){
+
+  /**
+   * the reset password dialog should only be displayed if the login status is true
+   */
+  openReset(){
   this.dialogRef = this.dialog.open(ResetDialogComponent)
   this.dialogRef.afterClosed().subscribe(() =>{
     console.log("dialog is closed!")
@@ -99,13 +106,21 @@ openReset(){
   }
 }
 
-fetchAllListsOfUser(){
+  /**
+   * throws an error if the user has no lists otherwise the lists for the user are displayed
+   */
+  fetchAllListsOfUser(){
   this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe({
     next: (listData) => this.test123(listData),
     error: () => this.errorMessage()
   })
 }
-test123(listData: List[]){
+
+  /**
+   * here the lists are pushed to either the dynamic or static lists
+   * @param listData
+   */
+  test123(listData: List[]){
   this.allDynamicLists = []
   this.allLists = []
   this.allLists = listData;
@@ -119,11 +134,19 @@ test123(listData: List[]){
   })
   console.log("ListDData from service",listData)
 }
-errorMessage(){
+
+  /**
+   * This method calls only empty lists
+   */
+  errorMessage(){
   this.allDynamicLists = []
   this.allLists = []
 }
-getUIdOfCurrentUser(){
+
+  /**
+   * here is first checked if a user is logged in or not if the user is logged in the method gets the logged in userid
+   */
+  getUIdOfCurrentUser(){
     let email= this.sessionStorageService.get("email")
   if(email == undefined || email == ""){
     console.log("No email identified")
@@ -151,6 +174,12 @@ getUIdOfCurrentUser(){
 //  })
 }
 
+  /**
+   * here the current list id listname and owner is stored and updated in the sessionstorage
+   * @param listId
+   * @param listName
+   * @param ownerId
+   */
   saveCurrentListId(listId:string, listName:string,ownerId:string){
   this.sessionStorageService.set("inspectedList",listId)
     this.sessionStorageService.set("inspectedListName",listName)
@@ -160,9 +189,16 @@ getUIdOfCurrentUser(){
     this.fetchAllListsOfUser()
   }
 
+  /**
+   * test method to fetch all list of user
+   */
   test(){
     this.fetchAllListsOfUser()
   }
+
+  /**
+   * When the user logs out the status is set back to false and everything in sessionstorage is cleared
+   */
   logout(){
     if(this.sessionStorageService.get("loginStatus") == "true"){
       this.sessionStorageService.set("loginStatus", "false");

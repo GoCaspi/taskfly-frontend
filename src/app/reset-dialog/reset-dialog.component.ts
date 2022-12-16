@@ -1,6 +1,9 @@
 import { Component, } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
+/**
+ * class of RestDialogComponent
+ */
 @Component({
   selector: 'app-reset-dialog',
   templateUrl: './reset-dialog.component.html',
@@ -15,7 +18,9 @@ export class ResetDialogComponent  {
   }
 
 
-
+  /**
+   * In this method the password will be reseted
+   */
   resetPwd(){
     let resetBody = {lastName:this.lastNameInput,email:this.emailInput}
     let resetBodyString = JSON.stringify(resetBody)

@@ -7,6 +7,9 @@ import {
   Validators
 } from "@angular/forms";
 
+/**
+ * Here it is checked if the passwords entered when creating a user are the same.
+ */
 export function passwordsMatchValidator():ValidatorFn{
   // @ts-ignore
   return (control: AbstractControl): ValidationErrors | null =>{
@@ -22,6 +25,9 @@ export function passwordsMatchValidator():ValidatorFn{
   };
 }
 
+/**
+ * class of SignUpComponent
+ */
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -37,16 +43,27 @@ export class SignUpComponent   {
 
 
 
-
+  /**
+   * return the name that it gets
+   */
   get name() {
     return this.signUpForm.get('email');
   }
+  /**
+   * return the password that it gets
+   */
   get password() {
     return this.signUpForm.get('password');
   }
+  /**
+   * return the email that it gets
+   */
   get email() {
     return this.signUpForm.get('email');
   }
+  /**
+   * return the confirmPassword that it gets
+   */
   get confirmPassword() {
     return this.signUpForm.get('confirmPassword');
   }

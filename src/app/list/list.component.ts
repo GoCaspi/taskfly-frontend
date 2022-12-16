@@ -6,22 +6,36 @@ import {BROWSER_STORAGE, BrowserStorageService} from '../storage.service';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UpdateListDialogComponent} from "../update-list-dialog/update-list-dialog.component";
 
+/**
+ * Interface of List
+ */
 interface List{
   id:string;
   name:string;
   teamId:string;
   tasks:Task[]
 }
+
+/**
+ * Interface of User
+ */
 interface User{
   userId : string;
 
 }
+
+/**
+ * Interface of TaskBody
+ */
 interface TaskBody{
   topic : string;
   highPriority: string;
   description: string;
 }
 
+/**
+ * Interface of Task
+ */
 interface Task  {
   body: TaskBody;
   userId : string;
@@ -31,6 +45,9 @@ interface Task  {
   deadline : string;
 }
 
+/**
+ * class of ListComponent that implements OnInit
+ */
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -72,6 +89,9 @@ export class ListComponent implements OnInit {
 
   }
 
+  /**
+   * In this method the inspectedList id from sessionStorage is stored in a variable and sent to the service to get a list for the given id
+   */
   renderList1(){
     this.enabled = true;
     let checkId = this.sessionStorageService.get("inspectedList")!
@@ -81,6 +101,9 @@ export class ListComponent implements OnInit {
     })
   }
 
+  /**
+   * In this method the inspectedList id from sessionStorage is stored in a variable and sent to the service to get a list for the given id
+   */
   openListDialog(){
     let listId = this.sessionStorageService.get("inspectedList")!
     this.listService.getListById(listId).subscribe(list =>{
@@ -100,6 +123,9 @@ export class ListComponent implements OnInit {
     })
   }
 
+  /**
+   * In this method the inspectedList id from sessionStorage is stored in a variable and sent to the service to delete a list for the given id
+   */
   deleteList(){
     let listId = this.sessionStorageService.get("inspectedList")!
     this.listService.deleteList(listId).subscribe(_response =>{
@@ -109,7 +135,10 @@ export class ListComponent implements OnInit {
     })
   }
 
-
+  /**
+   * In this method, either the tasks are called for the specified task id or, if there is no task id, all tasks are called and displayed.
+   * @param taskId
+   */
   openTaskDialog(taskId : string){
     this.setSession("currentTask",taskId)
     this.setLocal("currentTask",taskId)
@@ -130,15 +159,29 @@ export class ListComponent implements OnInit {
 
     })
   }
+
+  /**
+   *
+   * @param key
+   * @param value
+   */
   setSession(key : string, value : string) {
     this.sessionStorageService.set(key, value);
   }
 
+  /**
+   *
+   * @param key
+   * @param value
+   */
   setLocal(key : string, value : string) {
     this.sessionStorageService.set(key, value);
   }
 
-
+  /**
+   * returns all static lists if the checkname = "MyDay", "Important", "", or "Scheduled".
+   * @constructor
+   */
   IAmStatic1() : boolean{
     let checkName = this.sessionStorageService.get("inspectedListName")
     let checkId = this.sessionStorageService.get("loggedInUserId")
@@ -148,6 +191,9 @@ export class ListComponent implements OnInit {
     return false
   }
 
+  /**
+   * checks if the logged in user is also the owner of the lists
+   */
   isOwner() : boolean{
     let checkId = this.sessionStorageService.get("loggedInUserId")
     if( checkId == this.sessionStorageService.get("inspectedListOwnerId")){
