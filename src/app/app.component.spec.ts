@@ -473,9 +473,10 @@ describe('AppComponent resetDialog', () => {
     fixture.whenStable().then(() => {
       const dialogSpy=spyOn(app.dialog,'open').and.returnValue({afterClosed: () => EMPTY,open:()=>{EMPTY}} as any)
       window.sessionStorage.setItem("loginStatus","true")
+      fixture.detectChanges();
       app.openReset()
       //   tick()
-      fixture.detectChanges();
+
       expect(dialogSpy).toHaveBeenCalled()
       expect(app.loginStatus).toEqual(true)
     });
@@ -541,13 +542,17 @@ describe('AppComponent ngOninit', () => {
   });
 
 
-  it('ngOnInit', function () {
+  it('ngOnInit', function (done) {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     fixture.whenStable().then(() => {
+      const fetchAllSpry = spyOn(app,"fetchAllListsOfUser")
       window.sessionStorage.setItem("loggedInUserId","abc123")
       app.ngOnInit()
+      fixture.detectChanges()
       expect(app).toBeTruthy()
+      expect(fetchAllSpry).toHaveBeenCalled()
+      done()
     })
 
   });
