@@ -485,3 +485,72 @@ describe('AppComponent resetDialog', () => {
 
 
 });
+
+describe('AppComponent ngOninit', () => {
+  let listServiceSpy: Spy<ListService>
+  let listServiceSpy2: Spy<ListService>
+  let httpSpy : Spy<HttpClient>
+  let storageSpy:Spy<BrowserStorageService>
+  const httpStub = {get(){
+      let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+      return of(mockUser)
+    }}
+  const storageStub ={
+    get(key:string){
+      if(key == "loggedInUserId"){return "123"}
+      if(key == "password"){return "password"}
+      if(key == "email"){return "email"}
+      if(key == "loginStatus"){return "true"}
+      return ""
+    },set(){}
+  }
+  const listServiceStub = {
+    renderCheck:new BehaviorSubject(true),
+    renderCheckList:new BehaviorSubject(true),
+    getAllListsByUserId(){
+      let allLists = [mockList]
+      return of(allLists)
+    }
+  }
+  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
+  let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:""}
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        AppComponent,ResetDialogComponent
+      ],
+      imports:[MatMenuModule],
+      providers: [
+        AuthenticationService,{
+          provide:HttpClient,
+          useValue:httpStub
+        },{provide:BrowserStorageService,useValue: storageStub},
+        ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
+          provide : MAT_DIALOG_SCROLL_STRATEGY,
+          useValue : {}
+        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: listServiceStub}
+      ],
+
+    }).compileComponents();
+    listServiceSpy = TestBed.inject<any>(ListService);
+    listServiceSpy2 = TestBed.inject<any>(ListService);
+    httpSpy = TestBed.inject<any>(HttpClient)
+    storageSpy = TestBed.inject<any>(BrowserStorageService)
+  });
+
+
+  it('ngOnInit', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    fixture.whenStable().then(() => {
+      window.sessionStorage.setItem("loggedInUserId","abc123")
+      app.ngOnInit()
+      expect(app).toBeTruthy()
+    })
+
+  });
+
+
+});
