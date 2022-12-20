@@ -1,4 +1,4 @@
-import { TestBed, tick } from '@angular/core/testing';
+import {TestBed, tick, waitForAsync} from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
 import {AuthenticationService} from "./serives/authentication.service";
@@ -327,9 +327,10 @@ describe('AppComponent', () => {
 });
 
 
-describe('AppComponent', () => {
+fdescribe('AppComponent', () => {
 
-  const httpStub = {get(){
+  const httpStub = {
+    get(){
       let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
       return of(mockUser)
     }}
@@ -379,40 +380,21 @@ describe('AppComponent', () => {
 
 
 
-  it('NewTestcase for getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage', function (done) {
+  fit('NewTestcase for getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage',  function (done) {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
 
+
+
+    fixture.detectChanges();
 
     app.getUIdOfCurrentUser()
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(httpStub).toHaveBeenCalled();
-
-    });
-    done();
+    expect(window.sessionStorage.getItem("loggedInUserId")).toEqual("12345")
+  done()
   });
 
-/*
 
-  it("openReset",async ()=>{
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-
-
-
-    fixture.whenStable().then(() => {
-      const dialogSpy=spyOn(app.dialog,'open').and.returnValue({afterClosed: () => EMPTY,open:()=>{EMPTY}} as any)
-      app.openReset()
-   //   tick()
-      fixture.detectChanges();
-      expect(dialogSpy).toHaveBeenCalled()
-      expect(app.loginStatus).toEqual(true)
-    });
-
-  })
-
- */
 
 });
 
