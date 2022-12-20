@@ -327,7 +327,7 @@ describe('AppComponent', () => {
 });
 
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
 
   const httpStub = {
     get(){
@@ -380,7 +380,7 @@ fdescribe('AppComponent', () => {
 
 
 
-  fit('NewTestcase for getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage',  function (done) {
+  it('NewTestcase for getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage',  function (done) {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
 
