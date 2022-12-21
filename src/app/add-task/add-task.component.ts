@@ -1,6 +1,7 @@
 import {Component, OnInit, Self} from '@angular/core';
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {AddTaskService} from "../add-task.service";
+import {ListService} from "../serives/list.service";
 
 @Component({
 
@@ -23,7 +24,7 @@ export class AddTaskComponent implements OnInit{
 
 
 constructor(@Self() private sessionStorageService: BrowserStorageService,
-            private Service:AddTaskService){
+            private Service:AddTaskService,public listService:ListService){
 }
 
   ngOnInit(): void {
@@ -51,7 +52,10 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
       this.message="Das Textfeld ist Leer!";
     }
     else {
-    this.Service.createTask(this.tasks,id,formatDate, listId).subscribe(data => {console.log(data)});
+    this.Service.createTask(this.tasks,id,formatDate, listId).subscribe(data => {
+      this.listService.toggleRender()
+      console.log("RenderCHECK from ADDTAASKCOMPONENT",data)
+    });
     this.tasks = this.value;
 
     }

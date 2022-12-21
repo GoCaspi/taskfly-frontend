@@ -10,6 +10,7 @@ import {ListService} from "./serives/list.service";
 import {Buffer} from "buffer";
 import {HomeComponent} from "./home/home.component";
 import {BehaviorSubject} from "rxjs";
+import {LocalService} from "./serives/local.service";
 
 
 interface User{
@@ -37,6 +38,7 @@ export class AppComponent implements OnInit{
   opened = false;
   sideList : BehaviorSubject<[]>
   private dialogRef: MatDialogRef<ResetDialogComponent> | undefined;
+  private homeDialogRef: MatDialogRef<HomeComponent> | undefined;
   allLists:any=[];
   allStaticList:any =[];
   allDynamicLists:any=[];
@@ -51,6 +53,7 @@ export class AppComponent implements OnInit{
               public router: Router,
               private http: HttpClient,
               public listService:ListService,
+              public store:LocalService
               ) {
     this.baseURL = process.env['NG_APP_PROD_URL'];
     this.sideList = new BehaviorSubject([])
@@ -81,11 +84,15 @@ export class AppComponent implements OnInit{
   }
 
 openDialoge(){
-    this.dialog.open(HomeComponent,{
+
+  this.homeDialogRef=  this.dialog.open(HomeComponent,{
       width:'500px',
       height:"350px",
       data:"right click"
     })
+  this.homeDialogRef.afterClosed().subscribe(()=>{
+    this.fetchAllListsOfUser()
+  })
   }
 openReset(){
   this.dialogRef = this.dialog.open(ResetDialogComponent)
@@ -161,6 +168,9 @@ getUIdOfCurrentUser(){
   }
 
   test(){
+
+this.store.saveData("storeTest","store works")
+    console.log("FROM STORE : ",this.store.getData("storeTest"))
     this.fetchAllListsOfUser()
   }
   logout(){
