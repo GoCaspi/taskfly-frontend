@@ -1,4 +1,4 @@
-import {Component, OnInit, Self} from '@angular/core';
+import {Component, OnInit, Self, SkipSelf} from '@angular/core';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Overlay} from "@angular/cdk/overlay";
@@ -10,6 +10,7 @@ import {ListService} from "./serives/list.service";
 import {Buffer} from "buffer";
 import {HomeComponent} from "./home/home.component";
 import {BehaviorSubject} from "rxjs";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 
 interface User{
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit{
   loginStatus: boolean | undefined = false;
   opened = false;
   sideList : BehaviorSubject<[]>
+  email: string = ""
   private dialogRef: MatDialogRef<ResetDialogComponent> | undefined;
   allLists:any=[];
   allStaticList:any =[];
@@ -48,12 +50,19 @@ export class AppComponent implements OnInit{
               public dialog: MatDialog,
               public rd: ResetDialogComponent,
               @Self() private sessionStorageService: BrowserStorageService,
+              @SkipSelf() private localStorageService: BrowserStorageService,
               public router: Router,
               private http: HttpClient,
               public listService:ListService,
               ) {
     this.baseURL = process.env['NG_APP_PROD_URL'];
     this.sideList = new BehaviorSubject([])
+  }
+  Settings = new FormGroup({
+    email: new FormControl(this.sessionStorageService.get("email"),[Validators.email,Validators.required]),
+  })
+  get emaill() {
+    return this.Settings.get('email');
   }
 
   init(): void {
@@ -67,6 +76,7 @@ export class AppComponent implements OnInit{
     },1000)
   }
   ngOnInit() {
+    this.email = this.sessionStorageService.get("email") || ""
     this.init()
     this.getUIdOfCurrentUser()
     if (!(this.sessionStorageService.get("loggedInUserId") == undefined || this.sessionStorageService.get("loggedInUserId") == "")) {
