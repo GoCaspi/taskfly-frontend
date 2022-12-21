@@ -8,6 +8,7 @@ import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {Buffer} from "buffer";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ListService} from "../serives/list.service";
+import {LocalService, UserInfoData, UserLoginData} from "../serives/local.service";
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,8 @@ export class LoginComponent {
               private toast: HotToastService,
               @Self() private sessionStorageService: BrowserStorageService,
               private http:HttpClient,
-              private listService:ListService
+              private listService:ListService,
+              private localService: LocalService
   ) {
     this.baseURL = process.env['NG_APP_PROD_URL']
   }
@@ -107,10 +109,16 @@ export class LoginComponent {
           error: 'There was an error'
         })
       ).subscribe(() =>{
+        let userLoginDTO: UserLoginData = {email:this.userEmail,password:this.userPassword,loginStatus:"true"}
+        this.localService.setUserLoginDTOToStore(userLoginDTO)
+        console.log("USERLOGINDTO DTO: ",this.localService.getUserLoginDTOFromStore())
         this.sessionStorageService.set("email",this.userEmail)
         this.sessionStorageService.set("password",this.userPassword)
         this.sessionStorageService.set("loginStatus", "true")
         this.authservice.userInfo(this.userEmail, this.userPassword).subscribe((data) =>{
+          let userInfoDTO:UserInfoData = {loggedInUserId:data.id,firstName:data.firstName,lastName:data.lastName}
+          this.localService.setUserInfoDTOToStore(userInfoDTO)
+          console.log("USERINFODTO DTO: ",this.localService.getUserInfoDTOFromStore())
           this.sessionStorageService.set("loggedInUserId", data.id)
           this.sessionStorageService.set("firstName", data.firstName)
           this.sessionStorageService.set("lastName", data.lastName)
