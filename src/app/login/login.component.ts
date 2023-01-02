@@ -131,7 +131,7 @@ export class LoginComponent {
       console.log("No email identified")
     } else {
       let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") + ":" + this.sessionStorageService.get("password")).toString('base64')
-      console.log("Identified email is :",email)
+      console.log("Identified email is :",this.sessionStorageService.get("email"))
       console.log("Identified pwd is :",this.sessionStorageService.get("password"))
 
 

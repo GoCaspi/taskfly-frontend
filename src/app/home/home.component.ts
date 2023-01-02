@@ -44,6 +44,7 @@ get list(){
       verticalPosition:this.verticalPosition,
     })
   }
+
 kollectionUser(){
     let name = this.KollectionForm.value.list
     let userid = this.sessionStorageService.get("loggedInUserId")
