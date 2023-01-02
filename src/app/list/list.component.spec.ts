@@ -47,6 +47,15 @@ describe('ListComponent', () => {
   let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
   let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
   let mockWichtigList : List = {id:"123",name:"Important",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  /*
+  const localStub = {
+    getData(key : string){
+      if (key === "loggedInUserId" || key === "inspectedListOwnerId"){return "12345"}
+      return ""
+    }
+  }
+
+   */
   const todosServiceStub = {
     getListById(id:string) {
       const todos = mockList;

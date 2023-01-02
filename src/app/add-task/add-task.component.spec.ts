@@ -1,7 +1,8 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import { AddTaskComponent } from './add-task.component';
 import {AddTaskService} from "../add-task.service";
-import {of} from "rxjs";
+import {Observable, of} from "rxjs";
+import {ListService} from "../serives/list.service";
 
 
 describe('AddTaskComponent', () => {
@@ -11,11 +12,15 @@ describe('AddTaskComponent', () => {
     let massage = "test";
     return of(massage);
     }};
+  const listServiceStub={
+    toggleRender() {
+    }
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ AddTaskComponent ],
-      providers:[{ provide:AddTaskService,useValue: serviceStub}]
+      providers:[{ provide:AddTaskService,useValue: serviceStub},{provide: ListService, useValue: listServiceStub}]
     })
 
     .compileComponents();

@@ -16,6 +16,14 @@ import {User} from "../user";
    lastName:string;
    loggedInUserId:string;
  }
+ export interface TaskData{
+   currentListId:string;
+   currentDeadline:string;
+   currentTopic:string;
+   currentDescription:string;
+   currentPriority:string;
+   currentTeam:string;
+ }
 @Injectable({
   providedIn: 'root'
 })
@@ -71,6 +79,41 @@ export class LocalService {
       DTO.loggedInUserId = this.getData("loggedInUserId")
     }
     return DTO
+  }
+  public setTaskDTOToStore(taskDataDTO: TaskData){
+ this.saveData("currentListId", taskDataDTO.currentListId)
+    this.saveData("currentDeadline", taskDataDTO.currentDeadline)
+    this.saveData("currentTopic", taskDataDTO.currentTopic)
+    this.saveData("currentDescription", taskDataDTO.currentDescription)
+    this.saveData("currentPriority", taskDataDTO.currentPriority)
+    this.saveData("currentTeam",taskDataDTO.currentTeam)
+  }
+
+  public getTaskDTOFromStore():TaskData{
+    let taskDTO:TaskData = {currentListId:"",currentTeam:"",currentPriority:"",currentDescription:"",currentTopic:"", currentDeadline:""}
+    if(this.getData("currentListId") && this.getData("currentDeadline") && this.getData("currentTopic") && this.getData("currentDescription")
+      && this.getData("currentPriority") && this.getData("currentTeam")){
+      taskDTO.currentDeadline = this.getData("currentDeadline")
+      taskDTO.currentTopic = this.getData("currentTopic")
+      taskDTO.currentDescription = this.getData("currentDescription")
+      taskDTO.currentListId = this.getData("currentListId")
+      taskDTO.currentPriority = this.getData("currentPriority")
+      taskDTO.currentTeam = this.getData("currentTeam")
+    }
+    return taskDTO
+  }
+
+  public getTaskDTOFromStore1():TaskData{
+    let taskDTO:TaskData = {currentListId:"",currentTeam:"",currentPriority:"",currentDescription:"",currentTopic:"", currentDeadline:""}
+
+      taskDTO.currentDeadline = this.getData("currentDeadline")
+      taskDTO.currentTopic = this.getData("currentTopic")
+      taskDTO.currentDescription = this.getData("currentDescription")
+      taskDTO.currentListId = this.getData("currentListId")
+      taskDTO.currentPriority = this.getData("currentPriority")
+      taskDTO.currentTeam = this.getData("currentTeam")
+
+    return taskDTO
   }
 
   private encrypt(txt: string): string {

@@ -3,6 +3,7 @@ import { MatDialog,} from "@angular/material/dialog";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {TaskService} from "../serives/task.service";
 import {ListService} from "../serives/list.service";
+import {LocalService} from "../serives/local.service";
 
 
 interface List{
@@ -53,7 +54,7 @@ export class TaskDialogComponent {
   allLists:any;
 
   constructor(public dialog: MatDialog, private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
- private listService:ListService) {}
+ private listService:ListService, public localService:LocalService) {}
   @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
 
   formatDate(date:string) : string {
@@ -63,9 +64,11 @@ export class TaskDialogComponent {
     return stringArray.join("");
   }
   ngOnInit(){
-    this.taskId = this.sessionStorageService.get("currentTask")!
+   // this.taskId = this.sessionStorageService.get("currentTask")!
+    this.taskId = this.localService.getData("currentTask")
     this.setInputFields();
-    this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe((data) =>{
+  //  this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe((data) =>{
+      this.listService.getAllListsByUserId(this.localService.getData("loggedInUserId")).subscribe((data) =>{
       this.allLists=data
       this.nameIdMap=this.nameListIdMap(this.allLists)
       console.log("NAMEIDMAP key: listname val:listId : ",this.nameIdMap)
@@ -73,12 +76,23 @@ export class TaskDialogComponent {
   }
 
   setInputFields(){
+    /*
     this.listIdInput1  = this.sessionStorageService.get("currentListId")!;
     this.teamInput  = this.sessionStorageService.get("currentTeam")!;
     this.deadlineInput  = new Date(this.sessionStorageService.get("currentDeadline")!)
     this.bTopicInput  = this.sessionStorageService.get("currentTopic")!;
     this.bPriorityInput  = this.sessionStorageService.get("currentPriority")!;
     this.bDescriptionInput  = this.sessionStorageService.get("currentDescription")!;
+
+     */
+    let taskDTO = this.localService.getTaskDTOFromStore1()
+    this.listIdInput1 = taskDTO.currentListId
+    this.teamInput = taskDTO.currentTeam
+    this.deadlineInput = new Date(taskDTO.currentDeadline)
+    this.bTopicInput = taskDTO.currentTopic
+    this.bPriorityInput = taskDTO.currentPriority
+    this.bDescriptionInput = taskDTO.currentDescription
+
   }
 
 
@@ -109,7 +123,7 @@ export class TaskDialogComponent {
     this.sls.deleteTask(this.taskId).then(_r => {
       this.dialog.closeAll()
     })
-    this.sessionStorageService.setBody("updated",true)
+  //  this.sessionStorageService.setBody("updated",true)
   }
   nameListIdMap(allLists:List[]){
     let nameIdMap = new Map();

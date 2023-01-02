@@ -12,6 +12,7 @@ import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
 import {ListService} from "./serives/list.service";
 import {BrowserStorageService, StorageService} from "./storage.service";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
+import {LocalService} from "./serives/local.service";
 
 interface TaskBody{
   topic : string;
@@ -245,6 +246,8 @@ describe('AppComponent', () => {
       return of(allLists)
     }
   }
+
+
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
   let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:""}
@@ -328,6 +331,18 @@ describe('AppComponent', () => {
 
 
 describe('AppComponent', () => {
+  const localStub = {
+    getData(key : string){
+      if(key == "loggedInUserId"){return "123"}
+      if(key == "password"){return "password"}
+      if(key == "email"){return "email"}
+      if(key == "loginStatus"){return "true"}
+      return ""
+    },
+    saveData(key : string,data:string){
+      window.localStorage.setItem("loggedInUserId","12345")
+    }
+  }
 
   const httpStub = {
     get(){
@@ -370,7 +385,7 @@ describe('AppComponent', () => {
         ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
           provide : MAT_DIALOG_SCROLL_STRATEGY,
           useValue : {}
-        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: listServiceStub}
+        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: listServiceStub},{provide: LocalService, useValue: localStub}
       ],
 
     }).compileComponents();
@@ -390,7 +405,8 @@ describe('AppComponent', () => {
 
     app.getUIdOfCurrentUser()
     fixture.detectChanges();
-    expect(window.sessionStorage.getItem("loggedInUserId")).toEqual("12345")
+
+    expect(window.localStorage.getItem("loggedInUserId")).toEqual("12345")
   done()
   });
 

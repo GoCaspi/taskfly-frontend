@@ -99,8 +99,8 @@ export class LoginComponent {
   }
   */
   loginUser() {
-    let status = this.sessionStorageService.get("loginStatus");
-
+  //  let status = this.sessionStorageService.get("loginStatus");
+let status = this.localService.getData("loginStatus")
     if(status == "false" || status == undefined){
       this.authservice.login(this.userEmail, this.userPassword).pipe(
         this.toast.observe({
@@ -112,16 +112,22 @@ export class LoginComponent {
         let userLoginDTO: UserLoginData = {email:this.userEmail,password:this.userPassword,loginStatus:"true"}
         this.localService.setUserLoginDTOToStore(userLoginDTO)
         console.log("USERLOGINDTO DTO: ",this.localService.getUserLoginDTOFromStore())
+        /*
         this.sessionStorageService.set("email",this.userEmail)
         this.sessionStorageService.set("password",this.userPassword)
         this.sessionStorageService.set("loginStatus", "true")
+
+         */
         this.authservice.userInfo(this.userEmail, this.userPassword).subscribe((data) =>{
           let userInfoDTO:UserInfoData = {loggedInUserId:data.id,firstName:data.firstName,lastName:data.lastName}
           this.localService.setUserInfoDTOToStore(userInfoDTO)
           console.log("USERINFODTO DTO: ",this.localService.getUserInfoDTOFromStore())
+          /*
           this.sessionStorageService.set("loggedInUserId", data.id)
           this.sessionStorageService.set("firstName", data.firstName)
           this.sessionStorageService.set("lastName", data.lastName)
+
+           */
           this.listService.toggleRenderList()
           this.listService.toggleRender()
         })
@@ -134,11 +140,13 @@ export class LoginComponent {
   }
 
   setUIdOfCurrentUser(){
-    let email= this.sessionStorageService.get("email")
+ //   let email= this.sessionStorageService.get("email")
+    let email = this.localService.getData("email")
     if(email == undefined || email == ""){
       console.log("No email identified")
     } else {
-      let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") + ":" + this.sessionStorageService.get("password")).toString('base64')
+   //   let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") + ":" + this.sessionStorageService.get("password")).toString('base64')
+      let cred =  "Basic " + Buffer.from(this.localService.getData("email") + ":" + this.localService.getData("password")).toString('base64')
       console.log("Identified email is :",email)
       console.log("Identified pwd is :",this.sessionStorageService.get("password"))
 
@@ -151,7 +159,8 @@ export class LoginComponent {
       };
       this.http.get<User>( this.baseURL+"/user/userInfo?email=" + email,httpOptions).subscribe(data=>{
         console.log("test:", data.id);
-        this.sessionStorageService.set("loggedInUserId",data.id);
+     //   this.sessionStorageService.set("loggedInUserId",data.id);
+        this.localService.saveData("loggedInUserId",data.id)
         console.log(this.sessionStorageService.get("loggedInUserId"))
         this.listService.toggleRenderList();
         this.listService.toggleRender()

@@ -61,10 +61,12 @@ export class AppComponent implements OnInit{
 
   init(): void {
     setInterval(()=>{
-      if(this.sessionStorageService.get("loginStatus") == "false"){
+   //   if(this.sessionStorageService.get("loginStatus") == "false"){
+        if(this.store.getData("loginStatus") == "false"){
         this.loginStatus = false;
       }
-      if(this.sessionStorageService.get("loginStatus") == "true"){
+    //  if(this.sessionStorageService.get("loginStatus") == "true"){
+        if(this.store.getData("loginStatus") == "true"){
         this.loginStatus = true;
       }
     },1000)
@@ -72,7 +74,8 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.init()
     this.getUIdOfCurrentUser()
-    if (!(this.sessionStorageService.get("loggedInUserId") == undefined || this.sessionStorageService.get("loggedInUserId") == "")) {
+  //  if (!(this.sessionStorageService.get("loggedInUserId") == undefined || this.sessionStorageService.get("loggedInUserId") == "")) {
+      if (!(this.store.getData("loggedInUserId") == undefined || this.store.getData("loggedInUserId") == "")) {
       this.fetchAllListsOfUser()
       this.listService.renderCheckList.subscribe(statement => {
         console.log("RenderCheck from Service is ", statement)
@@ -99,7 +102,8 @@ openReset(){
   this.dialogRef.afterClosed().subscribe(() =>{
     console.log("dialog is closed!")
   })
-  let status = this.sessionStorageService.get("loginStatus")
+ // let status = this.sessionStorageService.get("loginStatus")
+  let status = this.store.getData("loginStatus")
   if (status == "true") {
     this.loginStatus = true;
     console.log(this.loginStatus)
@@ -107,7 +111,8 @@ openReset(){
 }
 
 fetchAllListsOfUser(){
-  this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe({
+ // this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe({
+    this.listService.getAllListsByUserId(this.store.getData("loggedInUserId")).subscribe({
     next: (listData) => this.test123(listData),
     error: () => this.errorMessage()
   })
@@ -131,13 +136,15 @@ errorMessage(){
   this.allLists = []
 }
 getUIdOfCurrentUser(){
-    let email= this.sessionStorageService.get("email")
+ //   let email= this.sessionStorageService.get("email")
+  let email= this.store.getData("email")
   if(email == undefined || email == ""){
     console.log("No email identified")
     return
   }
 
-  let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") + ":" + this.sessionStorageService.get("password")).toString('base64')
+ // let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") + ":" + this.sessionStorageService.get("password")).toString('base64')
+  let cred =  "Basic " + Buffer.from(this.store.getData("email") + ":" + this.store.getData("password")).toString('base64')
   console.log("Identified email is :",email)
   console.log("Identified pwd is :",this.sessionStorageService.get("password"))
 
@@ -150,7 +157,8 @@ getUIdOfCurrentUser(){
   };
   this.http.get<User>( this.baseURL+"user/userInfo?email=" + email,httpOptions).subscribe(data=>{
     console.log(data.id);
-    this.sessionStorageService.set("loggedInUserId",data.id);
+   // this.sessionStorageService.set("loggedInUserId",data.id);
+    this.store.saveData("loggedInUserId",data.id)
     console.log(this.sessionStorageService.get("loggedInUserId"))
   })
 //  this.listServicce.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
@@ -159,9 +167,16 @@ getUIdOfCurrentUser(){
 }
 
   saveCurrentListId(listId:string, listName:string,ownerId:string){
+    /*
   this.sessionStorageService.set("inspectedList",listId)
     this.sessionStorageService.set("inspectedListName",listName)
     this.sessionStorageService.set("inspectedListOwnerId",ownerId)
+
+     */
+
+    this.store.saveData("inspectedList",listId)
+    this.store.saveData("inspectedListName",listName)
+    this.store.saveData("inspectedListOwnerId",ownerId)
 
     this.listService.toggleRender()
     this.fetchAllListsOfUser()
@@ -174,10 +189,19 @@ this.store.saveData("storeTest","store works")
     this.fetchAllListsOfUser()
   }
   logout(){
-    if(this.sessionStorageService.get("loginStatus") == "true"){
+  /*  if(this.sessionStorageService.get("loginStatus") == "true"){
       this.sessionStorageService.set("loginStatus", "false");
+    }
+
+   */
+
+    if(this.store.getData("loginStatus") == "true"){
+      this.store.saveData("loginStatus", "false");
     }
     window.sessionStorage.clear()
     window.sessionStorage.setItem("loginStatus", "false")
+
+    this.store.clearData()
+    this.store.saveData("loginStatus","false")
   }
 }
