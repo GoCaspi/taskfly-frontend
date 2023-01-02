@@ -58,6 +58,7 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
     else {
     this.Service.createTask(this.tasks,id,formatDate, listId).subscribe(data => {
       this.listService.toggleRender()
+      this.listService.toggleRenderList()
       console.log("RenderCHECK from ADDTAASKCOMPONENT",data)
     });
     this.tasks = this.value;
