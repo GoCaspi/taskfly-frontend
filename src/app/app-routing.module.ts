@@ -12,6 +12,7 @@ import {AssignedComponent} from "./assigned/assigned.component";
 import {UserSettingsComponent} from "./user-settings/user-settings.component";
 import {ListComponent} from "./list/list.component";
 import {AddTaskComponent} from "./add-task/add-task.component";
+import {ResetFormComponent} from "./reset-form/reset-form.component";
 
 const routes: Routes =[
   {
@@ -63,6 +64,10 @@ const routes: Routes =[
   {
     path:"add-task",
     component:AddTaskComponent
+  },
+  {
+    path:"reset",
+    component:ResetFormComponent
   }
 ];
 @NgModule({
