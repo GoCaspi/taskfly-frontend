@@ -42,14 +42,6 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { AddTaskComponent } from './add-task/add-task.component';
 import {MatSelectModule} from "@angular/material/select";
 
-
-
-
-
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
