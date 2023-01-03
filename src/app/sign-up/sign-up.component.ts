@@ -71,7 +71,10 @@ export class SignUpComponent   {
   }
 
   createUser(){
-    if(this.firstName == "" || this.lastName == "" || this.emaill == ""){
+    if(this.passsword != this.confirmPasssword) {
+      this.toast.error("the password does not match")
+    }
+    else if(this.firstName == "" || this.lastName == "" || this.emaill == "" || this.passsword == "" || this.confirmPasssword == ""){
       this.toast.error("All text field need to be filled")
     }else {
       this.service.createUser(this.firstName, this.lastName, this.emaill, this.confirmPasssword).pipe(
