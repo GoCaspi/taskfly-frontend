@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
-import {Buffer} from "buffer";
-import {HttpHeaders} from "@angular/common/http";
-import {User} from "../user";
 
-
-// DTO for userData
  export interface UserLoginData{
    email:string;
    password:string;
@@ -31,7 +26,7 @@ export class LocalService {
 
   key = "123";
 
-  constructor() { }
+ // constructor() { }
 
   public saveData(key: string, value: string) {
     localStorage.setItem(key, this.encrypt(value));
@@ -59,11 +54,9 @@ export class LocalService {
   }
   public getUserLoginDTOFromStore():UserLoginData{
    let DTO : UserLoginData = {email:"",password:"",loginStatus:""}
-  //  if(this.getData("email") && this.getData("password") &&this.getData("loginStatus")){
       DTO.email = this.getData("email")
       DTO.password = this.getData("password")
       DTO.loginStatus = this.getData("loginStatus")
-  //  }
    return DTO
   }
   public setUserInfoDTOToStore(userInfoDTO : UserInfoData){
@@ -73,11 +66,9 @@ export class LocalService {
   }
   public getUserInfoDTOFromStore():UserInfoData{
     let DTO : UserInfoData = {loggedInUserId:"",firstName:"",lastName:""}
- //   if(this.getData("loggedInUserId") && this.getData("firstName") &&this.getData("lastName")){
       DTO.firstName = this.getData("firstName")
       DTO.lastName = this.getData("lastName")
       DTO.loggedInUserId = this.getData("loggedInUserId")
-  //  }
     return DTO
   }
   public setTaskDTOToStore(taskDataDTO: TaskData){

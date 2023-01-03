@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import {LocalService, TaskData, UserLoginData} from './local.service';
+import {LocalService, TaskData, UserInfoData, UserLoginData} from './local.service';
 
 describe('LocalService', () => {
   let service: LocalService;
@@ -29,15 +29,32 @@ describe('LocalService', () => {
     service.removeData("fakeItem")
     expect(window.localStorage.getItem("fakeItem")).toEqual(null)
   });
-  it('should set a userInfoDTO to the storage', () => {
+  it('should set a userLoginDTO to the storage', () => {
     let DTO : UserLoginData = {email:"testEmail",password:"testPwd",loginStatus:"testStatus"}
     service.setUserLoginDTOToStore(DTO)
     expect(service.decrypt(window.localStorage.getItem("email")!)).toEqual(DTO.email)
   });
-  it('should get a userInfoDTO to the storage', () => {
+  it('should get a userLoginDTO to the storage', () => {
     let DTO : UserLoginData = {email:"testEmail",password:"testPwd",loginStatus:"testStatus"}
     service.setUserLoginDTOToStore(DTO)
     let actual = service.getUserLoginDTOFromStore()
     expect(actual).toEqual(DTO)
+  });
+  it('should set a userInfoDTO to the storage', () => {
+    let DTO : UserInfoData = {loggedInUserId:"",firstName:"",lastName:""}
+    service.setUserInfoDTOToStore(DTO)
+    expect(service.decrypt(window.localStorage.getItem("loggedInUserId")!)).toEqual(DTO.loggedInUserId)
+  });
+  it('should return true if the loginStatus is true', () => {
+   let encrypted = service.encrypt("true")
+    window.localStorage.setItem("loginStatus",encrypted)
+   let actual = service.getUserStatusFromStore()
+    expect(actual).toEqual(true)
+  });
+  it('should return false if the loginStatus is false', () => {
+    let encrypted = service.encrypt("false")
+    window.localStorage.setItem("loginStatus",encrypted)
+    let actual = service.getUserStatusFromStore()
+    expect(actual).toEqual(false)
   });
 });

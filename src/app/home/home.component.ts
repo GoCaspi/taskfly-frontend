@@ -26,7 +26,6 @@ export class HomeComponent {
   });
 
   constructor(
-   // public dialogRef: MatDialogRef<HomeComponent>,
     private toast: HotToastService,
    public localService:LocalService,
    @Self() private sessionStorageService: BrowserStorageService,
@@ -46,18 +45,15 @@ get list(){
   }
 kollectionUser(){
     let name = this.KollectionForm.value.list
- //   let userid = this.sessionStorageService.get("loggedInUserId")
   let userid = this.localService.getData("loggedInUserId")
   let body = {
       "name": name,
       "ownerID": userid
     }
- // let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") +":"+this.sessionStorageService.get("password")).toString('base64')
   let cred =  "Basic " + Buffer.from(this.localService.getData("email") +":"+this.localService.getData("password")).toString('base64')
   let headers_object = new HttpHeaders({
     "Authorization":cred
   });
-    console.log(body)
   this.http.post(this.baseURL+"/tc",body,{headers:headers_object,responseType:"text"}).pipe(
     this.toast.observe({
       success : "List wurde zugefügt",
@@ -65,7 +61,6 @@ kollectionUser(){
       error : "Textfeld ist leer"
     })
   ).subscribe(()=>{
-    //this.dialogRef.close()
   })
 }
 

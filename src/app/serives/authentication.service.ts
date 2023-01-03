@@ -25,13 +25,8 @@ export class AuthenticationService {
   }
 
   userUpdate(firstName: string, lastName: string, email: string){
-  //  let userid = this.sessionStorageService.get("loggedInUserId")
     let userid = this.localService.getData("loggedInUserId")
     let body: User = {
-    /*  "id": this.sessionStorageService.get("loggedInUserId") || "",
-      "srole": this.sessionStorageService.get("srole"),
-
-     */
       "id": this.localService.getData("loggedInUserId") || "",
       "srole": this.localService.getData("srole"),
       "password": null,
@@ -40,7 +35,6 @@ export class AuthenticationService {
       "lastName": lastName,
       "email": email,
       "body":{
-    //    "team": this.sessionStorageService.get("team") || ""
         "team": this.localService.getData("team") || ""
       }
     }
@@ -48,7 +42,6 @@ export class AuthenticationService {
   }
 
   createTeam(teamName: string, member: string[]){
-  //  let userid = this.sessionStorageService.get("loggedInUserId") || ""
     let userid = this.localService.getData("loggedInUserId") || ""
 
     let body: Team ={
