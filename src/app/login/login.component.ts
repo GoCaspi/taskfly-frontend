@@ -1,4 +1,4 @@
-import {Component, Self} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../serives/authentication.service";
 import {ActivatedRoute, Router,} from "@angular/router";
@@ -85,7 +85,7 @@ let status = this.localService.getData("loginStatus")
 
     let email = this.localService.getData("email")
     if(email == undefined || email == ""){
-
+console.log("")
     } else {
       let cred =  "Basic " + Buffer.from(this.localService.getData("email") + ":" + this.localService.getData("password")).toString('base64')
 

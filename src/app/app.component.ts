@@ -1,4 +1,4 @@
-import {Component, OnInit, Self} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Overlay} from "@angular/cdk/overlay";
@@ -96,12 +96,11 @@ openDialoge(){
 openReset(){
   this.dialogRef = this.dialog.open(ResetDialogComponent)
   this.dialogRef.afterClosed().subscribe(() =>{
-    console.log("dialog is closed!")
+    console.log("")
   })
   let status = this.store.getData("loginStatus")
   if (status == "true") {
     this.loginStatus = true;
-    console.log(this.loginStatus)
   }
 }
 
