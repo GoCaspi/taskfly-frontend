@@ -131,7 +131,7 @@ export class ListComponent implements OnInit {
       this.sessionStorageService.set("currentTeam",myData.team)
        */
       let taskDTO : TaskData = {currentListId:myData.listId, currentDeadline: myData.deadline, currentTopic:myData.body.topic,
-      currentDescription:myData.body.description,currentPriority:myData.body.highPriority, currentTeam:myData.team}
+      currentDescription:myData.body.description,currentPriority:myData.body.highPriority.toString(), currentTeam:myData.team}
       this.localService.setTaskDTOToStore(taskDTO)
 
       this.dialogRef = this.dialog.open(TaskDialogComponent)
