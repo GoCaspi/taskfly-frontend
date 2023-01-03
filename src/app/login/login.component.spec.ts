@@ -15,6 +15,7 @@ import {MAT_DIALOG_SCROLL_STRATEGY} from "@angular/material/dialog";
 import {Dialog} from "@angular/cdk/dialog";
 import {of} from "rxjs";
 import {MatMenuModule} from "@angular/material/menu";
+import {LocalService} from "../serives/local.service";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -42,6 +43,20 @@ describe('LoginComponent', () => {
     },
     set(){}
   }
+  const localServiceStub = {
+    getData(key:string){
+      let mockVal = "12345"
+      if (key == "loginStatus"){
+        return "false"
+      }
+      return mockVal
+    },
+    saveData(){},
+    setUserLoginDTOToStore(){},
+    getUserLoginDTOFromStore(){},
+    setUserInfoDTOToStore(){},
+    getUserInfoDTOFromStore(){}
+  }
   const httpServiceStub = {
     get(){
       let mockuser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
@@ -56,7 +71,8 @@ describe('LoginComponent', () => {
         {provide:AuthenticationService,useValue: createSpyFromClass(AuthenticationService)},HttpClient,HttpHandler,{
           provide : MAT_DIALOG_SCROLL_STRATEGY,
           useValue : {}
-        },{provide: Dialog, useValue: {}},{provide:BrowserStorageService,useValue: storageServiceStub},{provide: HttpClient,useValue: httpServiceStub}
+        },{provide: Dialog, useValue: {}},{provide:BrowserStorageService,useValue: storageServiceStub},{provide: HttpClient,useValue: httpServiceStub},
+        {provide: LocalService,useValue: localServiceStub}
         ],
 
     })

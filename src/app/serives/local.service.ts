@@ -59,11 +59,11 @@ export class LocalService {
   }
   public getUserLoginDTOFromStore():UserLoginData{
    let DTO : UserLoginData = {email:"",password:"",loginStatus:""}
-    if(this.getData("email") && this.getData("password") &&this.getData("loginStatus")){
+  //  if(this.getData("email") && this.getData("password") &&this.getData("loginStatus")){
       DTO.email = this.getData("email")
       DTO.password = this.getData("password")
       DTO.loginStatus = this.getData("loginStatus")
-    }
+  //  }
    return DTO
   }
   public setUserInfoDTOToStore(userInfoDTO : UserInfoData){
@@ -73,11 +73,11 @@ export class LocalService {
   }
   public getUserInfoDTOFromStore():UserInfoData{
     let DTO : UserInfoData = {loggedInUserId:"",firstName:"",lastName:""}
-    if(this.getData("loggedInUserId") && this.getData("firstName") &&this.getData("lastName")){
+ //   if(this.getData("loggedInUserId") && this.getData("firstName") &&this.getData("lastName")){
       DTO.firstName = this.getData("firstName")
       DTO.lastName = this.getData("lastName")
       DTO.loggedInUserId = this.getData("loggedInUserId")
-    }
+  //  }
     return DTO
   }
   public setTaskDTOToStore(taskDataDTO: TaskData){
@@ -87,20 +87,6 @@ export class LocalService {
     this.saveData("currentDescription", taskDataDTO.currentDescription)
     this.saveData("currentPriority", taskDataDTO.currentPriority)
     this.saveData("currentTeam",taskDataDTO.currentTeam)
-  }
-
-  public getTaskDTOFromStore():TaskData{
-    let taskDTO:TaskData = {currentListId:"",currentTeam:"",currentPriority:"",currentDescription:"",currentTopic:"", currentDeadline:""}
-    if(this.getData("currentListId") && this.getData("currentDeadline") && this.getData("currentTopic") && this.getData("currentDescription")
-      && this.getData("currentPriority") && this.getData("currentTeam")){
-      taskDTO.currentDeadline = this.getData("currentDeadline")
-      taskDTO.currentTopic = this.getData("currentTopic")
-      taskDTO.currentDescription = this.getData("currentDescription")
-      taskDTO.currentListId = this.getData("currentListId")
-      taskDTO.currentPriority = this.getData("currentPriority")
-      taskDTO.currentTeam = this.getData("currentTeam")
-    }
-    return taskDTO
   }
 
   public getTaskDTOFromStore1():TaskData{
@@ -116,11 +102,11 @@ export class LocalService {
     return taskDTO
   }
 
-  private encrypt(txt: string): string {
+  public encrypt(txt: string): string {
     return CryptoJS.AES.encrypt(txt, this.key).toString();
   }
 
-  private decrypt(txtToDecrypt: string) {
+  public decrypt(txtToDecrypt: string) {
     return CryptoJS.AES.decrypt(txtToDecrypt, this.key).toString(CryptoJS.enc.Utf8);
   }
 

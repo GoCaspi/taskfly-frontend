@@ -14,6 +14,7 @@ describe('AddTaskComponent', () => {
     }};
   const listServiceStub={
     toggleRender() {
+    },toggleRenderList() {
     }
   }
 

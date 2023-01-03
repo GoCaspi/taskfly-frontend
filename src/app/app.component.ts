@@ -155,7 +155,7 @@ getUIdOfCurrentUser(){
       'Authorization': cred
     })
   };
-  this.http.get<User>( this.baseURL+"user/userInfo?email=" + email,httpOptions).subscribe(data=>{
+  this.http.get<User>( this.baseURL+"/user/userInfo?email=" + email,httpOptions).subscribe(data=>{
     console.log(data.id);
    // this.sessionStorageService.set("loggedInUserId",data.id);
     this.store.saveData("loggedInUserId",data.id)

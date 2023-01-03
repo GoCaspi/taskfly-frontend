@@ -427,6 +427,14 @@ describe('AppComponent resetDialog', () => {
       return ""
     },set(){}
   }
+  const newStorageStub = {
+  saveData(key:string,data:string){
+  },
+    getData(key:string){
+    if(key == "loginStatus"){return "true"}
+    return""
+    }
+  }
   const listServiceStub = {
     renderCheck:new BehaviorSubject(true),
     renderCheckList:new BehaviorSubject(true),
@@ -452,7 +460,7 @@ describe('AppComponent resetDialog', () => {
         ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
           provide : MAT_DIALOG_SCROLL_STRATEGY,
           useValue : {}
-        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: listServiceStub}
+        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: listServiceStub},{provide: LocalService, useValue: newStorageStub}
       ],
 
     }).compileComponents();
@@ -501,6 +509,15 @@ describe('AppComponent ngOninit', () => {
       return ""
     },set(){}
   }
+  const localServiceStub = {
+    getData(key:string){
+      if(key == "loggedInUserId"){return "123"}
+      if(key == "password"){return "password"}
+      if(key == "email"){return "email"}
+      if(key == "loginStatus"){return "true"}
+      return ""
+    },saveData(){}
+  }
   const listServiceStub = {
     renderCheck:new BehaviorSubject(true),
     renderCheckList:new BehaviorSubject(true),
@@ -527,7 +544,7 @@ describe('AppComponent ngOninit', () => {
         ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
           provide : MAT_DIALOG_SCROLL_STRATEGY,
           useValue : {}
-        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: listServiceStub}
+        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: listServiceStub},{provide: LocalService, useValue: localServiceStub}
       ],
 
     }).compileComponents();

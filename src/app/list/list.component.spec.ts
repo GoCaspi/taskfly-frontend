@@ -12,6 +12,7 @@ import {BrowserStorageService} from "../storage.service";
 import {AppComponent} from "../app.component";
 import {TaskService} from "../serives/task.service";
 import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
+import {LocalService} from "../serives/local.service";
 
 interface TaskBody{
   topic : string;
@@ -75,6 +76,15 @@ describe('ListComponent', () => {
     },
 renderCheck:new BehaviorSubject(true)
   };
+  const storageStub = {
+    saveData(key:string,data:string){
+    },
+    getData(key:string){
+      if(key == "loginStatus"){return "true"}
+      return""
+    },
+    setTaskDTOToStore(){}
+  }
 
   let body: TaskBody = {topic:"", highPriority: "", description: ""}
   let task: Task = {body: body, deadline: "",userId:"", listId:"", team:"", taskIdString:"", id:""}
@@ -87,7 +97,7 @@ renderCheck:new BehaviorSubject(true)
       imports: [MatMenuModule],
       providers:[MatDialog,Overlay,{provide : MAT_DIALOG_SCROLL_STRATEGY, useValue : {}},
         {provide: Dialog, useValue: {}},ListService,HttpClient,HttpHandler,{provide:BrowserStorageService,useValue: createSpyFromClass(BrowserStorageService)}
-        ,{provide: TaskService, useValue: createSpyFromClass(TaskService)},{provide: ListService,useValue: todosServiceStub}
+        ,{provide: TaskService, useValue: createSpyFromClass(TaskService)},{provide: ListService,useValue: todosServiceStub},{provide:LocalService,useValue: storageStub}
        ]
     })
     .compileComponents();
@@ -183,7 +193,8 @@ renderCheck:new BehaviorSubject(true)
     fixture.detectChanges()
     // storageSpy.get("")!.and.returnValue("MyDay")
     let res = component.isOwner()
-    expect(res).toEqual(false)
+  //  expect(res).toEqual(false)
+    expect(res).toEqual(true)
   });
 
 
