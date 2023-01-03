@@ -1,4 +1,4 @@
-import {Component, Self} from '@angular/core';
+import {Component, OnInit, Self} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../serives/authentication.service";
 import {ActivatedRoute, Router,} from "@angular/router";
@@ -24,7 +24,7 @@ export class LoginComponent {
   userid=""
   baseURL:string|undefined;
 
-
+   hide = true;
   loginForm = new FormGroup({
 
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -42,13 +42,14 @@ export class LoginComponent {
     this.baseURL = process.env['NG_APP_PROD_URL']
   }
 
- /* testlogin() {
-    let info = {
-      password: this.testpassword,
-      email: this.testemail
-    }
-    this.authservice.getLoginByEmail(info.password, info.email)
-  }*/
+
+  /* testlogin() {
+     let info = {
+       password: this.testpassword,
+       email: this.testemail
+     }
+     this.authservice.getLoginByEmail(info.password, info.email)
+   }*/
 
 
 
@@ -131,7 +132,7 @@ export class LoginComponent {
       console.log("No email identified")
     } else {
       let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") + ":" + this.sessionStorageService.get("password")).toString('base64')
-      console.log("Identified email is :",("email"))
+      console.log("Identified email is :",this.sessionStorageService.get("email"))
       console.log("Identified pwd is :",this.sessionStorageService.get("password"))
 
 

@@ -86,7 +86,7 @@ export class AppComponent implements OnInit{
         if (statement) {
           this.fetchAllListsOfUser()
         }
-      })
+      });
     }
   }
 
