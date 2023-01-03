@@ -48,8 +48,7 @@
       <mat-sidenav-content>
 
          <router-outlet></router-outlet>
-        <app-add-task id="Task" *ngIf="loginStatus">
-          TESTESTES
+        <app-add-task id="Task" *ngIf="loginStatus && !(this.router.url =='/userSetting')">
         </app-add-task>
       </mat-sidenav-content>
     </mat-sidenav-container>

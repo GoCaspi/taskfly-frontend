@@ -183,7 +183,7 @@ getUIdOfCurrentUser(){
   }
 
   test(){
-
+console.log("router LOCATION", this.router.url)
 this.store.saveData("storeTest","store works")
     console.log("FROM STORE : ",this.store.getData("storeTest"))
     this.fetchAllListsOfUser()
