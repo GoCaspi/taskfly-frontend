@@ -1,6 +1,7 @@
 import {Component, OnInit, Self, SkipSelf} from '@angular/core';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
+import {ResetFormComponent} from "./reset-form/reset-form.component";
 import {Overlay} from "@angular/cdk/overlay";
 import {AuthenticationService} from "./serives/authentication.service";
 import {BROWSER_STORAGE, BrowserStorageService} from "./storage.service";
@@ -28,7 +29,7 @@ interface List{
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers:[MatDialog,ResetDialogComponent,Overlay, AuthenticationService, BrowserStorageService,
+  providers:[MatDialog,ResetDialogComponent,ResetFormComponent,Overlay, AuthenticationService, BrowserStorageService,
     { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
 
 })

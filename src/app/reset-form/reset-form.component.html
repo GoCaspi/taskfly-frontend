@@ -1,1 +1,28 @@
-<p>reset-form works!</p>
+<div id="resetContainer">
+  <div id="resetForm">
+    <h1>Reset Password</h1>
+    <p>Please enter a new password:</p>
+    <form [formGroup]="resetForm" (ngSubmit)="submitNewPassword()">
+      <mat-form-field>
+        <input id="pwdInput" matInput placeholder="password" formControlName="password" type="password"/>
+        <mat-error *ngIf="password?.errors?.['required']">
+          required field
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input id="pwdRepeat" matInput placeholder="repeat password" formControlName="repeatPassword" type="password"/>
+        <mat-error *ngIf="repeatPassword?.errors?.['required']">
+          required field
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <mat-error *ngIf="resetForm.errors?.['passwordsUnequal']">
+        both passwords do not match
+      </mat-error>
+      <button  mat-raised-button color="primary" type="submit">
+        Login
+      </button>
+    </form>
+  </div>
+</div>

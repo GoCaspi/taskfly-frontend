@@ -1,0 +1,16 @@
+#resetContainer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+#resetForm {
+  background: #eceff1;
+  border-radius: 16px;
+  padding: 5%;
+}
+
+
+

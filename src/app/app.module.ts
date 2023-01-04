@@ -41,6 +41,7 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { AddTaskComponent } from './add-task/add-task.component';
 import {MatSelectModule} from "@angular/material/select";
+import {ResetFormComponent} from "./reset-form/reset-form.component";
 
 
 
@@ -69,6 +70,7 @@ import {MatSelectModule} from "@angular/material/select";
     ListComponent,
     TaskDialogComponent,
     UpdateListDialogComponent,
+    ResetFormComponent
   ],
     imports: [
         BrowserModule,
