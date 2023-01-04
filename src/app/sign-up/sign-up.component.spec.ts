@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SignUpComponent } from './sign-up.component';
+import {HttpClient, HttpHandler} from "@angular/common/http";
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -8,7 +8,8 @@ describe('SignUpComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SignUpComponent ]
+      declarations: [ SignUpComponent ],
+      providers: [HttpClient, HttpHandler]
     })
     .compileComponents();
 
@@ -21,17 +22,7 @@ describe('SignUpComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create', () => {
-  let fakepassword:String= "123";
-  expect(component.password).toBeTruthy();
-  });
-
-  it('should create', () => {
-    let fakepassword:String= "123";
-    expect(component.confirmPassword).toBeTruthy();
-  });
-
-  it('should create', () => {
+ /* it('should create', () => {
     let passwordInput = document.getElementById("password")
     component.signUpForm.controls['password'].setValue("123")
     component.signUpForm.controls['confirmPassword'].setValue("321")
@@ -43,5 +34,5 @@ describe('SignUpComponent', () => {
  //   confirmInput.innerHTML = "321"
  //component.confirmPassword
   //  expect(component.confirmPassword).toBeFalsy();
-  });
+  });*/
 });

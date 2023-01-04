@@ -74,6 +74,9 @@ export class SignUpComponent   {
     if(this.passsword != this.confirmPasssword) {
       this.toast.error("the password does not match")
     }
+    else if(this.signUpForm.invalid){
+      this.toast.error("Please enter a correct email format ")
+    }
     else if(this.firstName == "" || this.lastName == "" || this.emaill == "" || this.passsword == "" || this.confirmPasssword == ""){
       this.toast.error("All text field need to be filled")
     }else {
@@ -81,7 +84,7 @@ export class SignUpComponent   {
         this.toast.observe({
           success: "User created",
           loading: 'creating...',
-          error: 'There was an error'
+          error: 'Email address already exists'
         })
       ).subscribe((_data)=>{
         console.log("")
