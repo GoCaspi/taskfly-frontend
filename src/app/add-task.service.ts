@@ -27,7 +27,6 @@ export class AddTaskService {
     if(userId != null){
       body = {body:{topic:taskTopic,highPriority:false},userId:userId,deadline, listId};
     }
-
     return this.http.post(this.baseURL+"/task",body);
   }
 

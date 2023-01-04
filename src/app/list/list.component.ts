@@ -69,6 +69,14 @@ export class ListComponent implements OnInit {
 
   }
 
+  renderHighPrioTasks(){
+    let userId = this.localService.getData("loggedInUserId")
+    this.taskService.getHighPrioTasks(userId).subscribe(tasks=>{
+      this.taskData = tasks
+      this.renderListName = "Wichtig"
+    })
+  }
+
   renderList1(){
     this.enabled = true;
     let checkId = this.localService.getData("inspectedList")

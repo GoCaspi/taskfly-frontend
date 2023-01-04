@@ -44,4 +44,10 @@ export class TaskService {
   async deleteTask(id: string) {
     this.http.delete(this.baseURL+"/task/" + id, {responseType: 'text'}).subscribe(r =>{console.log(r)})
   }
+
+  // static servicces methods:
+
+  getHighPrioTasks(id : string){
+    return this.http.get<Task[]>(this.baseURL+"/task/priority/"+id)
+  }
 }
