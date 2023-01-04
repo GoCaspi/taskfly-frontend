@@ -38,6 +38,7 @@ interface List{
   ownerID:string;
 }
 describe('AppComponent', () => {
+  let component : AppComponent;
   let storagespy: Spy<BrowserStorageService>
   let listServiceSpy: Spy<ListService>
   let listServiceSpy2: Spy<ListService>
@@ -101,11 +102,10 @@ describe('AppComponent', () => {
   it('Test ngOnInit init()', function (){
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-
     app.init()
     expect(app).toBeTruthy()
-  });
 
+  });
   it('should have a button-method openResetDialog, that opens the ResetDialog if clicked', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
@@ -287,7 +287,6 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     let emailReturn = "mockMail"
     let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
-
    // httpSpy.get.and.nextWith(mockUser)
     app.getUIdOfCurrentUser()
     expect(storageSpy.get("loggedInUserId")).toEqual("123")

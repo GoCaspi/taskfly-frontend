@@ -61,9 +61,6 @@ export class AppComponent implements OnInit{
   Settings = new FormGroup({
     email: new FormControl(this.sessionStorageService.get("email"),[Validators.email,Validators.required]),
   })
-  get emaill() {
-    return this.Settings.get('email');
-  }
 
   init(): void {
     setInterval(()=>{
@@ -89,7 +86,6 @@ export class AppComponent implements OnInit{
       });
     }
   }
-
 openDialoge(){
     this.dialog.open(HomeComponent,{
       width:'500px',

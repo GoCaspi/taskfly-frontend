@@ -61,10 +61,10 @@ kollectionUser(){
     this.toast.observe({
       success : "List wurde zugefügt",
       loading :'Logging in...',
-      error : "Textfeld ist leer"
+      error : "text field is empty"
     })
   ).subscribe(()=>{
-    //this.dialogRef.close()
+
   })
 }
 

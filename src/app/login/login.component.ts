@@ -1,4 +1,4 @@
-import {Component, OnInit, Self} from '@angular/core';
+import {Component, Self} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../serives/authentication.service";
 import {ActivatedRoute, Router,} from "@angular/router";
@@ -105,7 +105,7 @@ export class LoginComponent {
         this.toast.observe({
           success: 'Logged in successfully',
           loading: 'Logging in...',
-          error: 'There was an error'
+          error: 'Password is wrong'
         })
       ).subscribe(() =>{
         this.sessionStorageService.set("email",this.userEmail)

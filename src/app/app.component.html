@@ -10,11 +10,11 @@
             Login
           </button>
 
-        <button mat-button id="openResetButton" (click)="openReset()" *ngIf="!loginStatus">Passwort vergessen?</button>
-        <button mat-button [matMenuTriggerFor]="menu" *ngIf="loginStatus">Menu</button>
+        <button mat-button id="openResetButton" (click)="openReset()" *ngIf="!loginStatus">Forgot password<mat-icon>live_help</mat-icon></button>
+        <button mat-button [matMenuTriggerFor]="menu" *ngIf="loginStatus"><mat-icon>playlist_add</mat-icon>Menu</button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="/login" (click)="logout()">Logout</button>
-          <button mat-menu-item routerLink="/userSetting">Settings</button>
+          <button mat-menu-item routerLink="/login" (click)="logout()"><mat-icon>exit_to_app</mat-icon>Logout</button>
+          <button mat-menu-item routerLink="/userSetting"><mat-icon>perm_device_information</mat-icon>Settings</button>
         </mat-menu>
       </div>
     </mat-toolbar>
@@ -43,7 +43,7 @@
 
           </div>
          <button mat-raised-button class="newlistbutton" (click)="openDialoge()" *ngIf="loginStatus">
-           <mat-icon>add</mat-icon><a>Neue Liste</a>
+           <mat-icon>add</mat-icon><a>New List</a>
          </button><br>
          </div>
 
