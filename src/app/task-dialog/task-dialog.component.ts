@@ -3,6 +3,7 @@ import { MatDialog,} from "@angular/material/dialog";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {TaskService} from "../serives/task.service";
 import {ListService} from "../serives/list.service";
+import {HotToastService} from "@ngneat/hot-toast";
 interface List{
   id:string;
   name:string;
@@ -50,7 +51,7 @@ export class TaskDialogComponent {
   startDate = new Date(2022, 0, 1);
   allLists:any;
 
-  constructor(public dialog: MatDialog, private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
+  constructor(    public dialog: MatDialog, private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
  private listService:ListService) {}
   @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
 
