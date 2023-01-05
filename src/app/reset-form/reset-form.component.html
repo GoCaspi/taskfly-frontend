@@ -1,17 +1,21 @@
 <div id="resetContainer">
-  <div id="resetForm">
+  <mat-progress-spinner class="progressSpinner" mode="indeterminate" *ngIf="isLoading">
+
+  </mat-progress-spinner>
+  <div id="resetForm" *ngIf="!isLoading">
     <h1>Reset Password</h1>
     <p>Please enter a new password:</p>
+
     <form [formGroup]="resetForm" (ngSubmit)="submitNewPassword()">
       <mat-form-field>
-        <input id="pwdInput" matInput placeholder="password" formControlName="password" type="password"/>
+        <input id="pwdInput" matInput placeholder="new password" formControlName="password" type="password"/>
         <mat-error *ngIf="password?.errors?.['required']">
           required field
         </mat-error>
       </mat-form-field>
       <br>
       <mat-form-field>
-        <input id="pwdRepeat" matInput placeholder="repeat password" formControlName="repeatPassword" type="password"/>
+        <input id="pwdRepeat" matInput placeholder="repeat new password" formControlName="repeatPassword" type="password"/>
         <mat-error *ngIf="repeatPassword?.errors?.['required']">
           required field
         </mat-error>

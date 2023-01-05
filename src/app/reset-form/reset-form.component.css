@@ -4,6 +4,7 @@
   width: 100%;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 #resetForm {
@@ -12,5 +13,8 @@
   padding: 5%;
 }
 
+.progressSpinner{
+  align-self: center;
+}
 
 

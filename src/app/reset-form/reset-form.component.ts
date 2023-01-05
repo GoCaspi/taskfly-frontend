@@ -8,6 +8,7 @@ import {bothFieldsMatch} from "./passwordFormValidator";
 
 interface isValidResponse{
   isValid: boolean | null
+
 }
 
 @Component({
@@ -17,12 +18,13 @@ interface isValidResponse{
 })
 export class ResetFormComponent implements OnInit {
 
-
+  isLoading: boolean | null
   baseURL: string | undefined
   public resetToken: string | null
   public isValid: boolean | null = false
   constructor(private route: ActivatedRoute, private http: HttpClient, private toast: HotToastService, public router: Router) {
     this.resetToken = null
+    this.isLoading = true
     this.baseURL = process.env['NG_APP_PROD_URL']
   }
 
@@ -55,26 +57,31 @@ resetForm = new FormGroup({
           this.toast.error("this link is expired, invalid or have been used already.")
           this.router.navigate(["login"])
             .then(() => console.log("Successfully redirected"))
+        } else {
+          this.isLoading = false
         }
       })
   }
 
   submitNewPassword(): void {
-    let body = {
-      "pwd": this.password,
-      "token": this.resetToken
+    const body = {
+      pwd: this.password?.value,
+      token: this.resetToken
     }
-    this.http.post(this.baseURL + "/reset/setNew", body).pipe(
-      this.toast.observe({
-        success: "successfully set new password",
-        error: "there have been an error when resetting the password",
-        loading: "resetting password..."
-      })
-    ).subscribe({
-      next: () => {
-        this.router.navigate(["login"])
-          .then(() => console.log("Successfully redirected"))
-      }
+    console.log(body)
+    this.http.post(this.baseURL + "/reset/setNew", body)
+      .pipe(
+        this.toast.observe({
+          success: "successfully updated the current password!",
+          error: "there was an error when updating the password",
+          loading: "loading..."
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(["login"])
+            .then(() => console.log("Successfully redirected"))
+        }
     })
   }
 
