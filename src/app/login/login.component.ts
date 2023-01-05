@@ -97,15 +97,27 @@ export class LoginComponent {
             });
   }
   */
+  get confirmPassword(){
+    return this.sessionStorageService.get('confirmPassword');
+  }
+  get confirmEmail(){
+    return this.sessionStorageService.get('confirmEmail');
+  }
   loginUser() {
     let status = this.sessionStorageService.get("loginStatus");
 
-    if(status == "false" || status == undefined){
+    if (this.userEmail == ""){
+      this.toast.error("Enter a Correct email")
+    }
+    else if (this.userPassword == ""){
+      this.toast.error("Enter a Correct Password")
+    }
+    else if(status == "false" || status == undefined){
       this.authservice.login(this.userEmail, this.userPassword).pipe(
         this.toast.observe({
           success: 'Logged in successfully',
           loading: 'Logging in...',
-          error: 'Password is wrong'
+          error: 'Incorrect login information'
         })
       ).subscribe(() =>{
         this.sessionStorageService.set("email",this.userEmail)

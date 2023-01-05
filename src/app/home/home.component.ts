@@ -59,7 +59,7 @@ kollectionUser(){
     console.log(body)
   this.http.post(this.baseURL+"/tc",body,{headers:headers_object,responseType:"text"}).pipe(
     this.toast.observe({
-      success : "List wurde zugefügt",
+      success : "List has been added",
       loading :'Logging in...',
       error : "text field is empty"
     })
