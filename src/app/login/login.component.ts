@@ -55,7 +55,7 @@ export class LoginComponent {
   loginUser() {
 
 let status = this.localService.getData("loginStatus")
-    if(status == "false" || status == undefined){
+    if(status == "false" || status == undefined || status == ""){
       this.authservice.login(this.userEmail, this.userPassword).pipe(
         this.toast.observe({
           success: 'Logged in successfully',
