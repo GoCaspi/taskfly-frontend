@@ -38,6 +38,8 @@ export class SignUpComponent   {
   emaill: string = ""
   passsword: string = ""
   confirmPasssword: string = ""
+
+  emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
   constructor(
     @Self() private sessionStorageService: BrowserStorageService,
     @SkipSelf() private localStorageService: BrowserStorageService,
@@ -48,7 +50,9 @@ export class SignUpComponent   {
   signUpForm = new FormGroup({
     firstName: new FormControl('',Validators.required),
     lastName: new FormControl('',Validators.required),
-    email: new FormControl('',[Validators.email,Validators.required]),
+    //email: new FormControl('',[Validators.email,Validators.required]),
+    //email: new FormControl(null, Validators.compose([Validators.pattern(/^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[de]{2,})$/)])),
+    email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]),
     password: new FormControl('',Validators.required),
     confirmPassword: new FormControl('',Validators.required),
   },{validators: passwordsMatchValidator()})
@@ -74,11 +78,11 @@ export class SignUpComponent   {
     if(this.passsword != this.confirmPasssword) {
       this.toast.error("the password does not match")
     }
-    else if(this.signUpForm.invalid){
-      this.toast.error("Please enter a correct email format ")
-    }
     else if(this.firstName == "" || this.lastName == "" || this.emaill == "" || this.passsword == "" || this.confirmPasssword == ""){
       this.toast.error("All text field need to be filled")
+    }
+    else if(this.signUpForm.get('email')?.invalid){
+      this.toast.error("Please enter a correct email format ")
     }else {
       this.service.createUser(this.firstName, this.lastName, this.emaill, this.confirmPasssword).pipe(
         this.toast.observe({
