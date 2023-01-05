@@ -10,6 +10,7 @@ interface TaskBody{
 
 interface Task{
   body: TaskBody;
+  id:string;
   userId : string;
   listId : string;
   taskIdString : string;

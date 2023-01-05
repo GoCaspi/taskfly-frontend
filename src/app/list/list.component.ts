@@ -19,7 +19,7 @@ interface User{
 }
 interface TaskBody{
   topic : string;
-  highPriority: string;
+  highPriority: string | boolean;
   description: string;
 }
 
@@ -63,6 +63,8 @@ export class ListComponent implements OnInit {
 
         if(this.IAmStatic1()){
           this.staticList = true;
+          this.initRenderImportant()
+          console.log("finished ininitRenderImportant. TaskData is: ",this.taskData)
         }else {this.staticList=false;}
       }
     })
@@ -137,18 +139,19 @@ export class ListComponent implements OnInit {
   IAmStatic1() : boolean{
     let checkName = this.localService.getData("inspectedListName")
     let checkId = this.localService.getData("loggedInUserId")
-    if((checkName == "MyDay" || checkName == "Important" || checkName == "" || checkName == "Geplant") && checkId == this.sessionStorageService.get("inspectedListOwnerId")){
-      return true
+    return (checkName == "MyDay" || checkName == "Important" || checkName == "" || checkName == "Geplant") && checkId == this.localService.getData("inspectedListOwnerId");
+  }
+
+  initRenderImportant(){
+    let checkName = this.localService.getData("inspectedListName")
+    if(checkName === "Important"){
+      this.renderHighPrioTasks()
     }
-    return false
   }
 
   isOwner() : boolean{
     let checkId = this.localService.getData("loggedInUserId")
-      if( checkId == this.localService.getData("inspectedListOwnerId")){
-      return true
-    }
-    return false
+      return checkId == this.localService.getData("inspectedListOwnerId");
   }
 
 }
