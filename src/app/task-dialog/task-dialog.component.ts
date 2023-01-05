@@ -3,8 +3,6 @@ import { MatDialog,} from "@angular/material/dialog";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {TaskService} from "../serives/task.service";
 import {ListService} from "../serives/list.service";
-
-
 interface List{
   id:string;
   name:string;
@@ -85,7 +83,6 @@ export class TaskDialogComponent {
   sendUpdate(){
     let format : boolean ;
     if(this.bPriorityInput == "hoch"){
-
        format = true
     }
     else if(this.bPriorityInput == "niedrig"){
@@ -100,11 +97,9 @@ export class TaskDialogComponent {
     let update :  TaskUpdate = {body:updateBody,listId:this.formatListNameToId(this.listIdInput1),
       deadline:this.formatDate(this.deadlineInput.toISOString()),team:this.teamInput}
     console.log("update is",update)
-
     this.sls.updateTask(update, this.taskId).then(_r => this.dialog.closeAll())
     this.change.emit(true)
   }
-
   deleteTask(){
     this.sls.deleteTask(this.taskId).then(_r => {
       this.dialog.closeAll()

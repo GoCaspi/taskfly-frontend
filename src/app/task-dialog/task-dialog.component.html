@@ -1,5 +1,5 @@
-<p>Edit your task  <mat-icon>perm_data_setting</mat-icon></p>
 
+<h2 class="examle-h2"><mat-icon>perm_data_setting</mat-icon> Edit your task</h2>
 <div class="priorityBox">
   <mat-label class="priorityLabel">Priority</mat-label>
   <mat-radio-group aria-label="Select an option">
@@ -41,5 +41,7 @@
 
 </form>
 
-<button mat-button color="primary" (click)="sendUpdate()">Send update</button>
-<button mat-button color="warn" (click)="deleteTask()">Delete task</button>
+<div class="example-button-row">
+<button mat-raised-button color="primary" cdkFocusInitial  aria-label="snack-bar" class="button mat-primary" (click)="sendUpdate()" matDialogClose="">Send update</button>
+<button mat-raised-button color="warn" cdkFocusInitial  aria-label="snack-bar" class="button mat-primary" (click)="deleteTask()"matDialogClose="">Delete task</button>
+</div>
