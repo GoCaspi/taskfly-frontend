@@ -97,12 +97,7 @@ export class LoginComponent {
             });
   }
   */
-  get confirmPassword(){
-    return this.sessionStorageService.get('confirmPassword');
-  }
-  get confirmEmail(){
-    return this.sessionStorageService.get('confirmEmail');
-  }
+
   loginUser() {
     let status = this.sessionStorageService.get("loginStatus");
 
