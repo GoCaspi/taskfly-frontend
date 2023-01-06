@@ -75,11 +75,10 @@ describe('TaskDialogComponent', () => {
   it('sendUpdate', async () =>{
     component.deadlineInput = new Date()
     taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
-
     }))
     component.sendUpdate()
     expect(component).toBeTruthy()
-  })
+  });
 
   it('deleteTask', async () => {
     /* const closeDialogSpy = spyOn(component.dialog, 'closeAll').and.returnValue({afterClosed: () => EMPTY} as any)

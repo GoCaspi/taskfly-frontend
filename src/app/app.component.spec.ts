@@ -127,6 +127,16 @@ describe('AppComponent', () => {
     app.logout();
     expect(storagespy.get("loginStatus")).toEqual("true");
   });
+  it('logout test 2', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    storagespy.get.and.returnValue("true")
+    storagespy.set.and.returnValue("false")
+    window.sessionStorage.setItem("true", "true")
+    //storagespy.storage.setItem("loginStatus", "true");
+    app.logout();
+    expect(storagespy.get("loginStatus")).toEqual("true");
+  });
 
   it('fetch all lists of user', function () {
     const fixture = TestBed.createComponent(AppComponent);
