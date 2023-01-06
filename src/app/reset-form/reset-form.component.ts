@@ -58,6 +58,7 @@ resetForm = new FormGroup({
           this.router.navigate(["login"])
             .then(() => console.log("Successfully redirected"))
         } else {
+          this.isValid = true
           this.isLoading = false
         }
       })
