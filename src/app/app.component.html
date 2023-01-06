@@ -29,7 +29,8 @@
 
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <mat-list *ngIf="enabled && loginStatus">
-  <mat-list-item class="listElement" *ngFor="let list of allStaticList" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
+
+  <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','Important',this.store.getData('loggedInUserId'))">Important</mat-list-item>
 </mat-list>
          <br><br><br>
          <mat-list *ngIf="loginStatus">

@@ -115,7 +115,10 @@ export class TaskDialogComponent {
       deadline:this.formatDate(this.deadlineInput.toISOString()),team:this.teamInput}
     console.log("update is",update)
 
-    this.sls.updateTask(update, this.taskId).then(_r => this.dialog.closeAll())
+    this.sls.updateTask(update, this.taskId).then(_r => {
+      this.listService.toggleRender();
+      this.dialog.closeAll()
+    })
     this.change.emit(true)
   }
 
