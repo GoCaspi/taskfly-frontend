@@ -1,5 +1,5 @@
 
-<div class="form-container mat-elevation-z5">
+<div class="form-container mat-elevation-z5" *ngIf="!alreadyLogin">
     <h1>Login</h1>
 
     <form [formGroup]="loginForm" (ngSubmit)="loginUser()" >
@@ -14,13 +14,13 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input id="pwdInput" matInput placeholder="Password" formControlName="password" type="password"[(ngModel)]="userPassword"/>
+        <input id="pwdInput" matInput placeholder="Password" formControlName="password" type="password" [(ngModel)]="userPassword"/>
         <mat-error *ngIf="password?.errors?.['required']">
           Password is required
         </mat-error>
       </mat-form-field>
       <div class="button-class">
-        <button  mat-raised-button color="primary"type="submit">
+        <button  mat-raised-button color="primary" type="submit">
           Login
         </button>
       </div><br>

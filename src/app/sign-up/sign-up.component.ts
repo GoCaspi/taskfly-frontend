@@ -1,4 +1,4 @@
-import {Component, Self, SkipSelf} from '@angular/core';
+import {Component, Self} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -9,6 +9,7 @@ import {
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {HotToastService} from "@ngneat/hot-toast";
 import {SignUpService} from "../serives/sign-up.service";
+import {Router} from "@angular/router";
 
 export function passwordsMatchValidator():ValidatorFn{
   // @ts-ignore
@@ -42,9 +43,9 @@ export class SignUpComponent   {
   emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
   constructor(
     @Self() private sessionStorageService: BrowserStorageService,
-    @SkipSelf() private localStorageService: BrowserStorageService,
     private service: SignUpService,
     private toast: HotToastService,
+    public router: Router,
   ){}
 
   signUpForm = new FormGroup({
@@ -53,7 +54,7 @@ export class SignUpComponent   {
     //email: new FormControl('',[Validators.email,Validators.required]),
     //email: new FormControl(null, Validators.compose([Validators.pattern(/^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[de]{2,})$/)])),
     email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]),
-    password: new FormControl('',Validators.required),
+    password: new FormControl('',[Validators.required, Validators.minLength(5)]),
     confirmPassword: new FormControl('',Validators.required),
   },{validators: passwordsMatchValidator()})
 
@@ -91,7 +92,7 @@ export class SignUpComponent   {
           error: 'Email address already exists'
         })
       ).subscribe((_data)=>{
-        console.log("")
+        this.router.navigate(['login']).then(r =>console.log(r))
       })
     }
   }

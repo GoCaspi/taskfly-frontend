@@ -1,4 +1,4 @@
-import {Component, Self} from '@angular/core';
+import {Component, OnInit, Self} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../serives/authentication.service";
 import {ActivatedRoute, Router,} from "@angular/router";
@@ -16,13 +16,14 @@ import {ListService} from "../serives/list.service";
   providers:[BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
 
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   loginStatus: boolean | undefined = false;
   userEmail=""
   userPassword=""
   userid=""
   baseURL:string|undefined;
+  alreadyLogin: boolean = false;
 
 
   loginForm = new FormGroup({
@@ -150,9 +151,14 @@ export class LoginComponent {
       })
 
     }
-
 //  this.listServicce.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
 //    console.log("ListDData from service",listData)
 //  })
+  }
+
+  ngOnInit(): void {
+    if(this.sessionStorageService.get("loginStatus") == "true"){
+      this.alreadyLogin = true;
+    }
   }
 }
