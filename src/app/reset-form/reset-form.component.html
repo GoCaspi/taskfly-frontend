@@ -9,19 +9,19 @@
     <form [formGroup]="resetForm" (ngSubmit)="submitNewPassword()">
       <mat-form-field>
         <input id="pwdInput" matInput placeholder="new password" formControlName="password" type="password"/>
-        <mat-error *ngIf="password?.errors?.['required']">
+        <mat-error *ngIf="password?.errors?.['required']" id="passwordError">
           required field
         </mat-error>
       </mat-form-field>
       <br>
       <mat-form-field>
         <input id="pwdRepeat" matInput placeholder="repeat new password" formControlName="repeatPassword" type="password"/>
-        <mat-error *ngIf="repeatPassword?.errors?.['required']">
+        <mat-error *ngIf="repeatPassword?.errors?.['required']" id="repeatPasswordError">
           required field
         </mat-error>
       </mat-form-field>
       <br>
-      <mat-error *ngIf="resetForm.errors?.['passwordsUnequal']">
+      <mat-error *ngIf="resetForm.errors?.['passwordsUnequal']" id="passwordsUnequalError">
         both passwords do not match
       </mat-error>
       <button  mat-raised-button color="primary" type="submit">

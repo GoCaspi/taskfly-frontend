@@ -1,16 +1,10 @@
-import {Component, NgModule, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {MatFormField} from "@angular/material/form-field";
 import {HotToastService} from "@ngneat/hot-toast";
-import {FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {bothFieldsMatch} from "./passwordFormValidator";
 import {ResetConfirmationService} from "../serives/reset-confirmation.service";
-
-interface isValidResponse{
-  isValid: boolean | null
-
-}
 
 @Component({
   selector: 'app-reset-form',
@@ -66,20 +60,23 @@ resetForm = new FormGroup({
   }
 
   submitNewPassword(): void {
-    this.resetService.submitNewPassword(this.password?.value, this.resetToken)
-      .pipe(
-        this.toast.observe({
-          success: "successfully updated the current password!",
-          error: "there was an error when updating the password",
-          loading: "loading..."
+    if (this.resetForm.valid){
+      this.resetService.submitNewPassword(this.password?.value, this.resetToken)
+        .pipe(
+          this.toast.observe({
+            success: "successfully updated the current password!",
+            error: "there was an error when updating the password",
+            loading: "loading..."
+          })
+        )
+        .subscribe({
+          next: () => {
+            this.router.navigate(["login"])
+              .then(() => console.log("Successfully redirected"))
+          }
         })
-      )
-      .subscribe({
-        next: () => {
-          this.router.navigate(["login"])
-            .then(() => console.log("Successfully redirected"))
-        }
-    })
+    }
+
   }
 
 

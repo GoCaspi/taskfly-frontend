@@ -42,7 +42,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { AddTaskComponent } from './add-task/add-task.component';
 import {MatSelectModule} from "@angular/material/select";
 import {ResetFormComponent} from "./reset-form/reset-form.component";
-import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 

@@ -2,7 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 
-interface isValidResponse{
+interface IsValidResponse{
   isValid: boolean | null
 
 }
@@ -18,7 +18,7 @@ export class ResetConfirmationService {
   }
 
   checkTokenValidity(resetToken: string | null): Observable<any>{
-    return this.http.get<isValidResponse>(this.baseURL + "/reset/valid/" + resetToken)
+    return this.http.get<IsValidResponse>(this.baseURL + "/reset/valid/" + resetToken)
   }
 
   submitNewPassword(password: string | null | undefined, resetToken: string | null): Observable<any>{

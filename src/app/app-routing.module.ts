@@ -14,7 +14,7 @@ import {ListComponent} from "./list/list.component";
 import {AddTaskComponent} from "./add-task/add-task.component";
 import {ResetFormComponent} from "./reset-form/reset-form.component";
 
-const routes: Routes =[
+export const routes: Routes =[
   {
     path:"",
     pathMatch:'full',
