@@ -6,12 +6,17 @@ import {Observable, from, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {LoginComponent} from "../login/login.component";
+import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
+import {ResetConfirmationService} from "../serives/reset-confirmation.service";
 
 describe('ResetFormComponent', () => {
   let component: ResetFormComponent;
   let fixture: ComponentFixture<ResetFormComponent>;
+  let service: ResetConfirmationService;
   let route: ActivatedRoute
-  let httpSpy = jasmine.createSpyObj('HttpClient', ['get', 'post'])
+  let resetServiceSpy: Spy<ResetConfirmationService>
+  let resetService: ResetConfirmationService
+  let httpMock : HttpTestingController
   let httpStub = {
     get(){
       return of({isValid: true})
@@ -35,22 +40,21 @@ describe('ResetFormComponent', () => {
         }
       },
         {
-          provide: HttpClient,
-          useValue: httpSpy
-
-        },
-        {
           provide: Router,
           useValue: routerStub
         }
-      ]
+      ],
+      imports: [HttpClientTestingModule]
     })
     .compileComponents();
+    httpMock = TestBed.inject(HttpTestingController);
     //httpSpy = TestBed.inject<any>(HttpClient);
     fixture = TestBed.createComponent(ResetFormComponent);
-    httpSpy.get.and.returnValue(of({ status: 200, data: {isValid:true} }));
+
     component = fixture.componentInstance;
+
     fixture.detectChanges();
+
   });
 
   it('should create', () => {
@@ -59,9 +63,9 @@ describe('ResetFormComponent', () => {
   });
 
   it("isValid should be true by default", () => {
-    httpSpy.get.and.returnValue(of({ status: 200, data: {isValid:true} }));
-
-
+    const req = httpMock.expectOne("undefined/reset/valid/123");
+    req.flush({isValid: true})
+    fixture.detectChanges()
     expect(component.isValid).toEqual(true)
   })
 });

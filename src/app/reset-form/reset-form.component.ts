@@ -5,6 +5,7 @@ import {MatFormField} from "@angular/material/form-field";
 import {HotToastService} from "@ngneat/hot-toast";
 import {FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {bothFieldsMatch} from "./passwordFormValidator";
+import {ResetConfirmationService} from "../serives/reset-confirmation.service";
 
 interface isValidResponse{
   isValid: boolean | null
@@ -22,7 +23,7 @@ export class ResetFormComponent implements OnInit {
   baseURL: string | undefined
   public resetToken: string | null
   public isValid: boolean | null = false
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toast: HotToastService, public router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toast: HotToastService, public router: Router, private resetService: ResetConfirmationService) {
     this.resetToken = null
     this.isLoading = true
     this.baseURL = process.env['NG_APP_PROD_URL']
@@ -51,7 +52,7 @@ resetForm = new FormGroup({
   }
 
   tokenIsValid(): void {
-    this.http.get<isValidResponse>(this.baseURL + "/reset/valid/" + this.resetToken)
+    this.resetService.checkTokenValidity(this.resetToken)
       .subscribe(data => {
         if (!data.isValid){
           this.toast.error("this link is expired, invalid or have been used already.")
@@ -65,12 +66,7 @@ resetForm = new FormGroup({
   }
 
   submitNewPassword(): void {
-    const body = {
-      pwd: this.password?.value,
-      token: this.resetToken
-    }
-    console.log(body)
-    this.http.post(this.baseURL + "/reset/setNew", body)
+    this.resetService.submitNewPassword(this.password?.value, this.resetToken)
       .pipe(
         this.toast.observe({
           success: "successfully updated the current password!",
