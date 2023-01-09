@@ -57,9 +57,6 @@ export class ListComponent implements OnInit {
       if(statement){
         this.renderList1()
         this.userIsOwner = this.isOwner();
-        if(this.userIsOwner){
-          console.log("I AM OWNER!!!")
-        }
 
         if(this.IAmStatic1()){
           this.staticList = true;
@@ -103,10 +100,13 @@ export class ListComponent implements OnInit {
   renderList1(){
     this.enabled = true;
     let checkId = this.localService.getData("inspectedList")
-    this.listService.getListById(checkId).subscribe(list =>{
-      this.taskData = list.tasks
-      this.renderListName = list.name;
-    })
+    if(!this.IAmStatic1()){
+      this.listService.getListById(checkId).subscribe(list =>{
+        this.taskData = list.tasks
+        this.renderListName = list.name;
+      })
+    }
+
   }
 
   openListDialog(){
