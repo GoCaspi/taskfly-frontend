@@ -10,6 +10,7 @@ interface TaskBody{
 
 interface Task{
   body: TaskBody;
+  id:string;
   userId : string;
   listId : string;
   taskIdString : string;
@@ -31,6 +32,7 @@ export class TaskService {
   baseURL:string|undefined
 
   constructor(private http:HttpClient) { this.baseURL = process.env['NG_APP_PROD_URL'];}
+
   getTaskById(id : string|null){
     if(id == null){return this.http.get(this.baseURL+"/task/taskId/")}
     return this.http.get(this.baseURL+"/task/taskId/"+id)
@@ -42,5 +44,19 @@ export class TaskService {
 
   async deleteTask(id: string) {
     this.http.delete(this.baseURL+"/task/" + id, {responseType: 'text'}).subscribe(r =>{console.log(r)})
+  }
+
+  // static servicces methods:
+
+  getScheduledTasks(id:string){
+    return this.http.get<Task[]>(this.baseURL+"/task/scheduled/week/"+id)
+  }
+
+  getPrivateTasks(id:string){
+    return this.http.get<Task[]>(this.baseURL+"/task/private/"+id)
+  }
+
+  getHighPrioTasks(id : string){
+    return this.http.get<Task[]>(this.baseURL+"/task/priority/"+id)
   }
 }

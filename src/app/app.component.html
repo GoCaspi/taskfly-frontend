@@ -20,21 +20,19 @@
         </mat-menu>
       </div>
     </mat-toolbar>
-
-    <mat-sidenav-container id="sidenavContainer">
-
-       <mat-sidenav [(opened)]="opened" mode="side" *ngIf="loginStatus" id="sidenav">
-         <div id="test1">
-           <div id="test2">
-
-             <img class="avatar mat-elevation-z4" src="assets/img/105198243.jpeg" alt="{{'language' }}">
-             <h4>{{email}}</h4>
-             <p class="designation">Software Engineer</p>
+    <mat-sidenav-container>
+       <mat-sidenav [(opened)]="opened" mode="side" *ngIf="loginStatus">
+         <h4 class="name">User Name</h4>
          <mat-divider></mat-divider>
           <br>
+
+
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <mat-list *ngIf="enabled && loginStatus">
-  <mat-list-item class="listElement" *ngFor="let list of allStaticList" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
+
+  <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','Important',this.store.getData('loggedInUserId'))">Important</mat-list-item>
+  <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','Geplant',this.store.getData('loggedInUserId'))">Scheduled</mat-list-item>
+  <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','MyDay',this.store.getData('loggedInUserId'))">MyDay</mat-list-item>
 </mat-list>
          <br><br><br>
          <mat-list *ngIf="loginStatus">
@@ -42,17 +40,18 @@
          </mat-list>
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
-          </div>
+
          <button mat-raised-button class="newlistbutton"(click)="openDialoge()" *ngIf="loginStatus">
            <mat-icon>add</mat-icon><a>Neue Liste</a>
          </button><br>
-         </div>
+
 
        </mat-sidenav>
 
       <mat-sidenav-content>
+
          <router-outlet></router-outlet>
-        <app-add-task id="Task" *ngIf="loginStatus">
+        <app-add-task id="Task" *ngIf="loginStatus && !(this.router.url =='/userSetting') && !this.detectStaticList()">
         </app-add-task>
       </mat-sidenav-content>
     </mat-sidenav-container>

@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed, tick, waitForAsync} from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
 import {AuthenticationService} from "./serives/authentication.service";
@@ -12,6 +12,7 @@ import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
 import {ListService} from "./serives/list.service";
 import {BrowserStorageService, StorageService} from "./storage.service";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
+import {LocalService} from "./serives/local.service";
 
 interface TaskBody{
   topic : string;
@@ -231,6 +232,9 @@ describe('AppComponent', () => {
   const storageStub ={
     get(key:string){
       if(key == "loggedInUserId"){return "123"}
+      if(key == "password"){return "password"}
+      if(key == "email"){return "email"}
+      if(key == "loginStatus"){return "true"}
       return ""
     },set(){}
   }
@@ -242,6 +246,8 @@ describe('AppComponent', () => {
       return of(allLists)
     }
   }
+
+
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
   let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:""}
@@ -282,7 +288,7 @@ describe('AppComponent', () => {
       expect(app).toBeTruthy()
     });
 
-  it('222222222222222222222 getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage', function () {
+  it(' getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     let emailReturn = "mockMail"
@@ -293,6 +299,276 @@ describe('AppComponent', () => {
     expect(storageSpy.get("loggedInUserId")).toEqual("123")
   });
 
+  it('NewTestcase for getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+
+
+    app.getUIdOfCurrentUser()
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(httpStub).toHaveBeenCalled();
+    });
+  });
+
+/*    it("openReset",()=>{
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.componentInstance;
+      const dialogSpy=spyOn(app.dialog,'open').and.returnValue({afterClosed: () => EMPTY} as any)
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(dialogSpy).toHaveBeenCalled()
+        expect(app.loginStatus).toEqual(true)
+      });
+
+    })
+
+ */
+
+
+
+});
+
+
+describe('AppComponent', () => {
+  const localStub = {
+    getData(key : string){
+      if(key == "loggedInUserId"){return "123"}
+      if(key == "password"){return "password"}
+      if(key == "email"){return "email"}
+      if(key == "loginStatus"){return "true"}
+      return ""
+    },
+    saveData(key : string,data:string){
+      window.localStorage.setItem("loggedInUserId","12345")
+    }
+  }
+
+  const httpStub = {
+    get(){
+      let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+      return of(mockUser)
+    }}
+  const storageStub ={
+    get(key:string){
+      if(key == "loggedInUserId"){return "123"}
+      if(key == "password"){return "password"}
+      if(key == "email"){return "email"}
+      if(key == "loginStatus"){return "true"}
+      return ""
+    },set(){}
+  }
+  const listServiceStub = {
+    renderCheck:new BehaviorSubject(true),
+    renderCheckList:new BehaviorSubject(true),
+    getAllListsByUserId(){
+      let allLists = [mockList]
+      return of(allLists)
+    }
+  }
+  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
+  let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:""}
+  let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:""}
+  let mockWichtigList : List = {id:"123",name:"Important",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:""}
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        AppComponent,ResetDialogComponent
+      ],
+      imports:[MatMenuModule],
+      providers: [
+        AuthenticationService,{
+          provide:HttpClient,
+          useValue:httpStub
+        },{provide:BrowserStorageService,useValue: storageStub},
+        ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
+          provide : MAT_DIALOG_SCROLL_STRATEGY,
+          useValue : {}
+        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: listServiceStub},{provide: LocalService, useValue: localStub}
+      ],
+
+    }).compileComponents();
+
+  });
+
+
+
+
+  it('NewTestcase for getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage',  function (done) {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+
+
+
+    fixture.detectChanges();
+
+    app.getUIdOfCurrentUser()
+    fixture.detectChanges();
+
+    expect(window.localStorage.getItem("loggedInUserId")).toEqual("12345")
+  done()
+  });
+
+
+
+});
+
+
+describe('AppComponent resetDialog', () => {
+
+  const httpStub = {get(){
+      let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+      return of(mockUser)
+    }}
+  const storageStub ={
+    get(key:string){
+      if(key == "loginStatus"){return "true"}
+      return ""
+    },set(){}
+  }
+  const newStorageStub = {
+  saveData(key:string,data:string){
+  },
+    getData(key:string){
+    if(key == "loginStatus"){return "true"}
+    return""
+    }
+  }
+  const listServiceStub = {
+    renderCheck:new BehaviorSubject(true),
+    renderCheckList:new BehaviorSubject(true),
+    getAllListsByUserId(){
+      let allLists = [mockList]
+      return of(allLists)
+    }
+  }
+  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
+  let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:""}
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        AppComponent,ResetDialogComponent
+      ],
+      imports:[MatMenuModule],
+      providers: [
+        AuthenticationService,{
+          provide:HttpClient,
+          useValue:httpStub
+        },{provide:BrowserStorageService,useValue: storageStub},
+        ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
+          provide : MAT_DIALOG_SCROLL_STRATEGY,
+          useValue : {}
+        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: listServiceStub},{provide: LocalService, useValue: newStorageStub}
+      ],
+
+    }).compileComponents();
+
+  });
+
+
+  it("openReset",async ()=>{
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+
+
+
+    fixture.whenStable().then(() => {
+      const dialogSpy=spyOn(app.dialog,'open').and.returnValue({afterClosed: () => EMPTY,open:()=>{EMPTY}} as any)
+      window.sessionStorage.setItem("loginStatus","true")
+      fixture.detectChanges();
+      app.openReset()
+      //   tick()
+
+      expect(dialogSpy).toHaveBeenCalled()
+      expect(app.loginStatus).toEqual(true)
+    });
+
+  })
+
+
+
+});
+
+describe('AppComponent ngOninit', () => {
+  let listServiceSpy: Spy<ListService>
+  let listServiceSpy2: Spy<ListService>
+  let httpSpy : Spy<HttpClient>
+  let storageSpy:Spy<BrowserStorageService>
+  const httpStub = {get(){
+      let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+      return of(mockUser)
+    }}
+  const storageStub ={
+    get(key:string){
+      if(key == "loggedInUserId"){return "123"}
+      if(key == "password"){return "password"}
+      if(key == "email"){return "email"}
+      if(key == "loginStatus"){return "true"}
+      return ""
+    },set(){}
+  }
+  const localServiceStub = {
+    getData(key:string){
+      if(key == "loggedInUserId"){return "123"}
+      if(key == "password"){return "password"}
+      if(key == "email"){return "email"}
+      if(key == "loginStatus"){return "true"}
+      return ""
+    },saveData(){}
+  }
+  const listServiceStub = {
+    renderCheck:new BehaviorSubject(true),
+    renderCheckList:new BehaviorSubject(true),
+    getAllListsByUserId(){
+      let allLists = [mockList]
+      return of(allLists)
+    }
+  }
+  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
+  let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:""}
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        AppComponent,ResetDialogComponent
+      ],
+      imports:[MatMenuModule],
+      providers: [
+        AuthenticationService,{
+          provide:HttpClient,
+          useValue:httpStub
+        },{provide:BrowserStorageService,useValue: storageStub},
+        ResetDialogComponent,{provide:MatDialog, useValue:MatDialog},{
+          provide : MAT_DIALOG_SCROLL_STRATEGY,
+          useValue : {}
+        },{provide: Dialog, useValue: {}},{provide:ListService,useValue: listServiceStub},{provide: LocalService, useValue: localServiceStub}
+      ],
+
+    }).compileComponents();
+    listServiceSpy = TestBed.inject<any>(ListService);
+    listServiceSpy2 = TestBed.inject<any>(ListService);
+    httpSpy = TestBed.inject<any>(HttpClient)
+    storageSpy = TestBed.inject<any>(BrowserStorageService)
+  });
+
+
+  it('ngOnInit', function (done) {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    fixture.whenStable().then(() => {
+      const fetchAllSpry = spyOn(app,"fetchAllListsOfUser")
+      window.sessionStorage.setItem("loggedInUserId","abc123")
+      app.ngOnInit()
+      fixture.detectChanges()
+      expect(app).toBeTruthy()
+      expect(fetchAllSpry).toHaveBeenCalled()
+      done()
+    })
+
+  });
 
 
 });

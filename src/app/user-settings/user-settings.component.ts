@@ -4,6 +4,8 @@ import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {AuthenticationService} from "../serives/authentication.service";
 import {HotToastService} from "@ngneat/hot-toast";
 import {Team} from "../team";
+import {LocalService, UserInfoData} from "../serives/local.service";
+
 @Component({
   selector: 'app-user-settings',
   templateUrl: './user-settings.component.html',
@@ -22,12 +24,12 @@ export class UserSettingsComponent implements OnInit{
     @Self() private sessionStorageService: BrowserStorageService,
     @SkipSelf() private localStorageService: BrowserStorageService,
     private authentication: AuthenticationService,
-    private toast: HotToastService,
+    private toast: HotToastService, public localService:LocalService
   ){}
   Settings = new FormGroup({
-    firstName: new FormControl(this.sessionStorageService.get("firstName"), Validators.required),
-    email: new FormControl(this.sessionStorageService.get("email"),[Validators.email,Validators.required]),
-    lastName: new FormControl(this.sessionStorageService.get("lastName"),Validators.required),
+    firstName: new FormControl(this.localService.getData("firstName"), Validators.required),
+    email: new FormControl(this.localService.getData("email"),[Validators.email,Validators.required]),
+    lastName: new FormControl(this.localService.getData("lastName"),Validators.required),
     teamName: new FormControl('', Validators.required),
     members: new FormControl('', Validators.required),
   })
@@ -73,8 +75,9 @@ console.log("")
     return this.Settings.get('email');
   }
   ngOnInit(): void {
-    this.firstName = this.sessionStorageService.get("firstName") || ""
-    this.lastName = this.sessionStorageService.get("lastName") || ""
-    this.emaill = this.sessionStorageService.get("email") || ""
+    let userInfoDTO : UserInfoData = this.localService.getUserInfoDTOFromStore()
+    this.firstName = userInfoDTO.firstName
+    this.lastName = userInfoDTO.lastName
+    this.emaill = this.localService.getData("email")
   }
 }
