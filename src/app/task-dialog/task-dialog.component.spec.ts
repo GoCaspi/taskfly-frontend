@@ -6,9 +6,7 @@ import {TaskService} from "../serives/task.service";
 import {HttpClient, HttpHandler} from "@angular/common/http";
 import {ListService} from "../serives/list.service";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
-import {AuthenticationService} from "../serives/authentication.service";
 import {BrowserStorageService} from "../storage.service";
-import {EMPTY, Observable, observable} from "rxjs";
 import { Dialog } from '@angular/cdk/dialog';
 
 describe('TaskDialogComponent', () => {
@@ -80,10 +78,8 @@ describe('TaskDialogComponent', () => {
     expect(component).toBeTruthy()
   });
 
+
   it('deleteTask', async () => {
-    /* const closeDialogSpy = spyOn(component.dialog, 'closeAll').and.returnValue({afterClosed: () => EMPTY} as any)
-     taskServiceSpy.deleteTask.and.returnValue(Promise.resolve())
-     console.log(closeDialogSpy)*/
     taskServiceSpy.deleteTask.and.returnValue(new Promise(resolve => {
       storageSpy.setBody("updated", true)
     }))
