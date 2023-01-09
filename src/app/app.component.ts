@@ -174,4 +174,10 @@ this.store.saveData("storeTest","store works")
     this.store.clearData()
     this.store.saveData("loginStatus","false")
   }
+
+  detectStaticList(){
+    let checkName = this.store.getData("inspectedListName")
+    let checkId = this.store.getData("loggedInUserId")
+    return (checkName == "MyDay" || checkName == "Important"  || checkName == "Geplant") && checkId == this.store.getData("inspectedListOwnerId");
+  }
 }

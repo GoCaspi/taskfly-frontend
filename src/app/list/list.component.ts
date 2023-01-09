@@ -65,6 +65,8 @@ export class ListComponent implements OnInit {
           this.staticList = true;
           this.initRenderImportant()
           console.log("finished ininitRenderImportant. TaskData is: ",this.taskData)
+          this.initRenderScheduled()
+          this.initRenderPrivate()
         }else {this.staticList=false;}
       }
     })
@@ -73,9 +75,28 @@ export class ListComponent implements OnInit {
 
   renderHighPrioTasks(){
     let userId = this.localService.getData("loggedInUserId")
+    this.taskData = []
     this.taskService.getHighPrioTasks(userId).subscribe(tasks=>{
       this.taskData = tasks
       this.renderListName = "Wichtig"
+    })
+  }
+
+  renderScheduledTasks(){
+    let userId = this.localService.getData("loggedInUserId")
+    this.taskData = []
+    this.taskService.getScheduledTasks(userId).subscribe(tasks=>{
+      this.taskData = tasks
+      this.renderListName = "Planned"
+    })
+  }
+
+  renderPrivateTasks(){
+    let userId = this.localService.getData("loggedInUserId")
+    this.taskData = []
+    this.taskService.getPrivateTasks(userId).subscribe(tasks=>{
+      this.taskData = tasks
+      this.renderListName = "MyDay"
     })
   }
 
@@ -146,6 +167,20 @@ export class ListComponent implements OnInit {
     let checkName = this.localService.getData("inspectedListName")
     if(checkName === "Important"){
       this.renderHighPrioTasks()
+    }
+  }
+
+  initRenderScheduled(){
+    let checkName = this.localService.getData("inspectedListName")
+    if(checkName === "Geplant"){
+      this.renderScheduledTasks()
+    }
+  }
+
+  initRenderPrivate(){
+    let checkName = this.localService.getData("inspectedListName")
+    if(checkName === "MyDay"){
+      this.renderPrivateTasks()
     }
   }
 

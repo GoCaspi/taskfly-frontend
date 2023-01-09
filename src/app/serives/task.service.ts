@@ -48,6 +48,14 @@ export class TaskService {
 
   // static servicces methods:
 
+  getScheduledTasks(id:string){
+    return this.http.get<Task[]>(this.baseURL+"/task/scheduled/week/"+id)
+  }
+
+  getPrivateTasks(id:string){
+    return this.http.get<Task[]>(this.baseURL+"/task/private/"+id)
+  }
+
   getHighPrioTasks(id : string){
     return this.http.get<Task[]>(this.baseURL+"/task/priority/"+id)
   }
