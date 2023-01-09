@@ -73,6 +73,7 @@ mat-icon{
   font-size: 1rem;
   flex: 1 1 auto;
   bottom: 2rem;
+  top:2rem;
   align-self: flex-end;
 }
 #Task{
