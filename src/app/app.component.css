@@ -8,6 +8,11 @@ mat-toolbar{
   justify-content: space-between;
   align-items: center;
 }
+#sidenav{
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
 #Toolbar{
   display: flex !important;
   justify-content: space-between !important;
@@ -21,15 +26,15 @@ mat-toolbar{
    color: white;
    border-radius: 10px;
    padding: 16px;
+   justify-content: space-between;
+   display: flex;
    text-align: center;
  }
 mat-sidenav-container{
   height:calc(100vh - 65px );
   justify-content: space-between;
 }
-#Wrapper{
-  position: relative;
-}
+
  .content{
  height: calc(100vh - 98px);
    margin: 16px;
@@ -57,13 +62,18 @@ mat-sidenav-container{
 mat-icon{
   margin-right: 8px;
 }
+.test1{
+  display: flex;
+  justify-content: space-between;
+}
 .newlistbutton{
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   font-size: 1rem;
   flex: 1 1 auto;
+  bottom: 2rem;
+  align-self: flex-end;
 }
 #Task{
   bottom: 0;
@@ -72,6 +82,7 @@ mat-icon{
   right: 50%;
 }
  .name{
+   margin: 0;
    margin-top: 8px;
    font-weight:normal ;
  }
@@ -84,6 +95,13 @@ mat-icon{
    margin-top: 16px;
    margin-bottom: 16px;
    background-color: rgba(255, 255, 255, 0.5);
+ }
+ .avatar{
+   background-repeat: no-repeat;
+   background-position: center;
+   width: 75%;
+   height: 100px;
+   border-radius: 100%;
  }
 .listElement{
   color: white;
