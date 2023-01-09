@@ -46,9 +46,8 @@ export class AppComponent implements OnInit{
   baseURL:string | undefined;
 
 
-  constructor(public authService: AuthenticationService,
+  constructor(
               public dialog: MatDialog,
-              public rd: ResetDialogComponent,
               @Self() private sessionStorageService: BrowserStorageService,
               @SkipSelf() private localStorageService: BrowserStorageService,
               public router: Router,

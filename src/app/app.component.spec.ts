@@ -287,7 +287,6 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     let emailReturn = "mockMail"
     let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
-
    // httpSpy.get.and.nextWith(mockUser)
     app.getUIdOfCurrentUser()
     expect(storageSpy.get("loggedInUserId")).toEqual("123")
