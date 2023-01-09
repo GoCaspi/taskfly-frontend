@@ -80,6 +80,35 @@ describe('TaskDialogComponent', () => {
     component.sendUpdate()
     expect(component).toBeTruthy()
   })
+  it('sendUpdate if hoch', async () =>{
+    component.bPriorityInput = "hoch"
+    component.deadlineInput = new Date()
+    taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
+
+    }))
+    component.sendUpdate()
+    expect(component).toBeTruthy()
+  })
+
+  it('sendUpdate if niedrig', async () =>{
+    component.bPriorityInput = "niedrig"
+    component.deadlineInput = new Date()
+    taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
+
+    }))
+    component.sendUpdate()
+    expect(component).toBeTruthy()
+  })
+
+  it('sendUpdate if true', async () =>{
+    component.bPriorityInput = ""
+    component.deadlineInput = new Date()
+    taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
+
+    }))
+    component.sendUpdate()
+    expect(component).toBeTruthy()
+  })
 
   it('deleteTask', async () => {
     /* const closeDialogSpy = spyOn(component.dialog, 'closeAll').and.returnValue({afterClosed: () => EMPTY} as any)

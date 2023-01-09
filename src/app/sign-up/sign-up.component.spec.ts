@@ -76,7 +76,7 @@ describe('SignUpComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Correct email address2', () => {
+  it('Correct email address 2', () => {
     component.signUpForm.setValue({firstName: "test", lastName: "test", email: "test@test.de", password: "sssss", confirmPassword: "sssss"})
     component.createUser()
     expect(component.signUpForm.get("email")?.valid).toBeTruthy();
