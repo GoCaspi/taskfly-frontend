@@ -123,6 +123,15 @@ renderCheck:new BehaviorSubject(true)
     expect(openDialogSpy).toHaveBeenCalled()
   });
 
+  it('should openListDialog an team members are not equal null', () => {
+    storageSpy.get.and.returnValue("123")
+    const openDialogSpy = spyOn(component.dialog, 'open').and.returnValue({afterClosed: () => EMPTY} as any)
+    //   listSpy.getListById.and.resolveTo(mockList)
+
+    component.openListDialog()
+    expect(openDialogSpy).toHaveBeenCalled()
+  });
+
   it('should deleteList', () => {
     const app = fixture.componentInstance;
     const toggleRenderSpy = spyOn(todosServiceStub, 'toggleRender')
@@ -196,6 +205,95 @@ renderCheck:new BehaviorSubject(true)
   //  expect(res).toEqual(false)
     expect(res).toEqual(true)
   });
+
+
+});
+
+
+fdescribe('ListComponent', () => {
+  let component: ListComponent;
+  let fixture: ComponentFixture<ListComponent>;
+  let storageSpy:Spy<BrowserStorageService>
+  let taskServiceSpy: Spy<TaskService>;
+  let listSpy:Spy<ListService>
+  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
+  let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:["123"]}
+  let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  let mockWichtigList : List = {id:"123",name:"Important",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  /*
+  const localStub = {
+    getData(key : string){
+      if (key === "loggedInUserId" || key === "inspectedListOwnerId"){return "12345"}
+      return ""
+    }
+  }
+
+   */
+  const todosServiceStub = {
+    getListById(id:string) {
+      const todos = mockList;
+      return of( todos );
+    },
+    deleteList(id:string) {
+      const todos = mockList;
+      return of( todos );
+    },
+    toggleRenderList() {
+      const todos = mockList;
+      return of( todos );
+    },
+    toggleRender() {
+      const todos = mockList;
+      return of( todos );
+    },
+    renderCheck:new BehaviorSubject(true)
+  };
+  const storageStub = {
+    saveData(key:string,data:string){
+    },
+    getData(key:string){
+      if(key == "loginStatus"){return "true"}
+      return""
+    },
+    setTaskDTOToStore(){}
+  }
+
+  let body: TaskBody = {topic:"", highPriority: "", description: ""}
+  let task: Task = {body: body, deadline: "",userId:"", listId:"", team:"", taskIdString:"", id:""}
+  let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task]}
+
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ ListComponent ],
+      imports: [MatMenuModule],
+      providers:[MatDialog,Overlay,{provide : MAT_DIALOG_SCROLL_STRATEGY, useValue : {}},
+        {provide: Dialog, useValue: {}},ListService,HttpClient,HttpHandler,{provide:BrowserStorageService,useValue: createSpyFromClass(BrowserStorageService)}
+        ,{provide: TaskService, useValue: createSpyFromClass(TaskService)},{provide: ListService,useValue: todosServiceStub},{provide:LocalService,useValue: storageStub}
+      ]
+    })
+      .compileComponents();
+    storageSpy = TestBed.inject<any>(BrowserStorageService)
+    taskServiceSpy = TestBed.inject<any>(TaskService)
+    fixture = TestBed.createComponent(ListComponent);
+    component = fixture.componentInstance;
+
+    fixture.detectChanges();
+  });
+
+
+
+  fit('should openListDialog an team members are equal null', () => {
+
+    storageSpy.get.and.returnValue("123")
+    const openDialogSpy = spyOn(component.dialog, 'open').and.returnValue({afterClosed: () => EMPTY} as any)
+    //   listSpy.getListById.and.resolveTo(mockList)
+
+    component.openListDialog()
+    expect(openDialogSpy).toHaveBeenCalled()
+  });
+
 
 
 });
