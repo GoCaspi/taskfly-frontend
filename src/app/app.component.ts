@@ -1,4 +1,4 @@
-import {Component, OnInit, Self, SkipSelf} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Overlay} from "@angular/cdk/overlay";
@@ -10,7 +10,7 @@ import {ListService} from "./serives/list.service";
 import {Buffer} from "buffer";
 import {HomeComponent} from "./home/home.component";
 import {BehaviorSubject} from "rxjs";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {LocalService} from "./serives/local.service";
 
 
 interface User{
@@ -37,8 +37,8 @@ export class AppComponent implements OnInit{
   loginStatus: boolean | undefined = false;
   opened = false;
   sideList : BehaviorSubject<[]>
-  email: string = ""
   private dialogRef: MatDialogRef<ResetDialogComponent> | undefined;
+  private homeDialogRef: MatDialogRef<HomeComponent> | undefined;
   allLists:any=[];
   allStaticList:any =[];
   allDynamicLists:any=[];
@@ -49,64 +49,66 @@ export class AppComponent implements OnInit{
   constructor(public authService: AuthenticationService,
               public dialog: MatDialog,
               public rd: ResetDialogComponent,
-              @Self() private sessionStorageService: BrowserStorageService,
-              @SkipSelf() private localStorageService: BrowserStorageService,
+              //@Self() private sessionStorageService: BrowserStorageService,
               public router: Router,
               private http: HttpClient,
               public listService:ListService,
+              public store:LocalService
               ) {
     this.baseURL = process.env['NG_APP_PROD_URL'];
     this.sideList = new BehaviorSubject([])
   }
   Settings = new FormGroup({
-    email: new FormControl(this.sessionStorageService.get("email"),[Validators.email,Validators.required]),
+    email: new FormControl(this.store.getData("email"),[Validators.email,Validators.required]),
   })
 
   init(): void {
     setInterval(()=>{
-      if(this.sessionStorageService.get("loginStatus") == "false"){
+        if(this.store.getData("loginStatus") == "false"){
         this.loginStatus = false;
       }
-      if(this.sessionStorageService.get("loginStatus") == "true"){
+        if(this.store.getData("loginStatus") == "true"){
         this.loginStatus = true;
       }
     },1000)
   }
   ngOnInit() {
-    this.email = this.sessionStorageService.get("email") || ""
     this.init()
     this.getUIdOfCurrentUser()
-    if (!(this.sessionStorageService.get("loggedInUserId") == undefined || this.sessionStorageService.get("loggedInUserId") == "")) {
+      if (!(this.store.getData("loggedInUserId") == undefined || this.store.getData("loggedInUserId") == "")) {
       this.fetchAllListsOfUser()
       this.listService.renderCheckList.subscribe(statement => {
-        console.log("RenderCheck from Service is ", statement)
         if (statement) {
           this.fetchAllListsOfUser()
         }
       });
     }
   }
+
 openDialoge(){
-    this.dialog.open(HomeComponent,{
+
+  this.homeDialogRef=  this.dialog.open(HomeComponent,{
       width:'500px',
       height:"350px",
       data:"right click"
     })
+  this.homeDialogRef.afterClosed().subscribe(()=>{
+    this.fetchAllListsOfUser()
+  })
   }
 openReset(){
   this.dialogRef = this.dialog.open(ResetDialogComponent)
   this.dialogRef.afterClosed().subscribe(() =>{
-    console.log("dialog is closed!")
+    console.log("")
   })
-  let status = this.sessionStorageService.get("loginStatus")
+  let status = this.store.getData("loginStatus")
   if (status == "true") {
     this.loginStatus = true;
-    console.log(this.loginStatus)
   }
 }
 
 fetchAllListsOfUser(){
-  this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe({
+    this.listService.getAllListsByUserId(this.store.getData("loggedInUserId")).subscribe({
     next: (listData) => this.test123(listData),
     error: () => this.errorMessage()
   })
@@ -123,23 +125,19 @@ test123(listData: List[]){
       this.allDynamicLists.push(list)
     }
   })
-  console.log("ListDData from service",listData)
 }
 errorMessage(){
   this.allDynamicLists = []
   this.allLists = []
 }
 getUIdOfCurrentUser(){
-    let email= this.sessionStorageService.get("email")
+
+  let email= this.store.getData("email")
   if(email == undefined || email == ""){
-    console.log("No email identified")
     return
   }
 
-  let cred =  "Basic " + Buffer.from(this.sessionStorageService.get("email") + ":" + this.sessionStorageService.get("password")).toString('base64')
-  console.log("Identified email is :",this.sessionStorageService.get("email"))
-  console.log("Identified pwd is :",this.sessionStorageService.get("password"))
-
+  let cred =  "Basic " + Buffer.from(this.store.getData("email") + ":" + this.store.getData("password")).toString('base64')
 
   const httpOptions = {
     headers: new HttpHeaders({
@@ -148,32 +146,34 @@ getUIdOfCurrentUser(){
     })
   };
   this.http.get<User>( this.baseURL+"/user/userInfo?email=" + email,httpOptions).subscribe(data=>{
-    console.log(data.id);
-    this.sessionStorageService.set("loggedInUserId",data.id);
-    console.log(this.sessionStorageService.get("loggedInUserId"))
+    this.store.saveData("loggedInUserId",data.id)
   })
-//  this.listServicce.getAllListsByUserId(this.localStorageService.get("loggedInUserId")!).subscribe(listData =>{
-//    console.log("ListDData from service",listData)
-//  })
+
 }
 
   saveCurrentListId(listId:string, listName:string,ownerId:string){
-  this.sessionStorageService.set("inspectedList",listId)
-    this.sessionStorageService.set("inspectedListName",listName)
-    this.sessionStorageService.set("inspectedListOwnerId",ownerId)
+    this.store.saveData("inspectedList",listId)
+    this.store.saveData("inspectedListName",listName)
+    this.store.saveData("inspectedListOwnerId",ownerId)
 
     this.listService.toggleRender()
     this.fetchAllListsOfUser()
   }
 
-  test(){
-    this.fetchAllListsOfUser()
-  }
   logout(){
-    if(this.sessionStorageService.get("loginStatus") == "true"){
-      this.sessionStorageService.set("loginStatus", "false");
+    if(this.store.getData("loginStatus") == "true"){
+      this.store.saveData("loginStatus", "false");
     }
     window.sessionStorage.clear()
     window.sessionStorage.setItem("loginStatus", "false")
+
+    this.store.clearData()
+    this.store.saveData("loginStatus","false")
+  }
+
+  detectStaticList(){
+    let checkName = this.store.getData("inspectedListName")
+    let checkId = this.store.getData("loggedInUserId")
+    return (checkName == "MyDay" || checkName == "Important"  || checkName == "Geplant") && checkId == this.store.getData("inspectedListOwnerId");
   }
 }

@@ -3,6 +3,7 @@ import {ListService} from "../serives/list.service";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {MatDialog} from "@angular/material/dialog";
 import {HotToastService} from "@ngneat/hot-toast";
+import {LocalService} from "../serives/local.service";
 interface List{
   id:string;
   name:string;
@@ -35,7 +36,7 @@ interface Task  {
 export class UpdateListDialogComponent implements OnInit {
   listName : string =""
   listMembersString:string =""
-  constructor(private listService:ListService ,private dialog:MatDialog, private toast: HotToastService,
+  constructor(private listService:ListService ,private dialog:MatDialog, private toast: HotToastService, public localService:LocalService,
               @Self() private sessisonStorageService: BrowserStorageService) { }
 
   ngOnInit(): void {
@@ -43,10 +44,12 @@ export class UpdateListDialogComponent implements OnInit {
   }
 
   setInputFields(){
-    this.listName = this.sessisonStorageService.get("inspectedListName")!
-    this.listMembersString = this.sessisonStorageService.get("inspectedListMembers")!
+  //  this.listName = this.sessisonStorageService.get("inspectedListName")!
+  //  this.listMembersString = this.sessisonStorageService.get("inspectedListMembers")!
+    this.listName = this.localService.getData("inspectedListName")
+    this.listMembersString = this.localService.getData("inspectedListMembers")
   }
-  sendUpdate() {
+  sendUpdate(){
     let membersArr = this.listMembersString.split(",")
     console.log("LISTMEMBERSIDSTRING : ", membersArr)
     let update: List = {
@@ -55,12 +58,12 @@ export class UpdateListDialogComponent implements OnInit {
       members: membersArr,
       teamId: "",
       tasks: [],
-      ownerID: this.sessisonStorageService.get("inspectedListOwnerId")!
+      ownerID: this.localService.getData("inspectedListOwnerId")!
     }
     if (this.listMembersString == "") {
       this.toast.error("Please enter a new Topic")
     } else {
-      this.listService.updateListe(this.sessisonStorageService.get("inspectedList")!, update).pipe(
+      this.listService.updateListe(this.localService.getData("inspectedList")!, update).pipe(
         this.toast.observe({
           success: "Topic has been Update",
           loading: 'Logging in...',
@@ -74,4 +77,5 @@ export class UpdateListDialogComponent implements OnInit {
       })
     }
   }
+
 }

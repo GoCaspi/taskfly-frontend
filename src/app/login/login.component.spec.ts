@@ -8,12 +8,14 @@ import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {By} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
 import {User, Body} from "../user";
+import {AppComponent} from "../app.component";
 import {ListService} from "../serives/list.service";
 import {BrowserStorageService} from "../storage.service";
 import {MAT_DIALOG_SCROLL_STRATEGY} from "@angular/material/dialog";
 import {Dialog} from "@angular/cdk/dialog";
 import {of} from "rxjs";
 import {MatMenuModule} from "@angular/material/menu";
+import {LocalService} from "../serives/local.service";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -50,6 +52,20 @@ describe('LoginComponent', () => {
     },
     set(){}
   }
+  const localServiceStub = {
+    getData(key:string){
+      let mockVal = "12345"
+      if (key == "loginStatus"){
+        return "false"
+      }
+      return mockVal
+    },
+    saveData(){},
+    setUserLoginDTOToStore(){},
+    getUserLoginDTOFromStore(){},
+    setUserInfoDTOToStore(){},
+    getUserInfoDTOFromStore(){}
+  }
   const httpServiceStub = {
     get(){
       let mockuser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
@@ -63,12 +79,12 @@ describe('LoginComponent', () => {
       providers: [{provide: ActivatedRoute, useValue: fakeActivatedRoute},
         {provide:AuthenticationService,useValue:authserviceStub},HttpClient,HttpHandler,{
           provide : MAT_DIALOG_SCROLL_STRATEGY,
-
           useValue : {}
         },{provide: Dialog, useValue: {}},{provide:BrowserStorageService,useValue: storageServiceStub},{provide: HttpClient,useValue: httpServiceStub}
          ,{
         provide: Router,useValue: routerStub
-        }
+        },
+        {provide: LocalService,useValue: localServiceStub}
       ],
 
     })
@@ -101,14 +117,12 @@ describe('LoginComponent', () => {
     component.loginUser()
     expect(component).toBeTruthy();
   });
-
   it('test 2 login User', () => {
     spyOn(component.router, 'navigate').and.returnValue(new Promise(resolve => true))
     window.sessionStorage.setItem("loginStatus", "false")
     component.loginUser()
     expect(component).toBeTruthy();
   });
-
   it('Login test1 UserEmail', () => {
    component.userPassword ="test"
     component.userEmail =""
@@ -130,7 +144,6 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
   it('setUIdOfCurrentUser test', () => {
     spyOn(component.router, 'navigate').and.returnValue(new Promise(resolve => true))
 
@@ -138,6 +151,7 @@ describe('LoginComponent', () => {
     component.setUIdOfCurrentUser()
     expect(component).toBeTruthy();
   });
+
 
   it('getUIDOfCurrentUser: case user can be found in the database and the email input was set', function () {
     const fixture = TestBed.createComponent(LoginComponent);
@@ -196,7 +210,7 @@ describe('LoginComponent', () => {
     httpSpy = TestBed.inject<any>(HttpClient)
     storageSpy = TestBed.inject<any>(BrowserStorageService)
     service = TestBed.inject(AuthenticationService);
-   // authServiceSpy = TestBed.inject<any>(AuthenticationService);
+    authServiceSpy = TestBed.inject<any>(AuthenticationService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -209,5 +223,4 @@ describe('LoginComponent', () => {
       component.setUIdOfCurrentUser()
       expect(storageSpy.get("loggedInUserId")).toEqual("")
     });
-
 });

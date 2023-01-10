@@ -11,6 +11,7 @@ interface TaskBody{
 
 interface Task{
   body: TaskBody;
+  id:string;
   userId : string;
   listId : string;
   taskIdString : string;
@@ -55,5 +56,19 @@ export class TaskService {
         error: 'There was an error'
       })
     ).subscribe(r =>{console.log(r)})
+  }
+
+  // static servicces methods:
+
+  getScheduledTasks(id:string){
+    return this.http.get<Task[]>(this.baseURL+"/task/scheduled/week/"+id)
+  }
+
+  getPrivateTasks(id:string){
+    return this.http.get<Task[]>(this.baseURL+"/task/private/"+id)
+  }
+
+  getHighPrioTasks(id : string){
+    return this.http.get<Task[]>(this.baseURL+"/task/priority/"+id)
   }
 }
