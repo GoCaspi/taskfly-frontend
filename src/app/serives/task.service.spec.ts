@@ -85,4 +85,14 @@ describe('TaskService', () => {
     service.updateTask(mockTask,mockID)
     expect(httpSpy.put).toHaveBeenCalledWith('undefined/task/123', mockTask, Object({ responseType: 'text' }))
   });
+  it('should call the getScheduled endpoint of the taskfly api and add the provided userId (param String) as query-parameter', () => {
+    let mockID = "123"
+    let mockTaskBody: TaskBody ={topic:"",highPriority:false,description:""}
+    let mockTask:Task ={body:mockTaskBody,userId:"",listId:"",taskIdString:"",team:"",deadline:""}
+    httpSpy.get.and.nextWith([mockTask,mockTask])
+    service.getScheduledTasks(mockID).subscribe((taskData:Task[])=>{
+      expect(taskData).toEqual([mockTask,mockTask])
+      expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/scheduled/week/'+mockID)
+    })
+  });
 });
