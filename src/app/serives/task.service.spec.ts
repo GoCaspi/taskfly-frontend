@@ -95,4 +95,26 @@ describe('TaskService', () => {
       expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/scheduled/week/'+mockID)
     })
   });
+
+  it('should call the getHighPrio endpoint of the taskfly api and add the provided userId (param String) as query-parameter', () => {
+    let mockID = "123"
+    let mockTaskBody: TaskBody ={topic:"",highPriority:true,description:""}
+    let mockTask:Task ={body:mockTaskBody,userId:"",listId:"",taskIdString:"",team:"",deadline:""}
+    httpSpy.get.and.nextWith([mockTask,mockTask])
+    service.getHighPrioTasks(mockID).subscribe((taskData:Task[])=>{
+      expect(taskData).toEqual([mockTask,mockTask])
+      expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/priority/'+mockID)
+    })
+  });
+
+  it('should call the getPrivate endpoint of the taskfly api and add the provided userId (param String) as query-parameter', () => {
+    let mockID = "123"
+    let mockTaskBody: TaskBody ={topic:"",highPriority:true,description:""}
+    let mockTask:Task ={body:mockTaskBody,userId:"",listId:"",taskIdString:"",team:"",deadline:""}
+    httpSpy.get.and.nextWith([mockTask,mockTask])
+    service.getPrivateTasks(mockID).subscribe((taskData:Task[])=>{
+      expect(taskData).toEqual([mockTask,mockTask])
+      expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/private/'+mockID)
+    })
+  });
 });
