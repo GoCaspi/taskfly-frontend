@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import {AuthenticationService} from "./serives/authentication.service";
 import { MatMenuModule } from '@angular/material/menu';
 import {HttpClient, HttpHandler, HttpHeaders} from "@angular/common/http";
-import {MAT_DIALOG_DATA, MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {ResetDialogComponent} from "./reset-dialog/reset-dialog.component";
 import {Dialog} from "@angular/cdk/dialog";
 import {By} from "@angular/platform-browser";
@@ -100,21 +100,28 @@ describe('AppComponent', () => {
     expect(fixture.debugElement.query(By.css('#openResetButton')).nativeElement.innerHTML).toEqual("Passwort vergessen?");
   });*/
 
-  it('Test ngOnInit init()', function (){
+  it('Test ngOnInit init() loginstatus false', function (){
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
+    window.sessionStorage.setItem("loginStatus", "false")
     app.init()
     expect(app).toBeTruthy()
-
   });
+
+  it('Test ngOnInit init() loginstatus false', function (){
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    window.sessionStorage.setItem("loginStatus", "true")
+    app.init()
+    expect(app).toBeTruthy()
+  });
+
   it('should have a button-method openResetDialog, that opens the ResetDialog if clicked', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     const openDialogSpy = spyOn(app.dialog, 'open').and.returnValue({afterClosed: () => EMPTY} as any)
-
+    window.sessionStorage.setItem("loginStatus", "true")
     app.openReset();
-    fixture.componentInstance.loginStatus = true
-
     expect(openDialogSpy).toHaveBeenCalled();
     expect(openDialogSpy).toHaveBeenCalledWith(ResetDialogComponent);
   });
@@ -122,21 +129,19 @@ describe('AppComponent', () => {
   it('logout test', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    storagespy.get.and.returnValue("true")
-    storagespy.set.and.returnValue("false")
+    window.sessionStorage.setItem("loginStatus","true")
     //storagespy.storage.setItem("loginStatus", "true");
     app.logout();
-    expect(storagespy.get("loginStatus")).toEqual("true");
+    expect(app).toBeTruthy();
   });
-  it('logout test 2', function () {
+
+  it('logout test if false', function () {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    storagespy.get.and.returnValue("true")
-    storagespy.set.and.returnValue("false")
-    window.sessionStorage.setItem("true", "true")
+    window.sessionStorage.setItem("loginStatus","false")
     //storagespy.storage.setItem("loginStatus", "true");
     app.logout();
-    expect(storagespy.get("loginStatus")).toEqual("true");
+    expect(app).toBeTruthy();
   });
 
   it('fetch all lists of user', function () {
@@ -294,6 +299,7 @@ describe('AppComponent', () => {
       let emailReturn = "mockMail"
       let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
       const fetchAllListsSpy = spyOn(app, 'fetchAllListsOfUser')
+      window.sessionStorage.setItem("loginStatus", "undefined")
       app.ngOnInit()
       expect(app).toBeTruthy()
     });
@@ -302,10 +308,22 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     let emailReturn = "mockMail"
-    let mockUser = {id:"12345", email:"mockMail", firstName:"fName", lastName:"lName"}
+    let mockUser = {id:"123", email:"mockMail", firstName:"fName", lastName:"lName"}
+    window.sessionStorage.setItem("email", "mockEmail")
    // httpSpy.get.and.nextWith(mockUser)
     app.getUIdOfCurrentUser()
-    expect(storageSpy.get("loggedInUserId")).toEqual("123")
+    expect(storageSpy.get("loggedInUserId")).toEqual(mockUser.id)
+  });
+
+  it('222222222222222222222 getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage2', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    let emailReturn = "mockMail"
+    let mockUser = {id:"123", email:"", firstName:"fName", lastName:"lName"}
+    window.sessionStorage.setItem("email", "")
+    // httpSpy.get.and.nextWith(mockUser)
+    app.getUIdOfCurrentUser()
+    expect(storageSpy.get("loggedInUserId")).toEqual(mockUser.id)
   });
 
   it('NewTestcase for getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage', function () {
@@ -407,19 +425,19 @@ describe('AppComponent', () => {
   it('NewTestcase for getUIDOfCurrentUser: case no user is logged in and therefore no email was set to the storage',  function (done) {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-
-
-
     fixture.detectChanges();
-
     app.getUIdOfCurrentUser()
     fixture.detectChanges();
-
     expect(window.localStorage.getItem("loggedInUserId")).toEqual("12345")
   done()
   });
 
-
+  it('errorMessage', function () {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    app.errorMessage()
+    expect(app).toBeTruthy()
+  });
 
 });
 

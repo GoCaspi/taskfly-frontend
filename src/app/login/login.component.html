@@ -1,5 +1,5 @@
 
-<div class="form-container mat-elevation-z5">
+<div class="form-container mat-elevation-z5" *ngIf="!alreadyLogin">
     <h1>Login</h1>
 
     <form [formGroup]="loginForm" (ngSubmit)="loginUser()" >

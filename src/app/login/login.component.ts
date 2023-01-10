@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../serives/authentication.service";
 import {ActivatedRoute, Router,} from "@angular/router";
@@ -17,13 +17,14 @@ import {LocalService, UserInfoData, UserLoginData} from "../serives/local.servic
   providers:[BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }]
 
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   loginStatus: boolean | undefined = false;
   userEmail=""
   userPassword=""
   userid=""
   baseURL:string|undefined;
+  alreadyLogin: boolean = false;
 
    hide = true;
   loginForm = new FormGroup({
@@ -43,10 +44,6 @@ export class LoginComponent {
   ) {
     this.baseURL = process.env['NG_APP_PROD_URL']
   }
-
-
-
-
 
   get email() {
     return this.loginForm.get('email');
@@ -100,6 +97,12 @@ export class LoginComponent {
         this.listService.toggleRenderList();
         this.listService.toggleRender()
       })
+    }
+  }
+
+  ngOnInit(): void {
+    if(this.localService.getData("loginStatus") == "true"){
+      this.alreadyLogin = true;
     }
   }
 }

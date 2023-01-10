@@ -37,8 +37,8 @@ export class AppComponent implements OnInit{
   title = 'TaskFly-frontend';
   loginStatus: boolean | undefined = false;
   opened = false;
-  email ="";
   sideList : BehaviorSubject<[]>
+  email: string = ""
   private dialogRef: MatDialogRef<ResetDialogComponent> | undefined;
   private homeDialogRef: MatDialogRef<HomeComponent> | undefined;
   allLists:any=[];
@@ -52,7 +52,6 @@ export class AppComponent implements OnInit{
   constructor(public authService: AuthenticationService,
               public dialog: MatDialog,
               public rd: ResetDialogComponent,
-              //@Self() private sessionStorageService: BrowserStorageService,
               public router: Router,
               private http: HttpClient,
               public listService:ListService,
@@ -64,6 +63,9 @@ export class AppComponent implements OnInit{
   Settings = new FormGroup({
     email: new FormControl(this.store.getData("email"),[Validators.email,Validators.required]),
   })
+  get emaill() {
+    return this.Settings.get('email');
+  }
 
   init(): void {
     setInterval(()=>{
@@ -89,7 +91,6 @@ export class AppComponent implements OnInit{
   }
 
 openDialoge(){
-
   this.homeDialogRef=  this.dialog.open(HomeComponent,{
       width:'500px',
       height:"350px",

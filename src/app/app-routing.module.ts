@@ -1,4 +1,4 @@
-import {NgModule} from "@angular/core";
+import {NgModule, Self} from "@angular/core";
 import {RouterModule,Routes} from "@angular/router";
 import {HomeComponent} from "./home/home.component";
 import {LandingComponent} from "./landing/landing.component";
@@ -17,7 +17,7 @@ const routes: Routes =[
   {
     path:"",
     pathMatch:'full',
-    component:LandingComponent
+    component:LoginComponent
   },
   {
     path:"login",
@@ -65,10 +65,12 @@ const routes: Routes =[
     component:AddTaskComponent
   }
 ];
+
 @NgModule({
   imports:[
     RouterModule.forRoot(routes)
   ],
   exports:[RouterModule]
 })
- export class AppRoutingModule{}
+ export class AppRoutingModule{
+}

@@ -29,7 +29,7 @@ export class AuthenticationService {
     let userid = this.localService.getData("loggedInUserId")
     let body: User = {
       "id": this.localService.getData("loggedInUserId") || "",
-      "srole": this.localService.getData("srole"),
+      "srole": "ROLE_WRITE",
       "password": null,
       "reseted": false,
       "firstName": firstName,
