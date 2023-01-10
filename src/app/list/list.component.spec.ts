@@ -16,7 +16,7 @@ import {LocalService} from "../serives/local.service";
 
 interface TaskBody{
   topic : string;
-  highPriority: string;
+  highPriority:  boolean;
   description: string;
 }
 
@@ -43,7 +43,7 @@ describe('ListComponent', () => {
   let storageSpy:Spy<BrowserStorageService>
   let taskServiceSpy: Spy<TaskService>;
   let listSpy:Spy<ListService>
-  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
+  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:true,description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
   let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
   let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
@@ -86,7 +86,7 @@ renderCheck:new BehaviorSubject(true)
     setTaskDTOToStore(){}
   }
 
-  let body: TaskBody = {topic:"", highPriority: "", description: ""}
+  let body: TaskBody = {topic:"", highPriority: true, description: ""}
   let task: Task = {body: body, deadline: "",userId:"", listId:"", team:"", taskIdString:"", id:""}
   let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task]}
 
@@ -210,15 +210,15 @@ renderCheck:new BehaviorSubject(true)
 });
 
 
-fdescribe('ListComponent', () => {
+describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
   let storageSpy:Spy<BrowserStorageService>
   let taskServiceSpy: Spy<TaskService>;
   let listSpy:Spy<ListService>
-  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
+  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:true,description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
-  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:["123"]}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
   let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
   let mockWichtigList : List = {id:"123",name:"Important",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
   /*
@@ -247,6 +247,10 @@ fdescribe('ListComponent', () => {
       const todos = mockList;
       return of( todos );
     },
+    getHighPrioTasks(userId : string){
+      const mockTasks = [mockTask,mockTask];
+      return of( mockTasks );
+    },
     renderCheck:new BehaviorSubject(true)
   };
   const storageStub = {
@@ -254,12 +258,15 @@ fdescribe('ListComponent', () => {
     },
     getData(key:string){
       if(key == "loginStatus"){return "true"}
+      if(key === "inspectedListName"){return "staticTest"}
+      if (key === "loggedInUserId"){return "123"}
+      if (key === "inspectedListOwnerId"){return "123"}
       return""
     },
     setTaskDTOToStore(){}
   }
 
-  let body: TaskBody = {topic:"", highPriority: "", description: ""}
+  let body: TaskBody = {topic:"", highPriority: true, description: ""}
   let task: Task = {body: body, deadline: "",userId:"", listId:"", team:"", taskIdString:"", id:""}
   let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task]}
 
@@ -284,7 +291,7 @@ fdescribe('ListComponent', () => {
 
 
 
-  fit('should openListDialog an team members are equal null', () => {
+  it('should openListDialog an team members are equal null', () => {
 
     storageSpy.get.and.returnValue("123")
     const openDialogSpy = spyOn(component.dialog, 'open').and.returnValue({afterClosed: () => EMPTY} as any)
@@ -294,6 +301,29 @@ fdescribe('ListComponent', () => {
     expect(openDialogSpy).toHaveBeenCalled()
   });
 
+  it('should execute renderList1', () => {
 
+
+
+    component.renderList1()
+    fixture.detectChanges()
+    expect(component.taskData).toEqual(mockList.tasks)
+  });
+
+  it(' renderHighPrioTasks should fetch all tasks assigned with high priority to taskData', () => {
+  let serviceReturn = [mockTask,mockTask]
+    taskServiceSpy.getHighPrioTasks.and.nextWith(serviceReturn)
+    fixture.detectChanges()
+    component.renderHighPrioTasks()
+    expect(component.taskData).toEqual(serviceReturn)
+    expect(component.renderListName).toEqual("Wichtig")
+  });
+  it('renderScheduledTasks should fetch all tasks assigned with high priority to taskData', () => {
+    let serviceReturn = [mockTask,mockTask]
+    taskServiceSpy.getHighPrioTasks.and.nextWith(serviceReturn)
+    fixture.detectChanges()
+    expect(component.taskData).toEqual(serviceReturn)
+   // expect(component.renderListName).toEqual("Wichtig")
+  });
 
 });
