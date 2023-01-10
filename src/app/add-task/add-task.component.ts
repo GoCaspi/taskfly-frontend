@@ -1,6 +1,8 @@
 import {Component, OnInit, Self} from '@angular/core';
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {AddTaskService} from "../add-task.service";
+import {ListService} from "../serives/list.service";
+import {LocalService} from "../serives/local.service";
 
 @Component({
 
@@ -23,7 +25,7 @@ export class AddTaskComponent implements OnInit{
 
 
 constructor(@Self() private sessionStorageService: BrowserStorageService,
-            private Service:AddTaskService){
+            private Service:AddTaskService,public listService:ListService, public localService:LocalService){
 }
 
   ngOnInit(): void {
@@ -40,18 +42,25 @@ constructor(@Self() private sessionStorageService: BrowserStorageService,
   }
 
   task(_$event: any){
-    let id = this.sessionStorageService.get("loggedInUserId");
+
+    let id = this.localService.getData("loggedInUserId");
+
     console.log("von der test methode",this.tasks);
     console.log("Date von dateinput", this.date);
     let formatDate = this.formatDate(this.date.toISOString());
-    let listId= this.sessionStorageService.get("inspectedList")!;
+
+    let listId= this.localService.getData("inspectedList")!;
 
     if(this.tasks == '')
     {
       this.message="Das Textfeld ist Leer!";
     }
     else {
-    this.Service.createTask(this.tasks,id,formatDate, listId).subscribe(data => {console.log(data)});
+    this.Service.createTask(this.tasks,id,formatDate, listId).subscribe(data => {
+      this.listService.toggleRender()
+      this.listService.toggleRenderList()
+      console.log("RenderCHECK from ADDTAASKCOMPONENT",data)
+    });
     this.tasks = this.value;
 
     }

@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 
 interface TaskBody{
   topic: string;
+  highPriority:boolean;
 }
 interface Task{
   body : TaskBody;
@@ -22,11 +23,10 @@ export class AddTaskService {
 
   createTask(taskTopic:string, userId:string | null, deadline:string, listId:string){
 
-    let body : Task = {body:{topic:taskTopic},userId:userId,deadline, listId};
+    let body : Task = {body:{topic:taskTopic,highPriority:false},userId:userId,deadline, listId};
     if(userId != null){
-      body = {body:{topic:taskTopic},userId:userId,deadline, listId};
+      body = {body:{topic:taskTopic,highPriority:false},userId:userId,deadline, listId};
     }
-
     return this.http.post(this.baseURL+"/task",body);
   }
 

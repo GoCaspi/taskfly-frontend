@@ -1,9 +1,11 @@
+
 import {Injectable, Self} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Buffer } from 'buffer';
 import {BrowserStorageService} from "../storage.service";
 import {User} from "../user";
 import {Team} from "../team";
+import {LocalService} from "./local.service";
 
 @Injectable()
 
@@ -11,7 +13,7 @@ export class AuthenticationService {
 
   baseURL : string| undefined;
 
-  constructor(private http:HttpClient, @Self() private sessionStorageService: BrowserStorageService) {
+  constructor(private http:HttpClient, @Self() private sessionStorageService: BrowserStorageService, public localService:LocalService) {
     this.baseURL = process.env['NG_APP_PROD_URL'];
   }
 
@@ -24,25 +26,24 @@ export class AuthenticationService {
   }
 
   userUpdate(firstName: string, lastName: string, email: string){
-    let userid = this.sessionStorageService.get("loggedInUserId")
-
+    let userid = this.localService.getData("loggedInUserId")
     let body: User = {
-      "id": this.sessionStorageService.get("loggedInUserId") || "",
-      "srole": this.sessionStorageService.get("srole"),
+      "id": this.localService.getData("loggedInUserId") || "",
+      "srole": this.localService.getData("srole"),
       "password": null,
       "reseted": false,
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
       "body":{
-        "team": this.sessionStorageService.get("team") || ""
+        "team": this.localService.getData("team") || ""
       }
     }
     return this.http.put<User>(this.baseURL + "/user/" + userid, body, {responseType:"json"})
   }
 
   createTeam(teamName: string, member: string[]){
-    let userid = this.sessionStorageService.get("loggedInUserId") || ""
+    let userid = this.localService.getData("loggedInUserId") || ""
 
     let body: Team ={
       "userID": userid,
