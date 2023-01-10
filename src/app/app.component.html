@@ -11,12 +11,11 @@
             Login
           </button>
 
-        <button mat-button id="openResetButton" (click)="openReset()" *ngIf="!loginStatus">Passwort vergessen?</button>
-
-        <button mat-button [matMenuTriggerFor]="menu" *ngIf="loginStatus">Menu</button>
+        <button mat-button id="openResetButton" (click)="openReset()" *ngIf="!loginStatus">Forgot password<mat-icon>live_help</mat-icon></button>
+        <button mat-button [matMenuTriggerFor]="menu" *ngIf="loginStatus"><mat-icon>playlist_add</mat-icon>Menu</button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="/login" (click)="logout()">Logout</button>
-          <button mat-menu-item routerLink="/userSetting">Settings</button>
+          <button mat-menu-item routerLink="/login" (click)="logout()"><mat-icon>exit_to_app</mat-icon>Logout</button>
+          <button mat-menu-item routerLink="/userSetting"><mat-icon>perm_device_information</mat-icon>Settings</button>
         </mat-menu>
       </div>
     </mat-toolbar>
@@ -34,7 +33,10 @@
           <br>
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <mat-list *ngIf="enabled && loginStatus">
-  <mat-list-item class="listElement" *ngFor="let list of allStaticList" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
+
+  <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','Important',this.store.getData('loggedInUserId'))">Important</mat-list-item>
+  <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','Geplant',this.store.getData('loggedInUserId'))">Scheduled</mat-list-item>
+  <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','MyDay',this.store.getData('loggedInUserId'))">MyDay</mat-list-item>
 </mat-list>
          <br><br><br>
          <mat-list *ngIf="loginStatus">
@@ -43,8 +45,8 @@
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
           </div>
-         <button mat-raised-button class="newlistbutton"(click)="openDialoge()" *ngIf="loginStatus">
-           <mat-icon>add</mat-icon><a>Neue Liste</a>
+         <button mat-raised-button class="newlistbutton" (click)="openDialoge()" *ngIf="loginStatus">
+           <mat-icon>add</mat-icon><a>New List</a>
          </button><br>
          </div>
 
@@ -52,11 +54,9 @@
 
       <mat-sidenav-content>
          <router-outlet></router-outlet>
-        <app-add-task id="Task" *ngIf="loginStatus">
+        <app-add-task id="Task" *ngIf="loginStatus && !(this.router.url =='/userSetting') && !this.detectStaticList()">
         </app-add-task>
       </mat-sidenav-content>
     </mat-sidenav-container>
 
-<!-- here link the create new list button to auto-render the list again -->
-<button (click)="test()">Create new List!</button>
 </div>

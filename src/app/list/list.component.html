@@ -1,7 +1,7 @@
 <div id="main-wrap">
   <mat-toolbar color="secondary" id="listToolbar">
     <span *ngIf="enabled">{{renderListName}}</span>
-    <span *ngIf="!enabled">Liste : {{renderListName}} wurde erfolgreich gelöscht. Wähle eine andere Liste um fortzufahren!</span>
+    <span *ngIf="!enabled">List : {{renderListName}} was successfully deleted. Choose another list to continue!</span>
     <span class="example-spacer"></span>
     <div id="buttonWrap">
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" (click)="openListDialog()" *ngIf="!staticList && enabled">
@@ -20,7 +20,7 @@
 
 
   <mat-list role="list"  id="taskList">
-   <mat-list-item *ngFor="let t of this.taskData" class="listElement {{t.body.highPriority}}" role="listitem" id="taskItem"  (click)="openTaskDialog(t.id)">{{t.body.topic}}</mat-list-item>
+   <mat-list-item *ngFor="let t of this.taskData" class="listElement {{t.body.highPriority.toString()}}" role="listitem" id="taskItem"  (click)="openTaskDialog(t.id)">{{t.body.topic}}</mat-list-item>
  </mat-list>
 
 </div>

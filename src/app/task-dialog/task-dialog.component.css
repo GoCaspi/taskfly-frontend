@@ -7,7 +7,13 @@
 .example-full-width {
   width: 100%;
 }
-
+.example-h2 {
+  margin: 10px;
+}
+.example-button-row button,
+.example-button-row a {
+  margin-right: 8px;
+}
 .priorityBox{
   display: flex;
   flex-direction: column;
