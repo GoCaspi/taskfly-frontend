@@ -157,14 +157,7 @@ getUIdOfCurrentUser(){
     this.fetchAllListsOfUser()
   }
 
-  test(){
-console.log("router LOCATION", this.router.url)
-this.store.saveData("storeTest","store works")
-    console.log("FROM STORE : ",this.store.getData("storeTest"))
-    this.fetchAllListsOfUser()
-  }
   logout(){
-
     if(this.store.getData("loginStatus") == "true"){
       this.store.saveData("loginStatus", "false");
     }

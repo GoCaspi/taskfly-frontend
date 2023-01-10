@@ -515,6 +515,8 @@ describe('AppComponent ngOninit', () => {
       if(key == "password"){return "password"}
       if(key == "email"){return "email"}
       if(key == "loginStatus"){return "true"}
+      if(key === "inspectedListOwnerId"){return "123"}
+      if(key === "inspectedListName"){return "Important"}
       return ""
     },saveData(){}
   }
@@ -570,5 +572,16 @@ describe('AppComponent ngOninit', () => {
 
   });
 
+  it('detectStatic returns true if a static list was choosen in the sidenav', function (done) {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    fixture.whenStable().then(() => {
+       let actual =  app.detectStaticList()
+      fixture.detectChanges()
+      expect(actual).toEqual(true)
+      done()
+    })
+
+  });
 
 });
