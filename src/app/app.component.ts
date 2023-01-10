@@ -11,6 +11,7 @@ import {Buffer} from "buffer";
 import {HomeComponent} from "./home/home.component";
 import {BehaviorSubject} from "rxjs";
 import {LocalService} from "./serives/local.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 
 interface User{
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit{
   title = 'TaskFly-frontend';
   loginStatus: boolean | undefined = false;
   opened = false;
+  email ="";
   sideList : BehaviorSubject<[]>
   private dialogRef: MatDialogRef<ResetDialogComponent> | undefined;
   private homeDialogRef: MatDialogRef<HomeComponent> | undefined;
@@ -44,6 +46,7 @@ export class AppComponent implements OnInit{
   allDynamicLists:any=[];
   enabled:boolean=true;
   baseURL:string | undefined;
+
 
 
   constructor(public authService: AuthenticationService,
