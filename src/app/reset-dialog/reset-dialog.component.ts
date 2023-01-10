@@ -24,18 +24,17 @@ export class ResetDialogComponent{
     this.baseURL = process.env['NG_APP_PROD_URL'];
   }
 
-
   resetPwd(){
     let resetBody = {lastName:this.lastNameInput,email:this.emailInput}
-    let resetBodyString = JSON.stringify(resetBody)
-    this.http.post(this.baseURL+"/reset/", resetBodyString, {responseType: 'text'}).pipe(
+    this.http.post(this.baseURL+"/reset", resetBody).pipe(
       this.toast.observe({
-        success : "List wurde zugefügt",
-        loading :'Logging in...',
-        error : "text field is empty"
+        success: "successfully requested a new password, please check you're mails.",
+        loading: "sent request...",
+        error: "there have been an error while requesting a new password"
       })
-    ).subscribe(r =>{console.log(r)})
-    return this.http.post(this.baseURL+"/reset/", resetBodyString, {responseType: 'text'})
+    ).subscribe(() => {
+
+    })
   }
 
 
