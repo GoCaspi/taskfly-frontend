@@ -92,6 +92,14 @@ describe('UserSettingsComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  /*it('Function for create Team if abfrage TEstTESTETSTES', function(){
+    service.createTeam("", ["", ""]).subscribe((_data) =>{
+
+    })
+    component.createTeam()
+    expect(component).toBeTruthy();
+  });*/
+
   it('get password test', function () {
     component.Settings.get("test")
     component.password

@@ -66,10 +66,11 @@ export class AppComponent implements OnInit{
 
   init(): void {
     setInterval(()=>{
-      if(this.sessionStorageService.get("loginStatus") == "false"){
+      let status = this.sessionStorageService.get("loginStatus")
+      if(status == "false"){
         this.loginStatus = false;
       }
-      if(this.sessionStorageService.get("loginStatus") == "true"){
+      if(status == "true"){
         this.loginStatus = true;
       }
     },1000)
