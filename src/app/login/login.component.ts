@@ -25,7 +25,7 @@ export class LoginComponent {
   userid=""
   baseURL:string|undefined;
 
-
+   hide = true;
   loginForm = new FormGroup({
 
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -44,6 +44,10 @@ export class LoginComponent {
     this.baseURL = process.env['NG_APP_PROD_URL']
   }
 
+
+
+
+
   get email() {
     return this.loginForm.get('email');
   }
@@ -51,11 +55,10 @@ export class LoginComponent {
   get password() {
     return this.loginForm.get('password');
   }
-
   loginUser() {
+    let status = this.localService.getData("loginStatus")
 
-let status = this.localService.getData("loginStatus")
-    if(status == "false" || status == undefined){
+    if(status == "false" || status == undefined || status == ""){
       this.authservice.login(this.userEmail, this.userPassword).pipe(
         this.toast.observe({
           success: 'Logged in successfully',
@@ -65,8 +68,6 @@ let status = this.localService.getData("loginStatus")
       ).subscribe(() =>{
         let userLoginDTO: UserLoginData = {email:this.userEmail,password:this.userPassword,loginStatus:"true"}
         this.localService.setUserLoginDTOToStore(userLoginDTO)
-
-
         this.authservice.userInfo(this.userEmail, this.userPassword).subscribe((data) =>{
           let userInfoDTO:UserInfoData = {loggedInUserId:data.id,firstName:data.firstName,lastName:data.lastName}
           this.localService.setUserInfoDTOToStore(userInfoDTO)
@@ -80,12 +81,11 @@ let status = this.localService.getData("loginStatus")
 
     }
   }
-
   setUIdOfCurrentUser(){
 
     let email = this.localService.getData("email")
     if(email == undefined || email == ""){
-console.log("")
+      console.log("No email identified")
     } else {
       let cred =  "Basic " + Buffer.from(this.localService.getData("email") + ":" + this.localService.getData("password")).toString('base64')
 

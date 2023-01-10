@@ -56,9 +56,9 @@ kollectionUser(){
   });
   this.http.post(this.baseURL+"/tc",body,{headers:headers_object,responseType:"text"}).pipe(
     this.toast.observe({
-      success : "List wurde zugefügt",
+      success : "List has been added",
       loading :'Logging in...',
-      error : "Textfeld ist leer"
+      error : "text field is empty"
     })
   ).subscribe(()=>{
     console.log("")

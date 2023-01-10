@@ -36,7 +36,7 @@ export class UserSettingsComponent implements OnInit{
 
   updateUser(){
     if(this.emaill == "" || this.firstName == "" || this.lastName == ""){
-      this.toast.error("All fields must be filled in")
+      this.toast.error("All fields must be filled ")
     } else {
       this.authentication.userUpdate(this.firstName, this.lastName, this.emaill).pipe(
         this.toast.observe({
@@ -53,15 +53,17 @@ export class UserSettingsComponent implements OnInit{
 
   createTeam (){
     let membersArray = this.membersInput.split(",")
-
-    if(this.membersInput == "" || this.teamName == ""){
+    if(this.teamName == ""){
+      this.toast.error("Please enter a team name")
+    }
+    else if(this.membersInput == "" || this.teamName == ""){
       this.toast.error("Please enter a team name and at least one team member")
     } else {
       this.authentication.createTeam(this.teamName, membersArray).pipe(
         this.toast.observe({
           success: "Team Created",
           loading: 'Logging in...',
-          error: 'There was an error'
+          error: 'Please enter a correct team member'
         })
       ).subscribe((_data:Team)=>{
 console.log("")

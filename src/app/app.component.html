@@ -11,22 +11,26 @@
             Login
           </button>
 
-        <button mat-button id="openResetButton" (click)="openReset()" *ngIf="!loginStatus">Passwort vergessen?</button>
-
-        <button mat-button [matMenuTriggerFor]="menu" *ngIf="loginStatus">Menu</button>
+        <button mat-button id="openResetButton" (click)="openReset()" *ngIf="!loginStatus">Forgot password<mat-icon>live_help</mat-icon></button>
+        <button mat-button [matMenuTriggerFor]="menu" *ngIf="loginStatus"><mat-icon>playlist_add</mat-icon>Menu</button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item routerLink="/login" (click)="logout()">Logout</button>
-          <button mat-menu-item routerLink="/userSetting">Settings</button>
+          <button mat-menu-item routerLink="/login" (click)="logout()"><mat-icon>exit_to_app</mat-icon>Logout</button>
+          <button mat-menu-item routerLink="/userSetting"><mat-icon>perm_device_information</mat-icon>Settings</button>
         </mat-menu>
       </div>
     </mat-toolbar>
-    <mat-sidenav-container>
-       <mat-sidenav [(opened)]="opened" mode="side" *ngIf="loginStatus">
-         <h4 class="name">User Name</h4>
+
+    <mat-sidenav-container id="sidenavContainer">
+
+       <mat-sidenav [(opened)]="opened" mode="side" *ngIf="loginStatus" id="sidenav">
+         <div id="test1">
+           <div id="test2">
+
+             <img class="avatar mat-elevation-z4" src="assets/img/105198243.jpeg" alt="{{'language' }}">
+             <h4>{{email}}</h4>
+             <p class="designation">Software Engineer</p>
          <mat-divider></mat-divider>
           <br>
-
-
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <mat-list *ngIf="enabled && loginStatus">
 
@@ -40,16 +44,15 @@
          </mat-list>
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
-
-         <button mat-raised-button class="newlistbutton"(click)="openDialoge()" *ngIf="loginStatus">
-           <mat-icon>add</mat-icon><a>Neue Liste</a>
+          </div>
+         <button mat-raised-button class="newlistbutton" (click)="openDialoge()" *ngIf="loginStatus">
+           <mat-icon>add</mat-icon><a>New List</a>
          </button><br>
-
+         </div>
 
        </mat-sidenav>
 
       <mat-sidenav-content>
-
          <router-outlet></router-outlet>
         <app-add-task id="Task" *ngIf="loginStatus && !(this.router.url =='/userSetting') && !this.detectStaticList()">
         </app-add-task>

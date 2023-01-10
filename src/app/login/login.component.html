@@ -3,7 +3,8 @@
     <h1>Login</h1>
 
     <form [formGroup]="loginForm" (ngSubmit)="loginUser()" >
-      <mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your Email</mat-label>
         <input id="emailInput" matInput placeholder="Email address" formControlName="email" [(ngModel)]="userEmail"/>
         <mat-error *ngIf="email?.errors?.['required']">
           Email is required
@@ -13,14 +14,18 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field>
-        <input id="pwdInput" matInput placeholder="Password" formControlName="password" type="password"[(ngModel)]="userPassword"/>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input id="pwdInput" matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password" type="password"[(ngModel)]="userPassword"/>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
         <mat-error *ngIf="password?.errors?.['required']">
           Password is required
         </mat-error>
       </mat-form-field>
       <div class="button-class">
-        <button  mat-raised-button color="primary"type="submit">
+        <button  mat-raised-button color="primary" type="submit">
           Login
         </button>
       </div><br>
