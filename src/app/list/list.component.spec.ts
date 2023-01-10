@@ -318,12 +318,22 @@ describe('ListComponent', () => {
     expect(component.taskData).toEqual(serviceReturn)
     expect(component.renderListName).toEqual("Wichtig")
   });
-  it('renderScheduledTasks should fetch all tasks assigned with high priority to taskData', () => {
+  it('renderScheduledTasks should fetch all tasks assigned with a deadline within the current week to taskData', () => {
     let serviceReturn = [mockTask,mockTask]
-    taskServiceSpy.getHighPrioTasks.and.nextWith(serviceReturn)
+    taskServiceSpy.getScheduledTasks.and.nextWith(serviceReturn)
     fixture.detectChanges()
+    component.renderScheduledTasks()
     expect(component.taskData).toEqual(serviceReturn)
-   // expect(component.renderListName).toEqual("Wichtig")
+    expect(component.renderListName).toEqual("Planned")
+  });
+
+  it('renderPrivateTasks should fetch all tasks assigned only to the user', () => {
+    let serviceReturn = [mockTask,mockTask]
+    taskServiceSpy.getPrivateTasks.and.nextWith(serviceReturn)
+    fixture.detectChanges()
+    component.renderPrivateTasks()
+    expect(component.taskData).toEqual(serviceReturn)
+    expect(component.renderListName).toEqual("MyDay")
   });
 
 });
