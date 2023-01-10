@@ -1,10 +1,12 @@
 import { Component, OnInit, Self, SkipSelf} from '@angular/core';
 import {ListService} from "../serives/list.service";
-import {TaskService} from "../serives/task.service";
+import {TaskService, Task} from "../serives/task.service";
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 import {BROWSER_STORAGE, BrowserStorageService} from '../storage.service';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UpdateListDialogComponent} from "../update-list-dialog/update-list-dialog.component";
+import {HotToastService} from "@ngneat/hot-toast";
+
 
 interface List{
   id:string;
@@ -12,23 +14,8 @@ interface List{
   teamId:string;
   tasks:Task[]
 }
-interface User{
-  userId : string;
-
-}
-interface TaskBody{
-  topic : string;
-  highPriority: string;
-  description: string;
-}
-
-interface Task  {
-  body: TaskBody;
-  userId : string;
-  listId : string;
-  id : string;
-  team : string;
-  deadline : string;
+interface User {
+  userId: string;
 }
 
 @Component({
@@ -45,14 +32,24 @@ export class ListComponent implements OnInit {
   userIsOwner:boolean=false;
   renderListName:string="";
   staticList:boolean = false;
+  wsStatus: boolean = false;
   private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
   private listDialogRef: MatDialogRef<UpdateListDialogComponent> | undefined
 
   constructor( private listService:ListService, private taskService:TaskService,@Self() private sessionStorageService: BrowserStorageService,
-  @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog) { }
+  @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog, private toast: HotToastService,) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<any> {
     this.renderList1()
+    this.listService.initializeStomp(this.sessionStorageService.get("email")!, this.sessionStorageService.get("password")!)
+      .subscribe(state => {
+        if(state == 1){
+            this.wsStatus = true
+        } else if (state == 0){
+            this.wsStatus = false
+
+        }
+      })
     this.userIsOwner = this.isOwner();
     this.listService.renderCheck.subscribe(statement =>{
       console.log("RenderCheck from Service is ", statement)
@@ -114,18 +111,13 @@ export class ListComponent implements OnInit {
     this.setSession("currentTask",taskId)
     this.setLocal("currentTask",taskId)
     this.taskService.getTaskById(taskId).subscribe(data =>{
-      let myData = <Task>data
-      this.sessionStorageService.set("currentListId",myData.listId)
-      this.sessionStorageService.set("currentDeadline",myData.deadline)
-      this.sessionStorageService.setBody("currentBody",myData.body)
-      this.sessionStorageService.set("currentTopic",myData.body.topic)
-      this.sessionStorageService.set("currentDescription",myData.body.description)
-      this.sessionStorageService.set("currentPriority",myData.body.highPriority)
-      this.sessionStorageService.set("currentTeam",myData.team)
+      let myData = <Task> data
 
-      this.dialogRef = this.dialog.open(TaskDialogComponent)
-      this.dialogRef.afterClosed().subscribe(_r =>{
+      this.dialogRef = this.dialog.open(TaskDialogComponent, {data: myData})
+      this.dialogRef.afterClosed().subscribe((task: Task) =>{
+        this.listService.sendTaskCollectionUpdates(task, this.sessionStorageService.set("currentListId",myData.listId))
         this.renderList1()
+
       })
 
     })

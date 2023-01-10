@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable, map} from "rxjs";
+import {RxStomp, RxStompConfig, RxStompState} from "@stomp/rx-stomp";
+import {OperatorSubscriber} from "rxjs/internal/operators/OperatorSubscriber";
 interface TaskBody{
   topic : string;
   highPriority: string;
@@ -11,7 +13,6 @@ interface Task{
   body: TaskBody;
   userId : string;
   listId : string;
-  taskIdString : string;
   team : string;
   deadline : string;
   id:string;
@@ -31,15 +32,18 @@ interface List{
 export class ListService {
   checkListSwitch : boolean = false;
   renderCheck : BehaviorSubject<boolean>;
-
+  rxStomp: RxStomp
   checkListUpdate : boolean = false;
   renderCheckList : BehaviorSubject<boolean>;
   baseURL:string|undefined
+  wsUrl: string | undefined
 
   constructor(private http: HttpClient) {
     this.baseURL = process.env['NG_APP_PROD_URL'];
+    this.wsUrl = process.env['NG_APP_WS_URL'];
     this.renderCheck = new BehaviorSubject<boolean>(this.checkListSwitch);
     this.renderCheckList = new BehaviorSubject<boolean>(this.checkListUpdate);
+    this.rxStomp = new RxStomp()
   }
   getTasksOfList(userId: string){
     return this.http.get(this.baseURL+"/task/userId/"+userId);
@@ -67,4 +71,35 @@ export class ListService {
   deleteList(listId:string){
     return this.http.delete(this.baseURL+"/tc/"+listId)
   }
+
+  initializeStomp(username: string, password: string): BehaviorSubject<RxStompState>{
+      const stompConfig: RxStompConfig = {
+        connectHeaders: {
+          username: username,
+          password: password
+        },
+        brokerURL: this.wsUrl,
+        reconnectDelay: 200
+
+      }
+      this.rxStomp.configure(stompConfig)
+      this.rxStomp.activate()
+      return this.rxStomp.connectionState$
+  }
+
+  getStompState(): BehaviorSubject<RxStompState>{
+    return this.rxStomp.connectionState$
+  }
+
+  sendTaskCollectionUpdates(data: Task, collectionID: void){
+    this.rxStomp.publish({destination: "/app/collection/broker/" + collectionID, body: JSON.stringify(data)})
+  }
+
+  receiveTaskCollectionUpdates(collectionID: string): Observable<any>{
+    return this.rxStomp.watch('/collection/' + collectionID).pipe(map(function (message){
+      return JSON.parse(message.body)
+    }))
+  }
+
+
 }
