@@ -141,18 +141,14 @@ export class ListComponent implements OnInit {
   IAmStatic1() : boolean{
     let checkName = this.sessionStorageService.get("inspectedListName")
     let checkId = this.sessionStorageService.get("loggedInUserId")
-    if((checkName == "MyDay" || checkName == "Important" || checkName == "" || checkName == "Geplant") && checkId == this.sessionStorageService.get("inspectedListOwnerId")){
-      return true
-    }
-    return false
+    return (checkName == "MyDay" || checkName == "Important" || checkName == "" || checkName == "Geplant") && checkId == this.sessionStorageService.get("inspectedListOwnerId");
+
   }
 
   isOwner() : boolean{
     let checkId = this.sessionStorageService.get("loggedInUserId")
-    if( checkId == this.sessionStorageService.get("inspectedListOwnerId")){
-      return true
-    }
-    return false
+    return checkId == this.sessionStorageService.get("inspectedListOwnerId");
+
   }
 
 }
