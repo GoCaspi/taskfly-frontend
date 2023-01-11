@@ -210,7 +210,7 @@ describe('ListComponent ngOnInit', () => {
       return new BehaviorSubject<RxStompState>(1)
     },
     receiveTaskCollectionUpdates(){
-      return new Observable()
+      return of(mockTask)
     },
     renderCheck:new BehaviorSubject(true)
   };
