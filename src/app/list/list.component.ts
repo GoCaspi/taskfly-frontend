@@ -1,6 +1,7 @@
 import { Component, OnInit, Self, SkipSelf} from '@angular/core';
 import {ListService} from "../serives/list.service";
-import {TaskService, Task} from "../serives/task.service";
+import {TaskService} from "../serives/task.service";
+import type {Task} from '../serives/task.service'
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 import {BROWSER_STORAGE, BrowserStorageService} from '../storage.service';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
@@ -51,6 +52,12 @@ export class ListComponent implements OnInit {
         }
       })
     this.userIsOwner = this.isOwner();
+    this.listService.receiveTaskCollectionUpdates(this.sessionStorageService.get("inspectedList")!)
+      .subscribe((task: Task) => {
+        console.log(task)
+        let indexTasks = this.taskData.findIndex(item => item.id === task.id)
+        this.taskData[indexTasks] = task
+      })
     this.listService.renderCheck.subscribe(statement =>{
       console.log("RenderCheck from Service is ", statement)
       if(statement){
@@ -115,7 +122,7 @@ export class ListComponent implements OnInit {
 
       this.dialogRef = this.dialog.open(TaskDialogComponent, {data: myData})
       this.dialogRef.afterClosed().subscribe((task: Task) =>{
-        this.listService.sendTaskCollectionUpdates(task, this.sessionStorageService.set("currentListId",myData.listId))
+        this.listService.sendTaskCollectionUpdates(task, this.sessionStorageService.get("inspectedList")!)
         this.renderList1()
 
       })

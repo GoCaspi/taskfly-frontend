@@ -2,22 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, map} from "rxjs";
 import {RxStomp, RxStompConfig, RxStompState} from "@stomp/rx-stomp";
-import {OperatorSubscriber} from "rxjs/internal/operators/OperatorSubscriber";
-interface TaskBody{
-  topic : string;
-  highPriority: string;
-  description: string;
-}
+import type {Task} from "./task.service";
 
-interface Task{
-  body: TaskBody;
-  userId : string;
-  listId : string;
-  team : string;
-  deadline : string;
-  id:string;
-}
-interface List{
+export interface List{
   id:string;
   name:string;
   teamId:string;
@@ -91,7 +78,7 @@ export class ListService {
     return this.rxStomp.connectionState$
   }
 
-  sendTaskCollectionUpdates(data: Task, collectionID: void){
+  sendTaskCollectionUpdates(data: Task, collectionID: string){
     this.rxStomp.publish({destination: "/app/collection/broker/" + collectionID, body: JSON.stringify(data)})
   }
 
