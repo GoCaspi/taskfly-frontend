@@ -66,11 +66,23 @@ describe('TaskDialogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should create 2', () => {
+    expect(component).toBeTruthy(true);
+  });
+  it('should create 2', () => {
+    expect(component).toBeTruthy(false);
+  });
 
   it('formatListNameToId Test', function (){
     let name = "";
     component.formatListNameToId(name);
     nameIdMap.get(name)
+    expect(component).toBeTruthy();
+  });
+  it('formatListNameToId Test2', function (){
+
+    component.formatListNameToId("");
+    nameIdMap.get("")
     expect(component).toBeTruthy();
   });
 
@@ -84,9 +96,6 @@ describe('TaskDialogComponent', () => {
   })
 
   it('deleteTask', async () => {
-    /* const closeDialogSpy = spyOn(component.dialog, 'closeAll').and.returnValue({afterClosed: () => EMPTY} as any)
-     taskServiceSpy.deleteTask.and.returnValue(Promise.resolve())
-     console.log(closeDialogSpy)*/
     taskServiceSpy.deleteTask.and.returnValue(new Promise(resolve => {
       storageSpy.setBody("updated", true)
     }))
@@ -98,4 +107,5 @@ describe('TaskDialogComponent', () => {
     component.nameListIdMap(mockList)
     expect(component).toBeTruthy();
   })
+
 });

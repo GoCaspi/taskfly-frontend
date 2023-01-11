@@ -1,5 +1,5 @@
 import {Component, Injectable, Self, EventEmitter, Output, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef,} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef,} from "@angular/material/dialog";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {Task, TaskService} from "../serives/task.service";
 import {ListService} from "../serives/list.service";
@@ -54,9 +54,6 @@ export class TaskDialogComponent {
       console.log("NAMEIDMAP key: listname val:listId : ",this.nameIdMap)
     })
   }
-
-
-
 
   sendUpdate(){
     this.task.deadline = this.formatDate(this.selectedDate?.toISOString()!)
