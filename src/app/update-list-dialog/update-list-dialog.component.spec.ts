@@ -37,4 +37,11 @@ let listSpy:Spy<ListService>
     component.sendUpdate()
     expect(component).toBeTruthy();
   });
+
+  it('should create', () => {
+    component.listMembersString = ""
+    listSpy.updateListe.and.nextWith()
+    component.sendUpdate()
+    expect(component).toBeTruthy();
+  });
 });

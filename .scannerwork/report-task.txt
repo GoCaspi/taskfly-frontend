@@ -2,5 +2,5 @@ projectKey=taskfly-frontend
 serverUrl=http://localhost:9000
 serverVersion=9.6.1.59531
 dashboardUrl=http://localhost:9000/dashboard?id=taskfly-frontend
-ceTaskId=AYWcSm7TSVn40GIT4wyt
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYWcSm7TSVn40GIT4wyt
+ceTaskId=AYWgej9bdjA7hUUA-Noe
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYWgej9bdjA7hUUA-Noe
