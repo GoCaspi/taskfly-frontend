@@ -1,4 +1,4 @@
-import { Component, OnInit, Self, SkipSelf} from '@angular/core';
+import { Component, OnInit, SkipSelf} from '@angular/core';
 import {ListService} from "../serives/list.service";
 import {TaskService} from "../serives/task.service";
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
@@ -6,6 +6,7 @@ import {BROWSER_STORAGE, BrowserStorageService} from '../storage.service';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UpdateListDialogComponent} from "../update-list-dialog/update-list-dialog.component";
 import {LocalService, TaskData} from "../serives/local.service";
+import {HotToastService} from "@ngneat/hot-toast";
 
 interface List{
   id:string;
@@ -47,7 +48,7 @@ export class ListComponent implements OnInit {
   private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
   private listDialogRef: MatDialogRef<UpdateListDialogComponent> | undefined
 
-  constructor( private listService:ListService, private taskService:TaskService,@Self() private sessionStorageService: BrowserStorageService,
+  constructor( private listService:ListService, private taskService:TaskService,private toast: HotToastService,
   @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog, public localService:LocalService) { }
 
   ngOnInit(): void {
@@ -61,7 +62,6 @@ export class ListComponent implements OnInit {
         if(this.IAmStatic1()){
           this.staticList = true;
           this.initRenderImportant()
-          console.log("finished ininitRenderImportant. TaskData is: ",this.taskData)
           this.initRenderScheduled()
           this.initRenderPrivate()
         }else {this.staticList=false;}
@@ -73,27 +73,45 @@ export class ListComponent implements OnInit {
   renderHighPrioTasks(){
     let userId = this.localService.getData("loggedInUserId")
     this.taskData = []
-    this.taskService.getHighPrioTasks(userId).subscribe(tasks=>{
+    this.renderListName = "Important"
+    this.taskService.getHighPrioTasks(userId).pipe(
+      this.toast.observe({
+        success: 'fetched tasks successfully',
+        loading: 'fetching tasks...',
+        error: 'There were no tasks found to that list'
+      })
+    ).subscribe(tasks=>{
       this.taskData = tasks
-      this.renderListName = "Wichtig"
     })
   }
 
   renderScheduledTasks(){
     let userId = this.localService.getData("loggedInUserId")
     this.taskData = []
-    this.taskService.getScheduledTasks(userId).subscribe(tasks=>{
+    this.renderListName = "Planned"
+    this.taskService.getScheduledTasks(userId).pipe(
+      this.toast.observe({
+        success: 'fetched tasks successfully',
+        loading: 'fetching tasks...',
+        error: 'There were no tasks found to that list'
+      })
+    ).subscribe(tasks=>{
       this.taskData = tasks
-      this.renderListName = "Planned"
     })
   }
 
   renderPrivateTasks(){
     let userId = this.localService.getData("loggedInUserId")
     this.taskData = []
-    this.taskService.getPrivateTasks(userId).subscribe(tasks=>{
+    this.renderListName = "My Tasks"
+    this.taskService.getPrivateTasks(userId).pipe(
+      this.toast.observe({
+        success: 'fetched tasks successfully',
+        loading: 'fetching tasks...',
+        error: 'There were no tasks found to that list'
+      })
+    ).subscribe(tasks=>{
       this.taskData = tasks
-      this.renderListName = "MyDay"
     })
   }
 

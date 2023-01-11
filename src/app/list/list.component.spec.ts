@@ -316,7 +316,7 @@ describe('ListComponent', () => {
     fixture.detectChanges()
     component.renderHighPrioTasks()
     expect(component.taskData).toEqual(serviceReturn)
-    expect(component.renderListName).toEqual("Wichtig")
+    expect(component.renderListName).toEqual("Important")
   });
   it('renderScheduledTasks should fetch all tasks assigned with a deadline within the current week to taskData', () => {
     let serviceReturn = [mockTask,mockTask]
@@ -333,7 +333,7 @@ describe('ListComponent', () => {
     fixture.detectChanges()
     component.renderPrivateTasks()
     expect(component.taskData).toEqual(serviceReturn)
-    expect(component.renderListName).toEqual("MyDay")
+    expect(component.renderListName).toEqual("My Tasks")
   });
 
 });
