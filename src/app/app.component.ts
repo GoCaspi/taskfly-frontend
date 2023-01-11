@@ -79,6 +79,7 @@ export class AppComponent implements OnInit{
     },1000)
   }
   ngOnInit() {
+    this.email = this.store.getData("email") || ""
     this.init()
     this.getUIdOfCurrentUser()
       if (!(this.store.getData("loggedInUserId") == undefined || this.store.getData("loggedInUserId") == "")) {
