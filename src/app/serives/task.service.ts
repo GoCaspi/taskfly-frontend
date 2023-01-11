@@ -10,7 +10,7 @@ export interface Task{
   deadline : string;
 }
 
-interface TaskBody {
+export interface TaskBody {
   topic : string;
   highPriority: string;
   description: string;
@@ -30,7 +30,7 @@ export class TaskService {
 
   async updateTask(task: Task, id: string) {
 console.log("TASK HIGH PRIO VAL IN SERVICE", task.body.highPriority)
-    this.http.put(this.baseURL+"/task/" + id,JSON.stringify(task), {responseType: 'text', headers:{"Content-Type":"application/json"}}).subscribe(r => console.log(r))
+    this.http.put(this.baseURL+"/task/" + id,task, {responseType: 'text'}).subscribe(r => console.log(r))
   }
 
   async deleteTask(id: string) {
