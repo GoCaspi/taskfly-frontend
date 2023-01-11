@@ -12,7 +12,7 @@ export interface Task{
 
 interface TaskBody {
   topic : string;
-  highPriority: boolean;
+  highPriority: string;
   description: string;
 }
 @Injectable({
@@ -29,7 +29,8 @@ export class TaskService {
   }
 
   async updateTask(task: Task, id: string) {
-    this.http.put(this.baseURL+"/task/" + id, task, {responseType: 'text'}).subscribe(r => console.log(r))
+console.log("TASK HIGH PRIO VAL IN SERVICE", task.body.highPriority)
+    this.http.put(this.baseURL+"/task/" + id,JSON.stringify(task), {responseType: 'text', headers:{"Content-Type":"application/json"}}).subscribe(r => console.log(r))
   }
 
   async deleteTask(id: string) {

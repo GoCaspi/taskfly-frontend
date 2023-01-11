@@ -3,8 +3,8 @@
 <div class="priorityBox">
   <mat-label class="priorityLabel">Priority</mat-label>
   <mat-radio-group aria-label="Select an option">
-    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="selectedPriority" [ngModelOptions]="{standalone: true}" value="true">high</mat-radio-button>
-    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="selectedPriority" [ngModelOptions]="{standalone: true}" value="false">low</mat-radio-button>
+    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="task.body.highPriority" [ngModelOptions]="{standalone: true}" value="true">high</mat-radio-button>
+    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="task.body.highPriority" [ngModelOptions]="{standalone: true}" value="false">low</mat-radio-button>
   </mat-radio-group>
 </div>
 
