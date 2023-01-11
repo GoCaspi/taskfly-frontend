@@ -88,7 +88,7 @@ export class ListComponent implements OnInit {
   openListDialog(){
     let listId = this.sessionStorageService.get("inspectedList")!
     this.listService.getListById(listId).subscribe(list =>{
-      if(list.members == null){
+      if(list.members.length < 2 && list.members[0] == ""){
         this.sessionStorageService.set("inspectedListMembers", "")
         this.listDialogRef = this.dialog.open(UpdateListDialogComponent)
         this.listDialogRef.afterClosed().subscribe(_r =>{
