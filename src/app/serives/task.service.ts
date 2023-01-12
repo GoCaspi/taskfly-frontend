@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {HotToastService} from "@ngneat/hot-toast";
 
 
-interface TaskBody {
+export interface TaskBody {
   topic : string;
   highPriority: string;
   description: string;
