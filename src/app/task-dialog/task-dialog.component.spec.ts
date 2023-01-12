@@ -4,11 +4,11 @@ import { TaskDialogComponent } from './task-dialog.component';
 import {MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {TaskService, Task} from "../serives/task.service";
 import {HttpClient, HttpHandler} from "@angular/common/http";
-import {ListService} from "../serives/list.service";
+import {ListService,List} from "../serives/list.service";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {AuthenticationService} from "../serives/authentication.service";
 import {BrowserStorageService} from "../storage.service";
-import {EMPTY, Observable, observable} from "rxjs";
+import {EMPTY, Observable, observable, of} from "rxjs";
 import { Dialog } from '@angular/cdk/dialog';
 
 describe('TaskDialogComponent', () => {
@@ -17,17 +17,20 @@ describe('TaskDialogComponent', () => {
   let listServiceSpy: Spy<ListService>;
   let taskServiceSpy: Spy<TaskService>;
   let storageSpy: Spy<BrowserStorageService>
-  let mockList: List[] = [{id: "test", name: "test", teamId:"test"}]
+  let mockList: List[] = [{id: "test", name: "test", teamId:"test", tasks:[], members:[], ownerID:""}]
   let body: TaskBody = {topic:"", highPriority: "", description: ""}
   let update: TaskUpdate ={body, deadline: "", listId: "", team: ""}
   let nameIdMap:Map<string, string>= new Map<string, string>();
-
   let mockTask : Task = {body:body,userId:"54321",listId:"123",team:"blue",deadline:"",id:"6789"}
 
-  interface List{
+   interface List{
     id:string;
     name:string;
     teamId:string;
+    tasks:Task[]
+    members:string[];
+
+    ownerID:string;
   }
   interface TaskUpdate{
     body: TaskBody;
@@ -52,10 +55,10 @@ describe('TaskDialogComponent', () => {
         {provide:BrowserStorageService, useValue:createSpyFromClass(BrowserStorageService)},
         {provide:MatDialog, useValue:MatDialog},
         {provide: Dialog, useValue: {}},{provide: MatDialogRef,useValue: {}}, { provide: MAT_DIALOG_DATA, useValue: mockTask },
-        HttpClient,ListService, HttpHandler]
+        HttpClient,ListService , HttpHandler]
     })
       .compileComponents();
-    listServiceSpy = TestBed.inject<any>(HttpClient);
+    listServiceSpy = TestBed.inject<any>(ListService);
     taskServiceSpy = TestBed.inject<any>(TaskService);
     storageSpy = TestBed.inject<any>(BrowserStorageService);
     fixture = TestBed.createComponent(TaskDialogComponent);
@@ -66,12 +69,6 @@ describe('TaskDialogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should create 2', () => {
-    expect(component).toBeTruthy(true);
-  });
-  it('should create 2', () => {
-    expect(component).toBeTruthy(false);
-  });
 
   it('formatListNameToId Test', function (){
     let name = "";
@@ -79,6 +76,7 @@ describe('TaskDialogComponent', () => {
     nameIdMap.get(name)
     expect(component).toBeTruthy();
   });
+
   it('formatListNameToId Test2', function (){
 
     component.formatListNameToId("");
@@ -106,6 +104,71 @@ describe('TaskDialogComponent', () => {
   it('nameListIdMap', function(){
     component.nameListIdMap(mockList)
     expect(component).toBeTruthy();
-  })
+  });
+
+});
+describe('NgOnint Test', () => {
+  let component: TaskDialogComponent;
+  let fixture: ComponentFixture<TaskDialogComponent>;
+  let listServiceStup = {getAllListsByUserId(){return of(mockList)
+    }}
+  let taskServiceSpy: Spy<TaskService>;
+  let storageSpy: Spy<BrowserStorageService>
+  let mockList: List[] = [{id: "test", name: "test", teamId:"test", tasks:[], members:[], ownerID:""}]
+  let body: TaskBody = {topic:"", highPriority: "", description: ""}
+  let update: TaskUpdate ={body, deadline: "", listId: "", team: ""}
+  let nameIdMap:Map<string, string>= new Map<string, string>();
+  let mockTask : Task = {body:body,userId:"54321",listId:"123",team:"blue",deadline:"",id:"6789"}
+
+  interface List{
+    id:string;
+    name:string;
+    teamId:string;
+    tasks:Task[]
+    members:string[];
+
+    ownerID:string;
+  }
+  interface TaskUpdate{
+    body: TaskBody;
+    listId : string;
+    team : string;
+    deadline : string;
+  }
+  interface TaskBody{
+    topic : string;
+    highPriority: string;
+    description: string;
+  }
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ TaskDialogComponent ],
+      providers:[MatDialog,{provide:MatDialog, useValue:MatDialog},{
+        provide : MAT_DIALOG_SCROLL_STRATEGY,
+        useValue : {}
+      },TaskService,{provide:TaskService, useValue: HttpClient},
+        {provide: TaskService, useValue:createSpyFromClass(TaskService)},
+        {provide:BrowserStorageService, useValue:createSpyFromClass(BrowserStorageService)},
+        {provide:MatDialog, useValue:MatDialog},
+        {provide: Dialog, useValue: {}},{provide: MatDialogRef,useValue: {}}, { provide: MAT_DIALOG_DATA, useValue: mockTask },
+        HttpClient,{
+          provide: ListService, useValue: listServiceStup
+        }, HttpHandler]
+    })
+      .compileComponents();
+
+    taskServiceSpy = TestBed.inject<any>(TaskService);
+    storageSpy = TestBed.inject<any>(BrowserStorageService);
+    fixture = TestBed.createComponent(TaskDialogComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('NgOnit Test 2',() => {
+    component.ngOnInit()
+    expect(component).toBeTruthy()
+  });
+
 
 });
