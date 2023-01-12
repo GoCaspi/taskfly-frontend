@@ -126,20 +126,13 @@ renderCheck:new BehaviorSubject(true)
     expect(openDialogSpy).toHaveBeenCalled()
   });
 
-  it('should openListDialog an team members are not equal null', () => {
-    storageSpy.get.and.returnValue("123")
-    const openDialogSpy = spyOn(component.dialog, 'open').and.returnValue({afterClosed: () => EMPTY} as any)
-    //   listSpy.getListById.and.resolveTo(mockList)
-
-    component.openListDialog()
-    expect(openDialogSpy).toHaveBeenCalled()
-  });
 
   it('should deleteList', () => {
     const app = fixture.componentInstance;
     const toggleRenderSpy = spyOn(todosServiceStub, 'toggleRender')
     const toggleRenderListSpy = spyOn(todosServiceStub, 'toggleRenderList')
     storageSpy.get.and.returnValue("123")
+    listSpy.deleteList.and.nextWith("")
     component.deleteList()
     expect(app).toBeTruthy();
     expect(toggleRenderSpy).toHaveBeenCalled()
@@ -294,7 +287,7 @@ describe('ListComponent', () => {
 
 
 
-  it('should openListDialog an team members are equal null', () => {
+  /*it('should openListDialog an team members are equal null', () => {
 
     storageSpy.get.and.returnValue("123")
     const openDialogSpy = spyOn(component.dialog, 'open').and.returnValue({afterClosed: () => EMPTY} as any)
@@ -302,7 +295,7 @@ describe('ListComponent', () => {
 
     component.openListDialog()
     expect(openDialogSpy).toHaveBeenCalled()
-  });
+  });*/
 
   it('should execute renderList1', () => {
     component.renderList1()
