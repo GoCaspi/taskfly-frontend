@@ -181,7 +181,7 @@ renderCheck:new BehaviorSubject(true)
 });
 
 
-describe('ListComponent ngOnInit', () => {
+describe('ListComponent ngOnInit with a StompState of 1', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
   let storageSpy:Spy<BrowserStorageService>
@@ -248,8 +248,82 @@ describe('ListComponent ngOnInit', () => {
   it('should execute ngOnInit', () => {
     const app = fixture.componentInstance;
     app.ngOnInit()
-    expect(app).toBeTruthy();
     expect(app.wsStatus).toEqual(true)
+    expect(app.userIsOwner).toEqual(true)
+  });
+
+
+});
+
+describe('ListComponent ngOnInit with a StompState of 0', () => {
+  let component: ListComponent;
+  let fixture: ComponentFixture<ListComponent>;
+  let storageSpy:Spy<BrowserStorageService>
+  let taskServiceSpy: Spy<TaskService>;
+  let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
+  let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  const todosServiceStub = {
+    getListById(id:string) {
+      const todos = mockList;
+      return of( todos );
+    },
+    deleteList(id:string) {
+      const todos = mockList;
+      return of( todos );
+    },
+    toggleRenderList() {
+      const todos = mockList;
+      return of( todos );
+    },
+    toggleRender() {
+      const todos = mockList;
+      return of( todos );
+    },
+    initializeStomp(){
+      return new BehaviorSubject<RxStompState>(0)
+    },
+    receiveTaskCollectionUpdates(){
+      return of(mockTask)
+    },
+    renderCheck:new BehaviorSubject(true)
+  };
+  const storageStub={
+    get(key:string){
+      if(key === "loggedInUserId")return "123"
+      if(key === "inspectedListOwnerId")return "123"
+      if(key === "inspectedListName") return "123"
+      return ""
+    }
+  }
+
+  let body: TaskBody = {topic:"", highPriority: "", description: ""}
+  let task: Task = {body: body, deadline: "",userId:"", listId:"", team:"", taskIdString:"", id:""}
+  let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task]}
+
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ ListComponent ],
+      imports: [MatMenuModule],
+      providers:[MatDialog,Overlay,{provide : MAT_DIALOG_SCROLL_STRATEGY, useValue : {}},
+        {provide: Dialog, useValue: {}},ListService,HttpClient,HttpHandler,{provide:BrowserStorageService,useValue: storageStub}
+        ,{provide: TaskService, useValue: createSpyFromClass(TaskService)},{provide: ListService,useValue: todosServiceStub}
+      ]
+    })
+      .compileComponents();
+    storageSpy = TestBed.inject<any>(BrowserStorageService)
+    taskServiceSpy = TestBed.inject<any>(TaskService)
+    fixture = TestBed.createComponent(ListComponent);
+    component = fixture.componentInstance;
+
+    fixture.detectChanges();
+  });
+
+  it('should execute ngOnInit and the recieved list is static', () => {
+    const app = fixture.componentInstance;
+    app.ngOnInit()
+    expect(app.wsStatus).toEqual(false)
     expect(app.userIsOwner).toEqual(true)
   });
 
