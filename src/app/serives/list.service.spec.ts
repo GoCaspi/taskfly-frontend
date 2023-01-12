@@ -3,6 +3,10 @@ import { TestBed } from '@angular/core/testing';
 import { ListService } from './list.service';
 import {HttpClient, HttpHandler} from "@angular/common/http";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
+import {RxStomp, RxStompState} from "@stomp/rx-stomp";
+import createSpy = jasmine.createSpy;
+import SpyObj = jasmine.SpyObj;
+import {BehaviorSubject, of} from "rxjs";
 
 interface TaskBody{
   topic : string;
@@ -32,16 +36,23 @@ interface List{
 describe('ListService', () => {
   let service: ListService;
   let httpSpy : Spy<HttpClient>
+  let rxStompSpy: SpyObj<RxStomp>
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
   let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:""}
 
+
+
   beforeEach(() => {
+    let rxStompSpyObj = jasmine.createSpyObj('RxStomp', ['configure', 'activate', 'connectionState$'])
+
     TestBed.configureTestingModule({
-      providers:[{provide:HttpClient, useValue:createSpyFromClass(HttpClient)}]
+      providers:[{provide:HttpClient, useValue:createSpyFromClass(HttpClient)}, {provide: RxStomp, useValue: rxStompSpyObj}]
     });
     service = TestBed.inject(ListService);
     httpSpy = TestBed.inject<any>(HttpClient)
+    rxStompSpy = TestBed.inject(RxStomp) as jasmine.SpyObj<RxStomp>
+
   });
 
   it('should be created', () => {
@@ -101,4 +112,5 @@ describe('ListService', () => {
       expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/userId/'+ mockId)
     })
   });
+
 });
