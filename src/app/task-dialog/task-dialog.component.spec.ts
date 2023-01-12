@@ -20,7 +20,7 @@ describe('TaskDialogComponent', () => {
   let update: TaskUpdate ={body, deadline: "", listId: "", team: ""}
   let nameIdMap:Map<string, string>= new Map<string, string>();
 
-  let mockTask : Task = {body:body,userId:"54321",listId:"123",team:"blue",deadline:"",id:"6789"}
+  let mockTask : Task = {body:body,userId:"54321",listId:"123",team:"blue",deadline:new Date().toString(),id:"6789"}
 
   interface List{
     id:string;
@@ -49,7 +49,8 @@ describe('TaskDialogComponent', () => {
         {provide: TaskService, useValue:createSpyFromClass(TaskService)},
         {provide:BrowserStorageService, useValue:createSpyFromClass(BrowserStorageService)},
         {provide:MatDialog, useValue:MatDialog},
-        {provide: Dialog, useValue: {}},{provide: MatDialogRef,useValue: {}}, { provide: MAT_DIALOG_DATA, useValue: mockTask },
+        {provide: Dialog, useValue: {}},{provide: MatDialogRef,useValue: {}},
+        { provide: MAT_DIALOG_DATA, useValue: mockTask },
         HttpClient,ListService, HttpHandler]
     })
       .compileComponents();
@@ -95,7 +96,7 @@ describe('TaskDialogComponent', () => {
   })
 
   it('sendUpdate if hoch', async () =>{
-    component.bPriorityInput = "hoch"
+    component.selectedPriority = "hoch"
     component.deadlineInput = new Date()
     taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
 
@@ -105,7 +106,7 @@ describe('TaskDialogComponent', () => {
   })
 
   it('sendUpdate if niedrig', async () =>{
-    component.bPriorityInput = "niedrig"
+    component.selectedPriority = "niedrig"
     component.deadlineInput = new Date()
     taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
 
@@ -115,7 +116,7 @@ describe('TaskDialogComponent', () => {
   })
 
   it('sendUpdate if true', async () =>{
-    component.bPriorityInput = ""
+    component.selectedPriority = ""
     component.deadlineInput = new Date()
     taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
 
