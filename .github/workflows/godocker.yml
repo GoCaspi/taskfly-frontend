@@ -69,6 +69,7 @@ jobs:
           tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ secrets.REGISTRY_IMAGE_NAME }}:${{github.head_ref || github.ref_name}}-${{ github.sha }}
           build-args: |
             NG_APP_PROD_URL=${{ secrets.NG_APP_PROD_URL }}
+            NG_APP_WS_URL=${{ secrets.NG_APP_WS_URL }}
 
       - name: Deploy Azure Web App
         uses: azure/webapps-deploy@v2
