@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef,} from "@angular/material/dialo
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {Task, TaskService} from "../serives/task.service";
 import {ListService} from "../serives/list.service";
+import {LocalService} from "../serives/local.service";
 
 
 interface List {
@@ -10,6 +11,7 @@ interface List {
   name: string;
   teamId: string;
 }
+
 @Injectable()
 @Component({
   selector: 'app-task-dialog',
@@ -27,8 +29,9 @@ export class TaskDialogComponent {
   selectedPriority: string = ""
   selectedDate: Date | null = new Date()
 
-  constructor(private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
- private listService:ListService, public dialogRef: MatDialogRef<TaskDialogComponent>, @Inject(MAT_DIALOG_DATA) public task: Task) {}
+  constructor(public dialog: MatDialog, private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
+ private listService:ListService,  public dialogRef: MatDialogRef<TaskDialogComponent>, @Inject(MAT_DIALOG_DATA) public task: Task,
+              public localService:LocalService) {}
   @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
   formatDate(date:string) : string {
     let stringArray = date.split("");
@@ -62,7 +65,6 @@ export class TaskDialogComponent {
     this.task.deadline = this.formatDate(this.selectedDate?.toISOString()!)
 //    this.task.body.highPriority = (this.selectedPriority === 'true')
     this.task.listId = this.formatListNameToId(this.task.listId)
-console.log("STRINGIFYD TASK",this.task)
     this.sls.updateTask(this.task, this.task.id).then(() => this.dialogRef.close(this.task))
   }
 
@@ -70,7 +72,7 @@ console.log("STRINGIFYD TASK",this.task)
     this.sls.deleteTask(this.taskId).then(_r => {
       this.dialogRef.close()
     })
-    this.sessionStorageService.setBody("updated",true)
+  //  this.sessionStorageService.setBody("updated",true)
   }
   nameListIdMap(allLists:List[]){
     let nameIdMap = new Map();

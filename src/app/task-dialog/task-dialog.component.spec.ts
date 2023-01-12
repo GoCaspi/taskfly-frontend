@@ -6,9 +6,7 @@ import {TaskService} from "../serives/task.service";
 import {HttpClient, HttpHandler} from "@angular/common/http";
 import {ListService} from "../serives/list.service";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
-import {AuthenticationService} from "../serives/authentication.service";
 import {BrowserStorageService} from "../storage.service";
-import {EMPTY, Observable, observable} from "rxjs";
 import { Dialog } from '@angular/cdk/dialog';
 
 describe('TaskDialogComponent', () => {
@@ -75,16 +73,13 @@ describe('TaskDialogComponent', () => {
   it('sendUpdate', async () =>{
     component.deadlineInput = new Date()
     taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
-
     }))
     component.sendUpdate()
     expect(component).toBeTruthy()
-  })
+  });
+
 
   it('deleteTask', async () => {
-    /* const closeDialogSpy = spyOn(component.dialog, 'closeAll').and.returnValue({afterClosed: () => EMPTY} as any)
-     taskServiceSpy.deleteTask.and.returnValue(Promise.resolve())
-     console.log(closeDialogSpy)*/
     taskServiceSpy.deleteTask.and.returnValue(new Promise(resolve => {
       storageSpy.setBody("updated", true)
     }))
@@ -95,5 +90,35 @@ describe('TaskDialogComponent', () => {
   it('nameListIdMap', function(){
     component.nameListIdMap(mockList)
     expect(component).toBeTruthy();
+  })
+
+  it('sendUpdate if hoch', async () =>{
+    component.bPriorityInput = "hoch"
+    component.deadlineInput = new Date()
+    taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
+
+    }))
+    component.sendUpdate()
+    expect(component).toBeTruthy()
+  })
+
+  it('sendUpdate if niedrig', async () =>{
+    component.bPriorityInput = "niedrig"
+    component.deadlineInput = new Date()
+    taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
+
+    }))
+    component.sendUpdate()
+    expect(component).toBeTruthy()
+  })
+
+  it('sendUpdate if true', async () =>{
+    component.bPriorityInput = ""
+    component.deadlineInput = new Date()
+    taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
+
+    }))
+    component.sendUpdate()
+    expect(component).toBeTruthy()
   })
 });

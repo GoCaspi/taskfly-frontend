@@ -7,7 +7,7 @@ import {BROWSER_STORAGE, BrowserStorageService} from '../storage.service';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UpdateListDialogComponent} from "../update-list-dialog/update-list-dialog.component";
 import {HotToastService} from "@ngneat/hot-toast";
-
+import {LocalService, TaskData} from "../serives/local.service";
 
 interface List{
   id:string;
@@ -15,8 +15,9 @@ interface List{
   teamId:string;
   tasks:Task[]
 }
-interface User {
-  userId: string;
+interface User{
+  userId : string;
+
 }
 
 @Component({
@@ -38,7 +39,7 @@ export class ListComponent implements OnInit {
   private listDialogRef: MatDialogRef<UpdateListDialogComponent> | undefined
 
   constructor( private listService:ListService, private taskService:TaskService,@Self() private sessionStorageService: BrowserStorageService,
-  @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog, private toast: HotToastService,) { }
+  @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog, public localService:LocalService, private toast: HotToastService) { }
 
   async ngOnInit(): Promise<any> {
     this.renderList1()
@@ -59,43 +60,89 @@ export class ListComponent implements OnInit {
         this.taskData[indexTasks] = task
       })
     this.listService.renderCheck.subscribe(statement =>{
-      console.log("RenderCheck from Service is ", statement)
       if(statement){
         this.renderList1()
         this.userIsOwner = this.isOwner();
-        if(this.userIsOwner){
-          console.log("I AM OWNER!!!")
-        }
 
         if(this.IAmStatic1()){
           this.staticList = true;
-          console.log("I AM STATIC1")
+          this.initRenderImportant()
+          this.initRenderScheduled()
+          this.initRenderPrivate()
         }else {this.staticList=false;}
       }
     })
 
   }
 
-  renderList1(){
-    this.enabled = true;
-    let checkId = this.sessionStorageService.get("inspectedList")!
-    this.listService.getListById(checkId).subscribe(list =>{
-      this.taskData = list.tasks
-      this.renderListName = list.name;
+  renderHighPrioTasks(){
+    let userId = this.localService.getData("loggedInUserId")
+    this.taskData = []
+    this.renderListName = "Important"
+    this.taskService.getHighPrioTasks(userId).pipe(
+      this.toast.observe({
+        success: 'fetched tasks successfully',
+        loading: 'fetching tasks...',
+        error: 'There were no tasks found to that list'
+      })
+    ).subscribe(tasks=>{
+      this.taskData = tasks
     })
   }
 
+  renderScheduledTasks(){
+    let userId = this.localService.getData("loggedInUserId")
+    this.taskData = []
+    this.renderListName = "Planned"
+    this.taskService.getScheduledTasks(userId).pipe(
+      this.toast.observe({
+        success: 'fetched tasks successfully',
+        loading: 'fetching tasks...',
+        error: 'There were no tasks found to that list'
+      })
+    ).subscribe(tasks=>{
+      this.taskData = tasks
+    })
+  }
+
+  renderPrivateTasks(){
+    let userId = this.localService.getData("loggedInUserId")
+    this.taskData = []
+    this.renderListName = "My Tasks"
+    this.taskService.getPrivateTasks(userId).pipe(
+      this.toast.observe({
+        success: 'fetched tasks successfully',
+        loading: 'fetching tasks...',
+        error: 'There were no tasks found to that list'
+      })
+    ).subscribe(tasks=>{
+      this.taskData = tasks
+    })
+  }
+
+  renderList1(){
+    this.enabled = true;
+    let checkId = this.localService.getData("inspectedList")
+    if(!this.IAmStatic1()){
+      this.listService.getListById(checkId).subscribe(list =>{
+        this.taskData = list.tasks
+        this.renderListName = list.name;
+      })
+    }
+
+  }
+
   openListDialog(){
-    let listId = this.sessionStorageService.get("inspectedList")!
+    let listId = this.localService.getData("inspectedList")
     this.listService.getListById(listId).subscribe(list =>{
-      if(list.members == null){
-        this.sessionStorageService.set("inspectedListMembers", "")
+      if(list.members == null || list.members == [""]){
+        this.localService.saveData("inspectedListMembers","")
         this.listDialogRef = this.dialog.open(UpdateListDialogComponent)
         this.listDialogRef.afterClosed().subscribe(_r =>{
           this.renderList1()
         })
       } else  {
-        this.sessionStorageService.set("inspectedListMembers", list.members.join())
+        this.localService.saveData("inspectedListMembers",list.members.join())
         this.listDialogRef = this.dialog.open(UpdateListDialogComponent)
         this.listDialogRef.afterClosed().subscribe(_r =>{
           this.renderList1()
@@ -105,20 +152,24 @@ export class ListComponent implements OnInit {
   }
 
   deleteList(){
-    let listId = this.sessionStorageService.get("inspectedList")!
+    let listId = this.localService.getData("inspectedList")
     this.listService.deleteList(listId).subscribe(_response =>{
       this.listService.toggleRenderList();
      this.listService.toggleRender();
+    this.taskData =[]
      this.enabled = false;
     })
   }
 
 
   openTaskDialog(taskId : string){
-    this.setSession("currentTask",taskId)
-    this.setLocal("currentTask",taskId)
+    this.localService.saveData("currentTask",taskId)
     this.taskService.getTaskById(taskId).subscribe(data =>{
       let myData = <Task> data
+
+      let taskDTO : TaskData = {currentListId:myData.listId, currentDeadline: myData.deadline, currentTopic:myData.body.topic,
+      currentDescription:myData.body.description,currentPriority:myData.body.highPriority.toString(), currentTeam:myData.team}
+      this.localService.setTaskDTOToStore(taskDTO)
 
       this.dialogRef = this.dialog.open(TaskDialogComponent, {data: myData})
       this.dialogRef.afterClosed().subscribe((task: Task) =>{
@@ -129,30 +180,38 @@ export class ListComponent implements OnInit {
 
     })
   }
-  setSession(key : string, value : string) {
-    this.sessionStorageService.set(key, value);
-  }
-
-  setLocal(key : string, value : string) {
-    this.sessionStorageService.set(key, value);
-  }
 
 
   IAmStatic1() : boolean{
-    let checkName = this.sessionStorageService.get("inspectedListName")
-    let checkId = this.sessionStorageService.get("loggedInUserId")
-    if((checkName == "MyDay" || checkName == "Important" || checkName == "" || checkName == "Geplant") && checkId == this.sessionStorageService.get("inspectedListOwnerId")){
-      return true
+    let checkName = this.localService.getData("inspectedListName")
+    let checkId = this.localService.getData("loggedInUserId")
+    return (checkName == "MyDay" || checkName == "Important" || checkName == "" || checkName == "Geplant") && checkId == this.localService.getData("inspectedListOwnerId");
+  }
+
+  initRenderImportant(){
+    let checkName = this.localService.getData("inspectedListName")
+    if(checkName === "Important"){
+      this.renderHighPrioTasks()
     }
-    return false
+  }
+
+  initRenderScheduled(){
+    let checkName = this.localService.getData("inspectedListName")
+    if(checkName === "Geplant"){
+      this.renderScheduledTasks()
+    }
+  }
+
+  initRenderPrivate(){
+    let checkName = this.localService.getData("inspectedListName")
+    if(checkName === "MyDay"){
+      this.renderPrivateTasks()
+    }
   }
 
   isOwner() : boolean{
-    let checkId = this.sessionStorageService.get("loggedInUserId")
-    if( checkId == this.sessionStorageService.get("inspectedListOwnerId")){
-      return true
-    }
-    return false
+    let checkId = this.localService.getData("loggedInUserId")
+      return checkId == this.localService.getData("inspectedListOwnerId");
   }
 
 }
