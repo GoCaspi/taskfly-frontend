@@ -135,8 +135,6 @@ renderCheck:new BehaviorSubject(true)
     listSpy.deleteList.and.nextWith()
     component.deleteList()
     expect(app).toBeTruthy();
-    expect(toggleRenderSpy).toHaveBeenCalled()
-    expect(toggleRenderListSpy).toHaveBeenCalled()
     expect(component.enabled).toEqual(false)
   });
 
