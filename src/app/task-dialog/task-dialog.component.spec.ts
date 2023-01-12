@@ -1,14 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskDialogComponent } from './task-dialog.component';
-import {MAT_DIALOG_SCROLL_STRATEGY, MatDialog} from "@angular/material/dialog";
-import {TaskService} from "../serives/task.service";
+import {MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {TaskService, Task} from "../serives/task.service";
 import {HttpClient, HttpHandler} from "@angular/common/http";
 import {ListService} from "../serives/list.service";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
-import {AuthenticationService} from "../serives/authentication.service";
 import {BrowserStorageService} from "../storage.service";
-import {EMPTY, Observable, observable} from "rxjs";
 import { Dialog } from '@angular/cdk/dialog';
 
 describe('TaskDialogComponent', () => {
@@ -21,6 +19,8 @@ describe('TaskDialogComponent', () => {
   let body: TaskBody = {topic:"", highPriority: "", description: ""}
   let update: TaskUpdate ={body, deadline: "", listId: "", team: ""}
   let nameIdMap:Map<string, string>= new Map<string, string>();
+
+  let mockTask : Task = {body:body,userId:"54321",listId:"123",team:"blue",deadline:new Date().toString(),id:"6789"}
 
   interface List{
     id:string;
@@ -49,7 +49,8 @@ describe('TaskDialogComponent', () => {
         {provide: TaskService, useValue:createSpyFromClass(TaskService)},
         {provide:BrowserStorageService, useValue:createSpyFromClass(BrowserStorageService)},
         {provide:MatDialog, useValue:MatDialog},
-        {provide: Dialog, useValue: {}},
+        {provide: Dialog, useValue: {}},{provide: MatDialogRef,useValue: {}},
+        { provide: MAT_DIALOG_DATA, useValue: mockTask },
         HttpClient,ListService, HttpHandler]
     })
       .compileComponents();
@@ -75,16 +76,13 @@ describe('TaskDialogComponent', () => {
   it('sendUpdate', async () =>{
     component.deadlineInput = new Date()
     taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
-
     }))
     component.sendUpdate()
     expect(component).toBeTruthy()
-  })
+  });
+
 
   it('deleteTask', async () => {
-    /* const closeDialogSpy = spyOn(component.dialog, 'closeAll').and.returnValue({afterClosed: () => EMPTY} as any)
-     taskServiceSpy.deleteTask.and.returnValue(Promise.resolve())
-     console.log(closeDialogSpy)*/
     taskServiceSpy.deleteTask.and.returnValue(new Promise(resolve => {
       storageSpy.setBody("updated", true)
     }))
@@ -95,5 +93,35 @@ describe('TaskDialogComponent', () => {
   it('nameListIdMap', function(){
     component.nameListIdMap(mockList)
     expect(component).toBeTruthy();
+  })
+
+  it('sendUpdate if hoch', async () =>{
+    component.selectedPriority = "hoch"
+    component.deadlineInput = new Date()
+    taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
+
+    }))
+    component.sendUpdate()
+    expect(component).toBeTruthy()
+  })
+
+  it('sendUpdate if niedrig', async () =>{
+    component.selectedPriority = "niedrig"
+    component.deadlineInput = new Date()
+    taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
+
+    }))
+    component.sendUpdate()
+    expect(component).toBeTruthy()
+  })
+
+  it('sendUpdate if true', async () =>{
+    component.selectedPriority = ""
+    component.deadlineInput = new Date()
+    taskServiceSpy.updateTask.and.returnValue(new Promise(resolve =>{
+
+    }))
+    component.sendUpdate()
+    expect(component).toBeTruthy()
   })
 });

@@ -13,6 +13,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {Body, User} from "../user";
 import {Observable} from "rxjs";
+import {Team} from "../team";
 
 describe('UserSettingsComponent', () => {
   let component: UserSettingsComponent;
@@ -21,6 +22,7 @@ describe('UserSettingsComponent', () => {
   let authServiceSpy: Spy<AuthenticationService>;
   let mockBody: Body = {team: ""}
   let mockUser: User = {firstName: "", lastName: "", email:"", id:"", body: mockBody, srole: "", reseted: false, password: ""}
+  let mockTeam: Team = {teamName: "", members:[""], userID: ""}
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -79,6 +81,7 @@ describe('UserSettingsComponent', () => {
     //authServiceSpy.userUpdate.and.returnValue(mockUser)
     const spy = spyOn(authServiceSpy, "createTeam").and.returnValue(new Observable())
     expect(spy).toBeTruthy()
+    authServiceSpy.createTeam.and.returnValue(new Observable())
     component.createTeam()
     expect(component).toBeTruthy();
   });
@@ -88,6 +91,14 @@ describe('UserSettingsComponent', () => {
     component.createTeam()
     expect(component).toBeTruthy();
   });
+
+  /*it('Function for create Team if abfrage TEstTESTETSTES', function(){
+    service.createTeam("", ["", ""]).subscribe((_data) =>{
+
+    })
+    component.createTeam()
+    expect(component).toBeTruthy();
+  });*/
 
   it('get password test', function () {
     component.Settings.get("test")

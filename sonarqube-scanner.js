@@ -9,7 +9,7 @@ scanner({
             "sonar.login":"19a9356832eff71859a0a168c8b9175ec940fcc3",
         },
         serverUrl:"http://localhost:9000",
-        login:"squ_f2ab7aab6830ea90ebce153f43bbb0755aa84a56",
+        login:"squ_e9e1cabed2a2fff96baa62ed74bdc7ba44e95694",
         options:{
             "sonar.sources":"./src"
         },

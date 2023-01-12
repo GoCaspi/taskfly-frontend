@@ -1,29 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TaskService } from './task.service';
+import { TaskService,Task,TaskBody } from './task.service';
 import {HttpClient, HttpHandler} from "@angular/common/http";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 
-interface TaskBody{
-  topic : string;
-  highPriority: boolean;
-  description: string;
-}
 
-interface Task{
-  body: TaskBody;
-  userId : string;
-  listId : string;
-  taskIdString : string;
-  team : string;
-  deadline : string;
-}
-interface TaskUpdate{
-  body: TaskBody;
-  listId : string;
-  team : string;
-  deadline : string;
-}
+
 describe('TaskService', () => {
   let service: TaskService;
   let httpSpy : Spy<HttpClient>
@@ -79,10 +61,42 @@ describe('TaskService', () => {
   it('should call the update endpoint of the taskfly api and add the provided userId (param String) as query-parameter', () => {
     let successMsg = "successfully deleted the task"
     let mockID = "123"
-    let mockTaskBody: TaskBody ={topic:"",highPriority:false,description:""}
-    let mockTask:Task ={body:mockTaskBody,userId:"",listId:"",taskIdString:"",team:"",deadline:""}
+    let mockTaskBody: TaskBody ={topic:"",highPriority:"false",description:""}
+    let mockTask:Task ={id:"",body:mockTaskBody,userId:"",listId:"",team:"",deadline:""}
     httpSpy.put.and.nextWith(successMsg)
     service.updateTask(mockTask,mockID)
     expect(httpSpy.put).toHaveBeenCalledWith('undefined/task/123', mockTask, Object({ responseType: 'text' }))
+  });
+  it('should call the getScheduled endpoint of the taskfly api and add the provided userId (param String) as query-parameter', () => {
+    let mockID = "123"
+    let mockTaskBody: TaskBody ={topic:"",highPriority:"",description:""}
+    let mockTask:Task ={body:mockTaskBody,userId:"",listId:"",team:"",deadline:"", id: ""}
+    httpSpy.get.and.nextWith([mockTask,mockTask])
+    service.getScheduledTasks(mockID).subscribe((taskData:Task[])=>{
+      expect(taskData).toEqual([mockTask,mockTask])
+      expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/scheduled/week/'+mockID)
+    })
+  });
+
+  it('should call the getHighPrio endpoint of the taskfly api and add the provided userId (param String) as query-parameter', () => {
+    let mockID = "123"
+    let mockTaskBody: TaskBody ={topic:"",highPriority:"",description:""}
+    let mockTask:Task ={body:mockTaskBody,userId:"",listId:"",team:"",deadline:"", id: ""}
+    httpSpy.get.and.nextWith([mockTask,mockTask])
+    service.getHighPrioTasks(mockID).subscribe((taskData:Task[])=>{
+      expect(taskData).toEqual([mockTask,mockTask])
+      expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/priority/'+mockID)
+    })
+  });
+
+  it('should call the getPrivate endpoint of the taskfly api and add the provided userId (param String) as query-parameter', () => {
+    let mockID = "123"
+    let mockTaskBody: TaskBody ={topic:"",highPriority:"",description:""}
+    let mockTask:Task ={body:mockTaskBody,userId:"",listId:"",team:"",deadline:"", id:""}
+    httpSpy.get.and.nextWith([mockTask,mockTask])
+    service.getPrivateTasks(mockID).subscribe((taskData:Task[])=>{
+      expect(taskData).toEqual([mockTask,mockTask])
+      expect(httpSpy.get).toHaveBeenCalledWith('undefined/task/private/'+mockID)
+    })
   });
 });

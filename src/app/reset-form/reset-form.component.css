@@ -1,0 +1,20 @@
+#resetContainer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#resetForm {
+  background: #eceff1;
+  border-radius: 16px;
+  padding: 5%;
+}
+
+.progressSpinner{
+  align-self: center;
+}
+
+
