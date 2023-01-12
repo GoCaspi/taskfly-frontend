@@ -3,21 +3,21 @@ import {HttpClient} from "@angular/common/http";
 import {HotToastService} from "@ngneat/hot-toast";
 
 
-interface TaskBody{
+interface TaskBody {
   topic : string;
-  highPriority: boolean;
+  highPriority: string;
   description: string;
 }
 
-interface Task{
+export interface Task{
+  id: string;
   body: TaskBody;
-  id:string;
   userId : string;
   listId : string;
-  taskIdString : string;
   team : string;
   deadline : string;
 }
+
 interface TaskUpdate{
   body: TaskBody;
   listId : string;
@@ -38,7 +38,7 @@ export class TaskService {
     return this.http.get(this.baseURL+"/task/taskId/"+id)
   }
 
-  async updateTask(task: TaskUpdate, id: string) {
+  async updateTask(task: Task, id: string) {
     this.http.put(this.baseURL+"/task/" + id, task, {responseType: 'text'}).pipe(
       this.toast.observe({
         success: "Update Task Successfully",

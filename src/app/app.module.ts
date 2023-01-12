@@ -1,5 +1,5 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { MatSidenavModule} from "@angular/material/sidenav";
 import {RouterLinkActive, RouterLinkWithHref, RouterOutlet,RouterLink} from "@angular/router";
-import {MatIconModule} from "@angular/material/icon";
+import {MatIconModule, MatIconRegistry} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatListModule} from "@angular/material/list";
@@ -103,4 +103,10 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     CUSTOM_ELEMENTS_SCHEMA
   ]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(iconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
+    iconRegistry.addSvgIconSet(
+      domSanitizer.bypassSecurityTrustResourceUrl('./assets/mdi/mdi.svg')
+    )
+  }
+}

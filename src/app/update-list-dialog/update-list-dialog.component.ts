@@ -1,32 +1,10 @@
 import {Component, OnInit, Self} from '@angular/core';
-import {ListService} from "../serives/list.service";
+import {ListService, List} from "../serives/list.service";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {MatDialog} from "@angular/material/dialog";
 import {HotToastService} from "@ngneat/hot-toast";
 import {LocalService} from "../serives/local.service";
-interface List{
-  id:string;
-  name:string;
-  teamId:string;
-  tasks:Task[]
-  members:string[];
-  ownerID:string;
-}
-interface TaskBody{
-  topic : string;
-  highPriority: string;
-  description: string;
-}
 
-interface Task  {
-  body: TaskBody;
-  userId : string;
-  listId : string;
-  id : string;
-  team : string;
-  deadline : string;
-  taskIdString:string;
-}
 @Component({
   selector: 'app-update-list-dialog',
   templateUrl: './update-list-dialog.component.html',

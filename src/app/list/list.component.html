@@ -8,10 +8,12 @@
         <mat-icon>share</mat-icon>
       </button>
 
-
-
       <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" *ngIf="userIsOwner && !staticList && enabled" (click)="deleteList()">
         <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button class="" aria-label="Example icon-button with heart icon" *ngIf="userIsOwner && !staticList && enabled">
+        <mat-icon class="example-icon favorite-icon" *ngIf="!wsStatus" svgIcon="broadcast-off"></mat-icon>
+        <mat-icon class="example-icon favorite-icon" *ngIf="wsStatus" svgIcon="broadcast"></mat-icon>
       </button>
     </div>
   </mat-toolbar>

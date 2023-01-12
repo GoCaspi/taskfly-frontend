@@ -1,12 +1,13 @@
-import { Component, OnInit, SkipSelf} from '@angular/core';
+import { Component, OnInit, Self, SkipSelf} from '@angular/core';
 import {ListService} from "../serives/list.service";
 import {TaskService} from "../serives/task.service";
+import type {Task} from '../serives/task.service'
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 import {BROWSER_STORAGE, BrowserStorageService} from '../storage.service';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UpdateListDialogComponent} from "../update-list-dialog/update-list-dialog.component";
-import {LocalService, TaskData} from "../serives/local.service";
 import {HotToastService} from "@ngneat/hot-toast";
+import {LocalService, TaskData} from "../serives/local.service";
 
 interface List{
   id:string;
@@ -18,20 +19,6 @@ interface User{
   userId : string;
 
 }
-interface TaskBody{
-  topic : string;
-  highPriority: string | boolean;
-  description: string;
-}
-
-interface Task  {
-  body: TaskBody;
-  userId : string;
-  listId : string;
-  id : string;
-  team : string;
-  deadline : string;
-}
 
 @Component({
   selector: 'app-list',
@@ -40,20 +27,39 @@ interface Task  {
   providers: [TaskDialogComponent, BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage },UpdateListDialogComponent]
 })
 export class ListComponent implements OnInit {
+  actualUser : User = {userId:"1"};
   taskData : Task[]=[];
+  listTasks: Task[]=[];
   enabled:boolean = true;
   userIsOwner:boolean=false;
   renderListName:string="";
   staticList:boolean = false;
+  wsStatus: boolean = false;
   private dialogRef: MatDialogRef<TaskDialogComponent> | undefined
   private listDialogRef: MatDialogRef<UpdateListDialogComponent> | undefined
 
-  constructor( private listService:ListService, private taskService:TaskService,private toast: HotToastService,
-  @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog, public localService:LocalService) { }
+  constructor( private listService:ListService, private taskService:TaskService,@Self() private sessionStorageService: BrowserStorageService,
+  @SkipSelf() private localStorageService: BrowserStorageService,public dialog:MatDialog, public localService:LocalService, private toast: HotToastService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<any> {
     this.renderList1()
+    this.listService.initializeStomp(this.localService.getData("email")!, this.localService.getData("password")!)
+      .subscribe(state => {
+        if(state == 1){
+            this.wsStatus = true
+        } else if (state == 0){
+            this.wsStatus = false
+
+        }
+      })
     this.userIsOwner = this.isOwner();
+    console.log(this.localService.getData("inspectedList"))
+    this.listService.receiveTaskCollectionUpdates(this.localService.getData("inspectedList")!)
+      .subscribe((task: Task) => {
+        console.log(task)
+        let indexTasks = this.taskData.findIndex(item => item.id === task.id)
+        this.taskData[indexTasks] = task
+      })
     this.listService.renderCheck.subscribe(statement =>{
       if(statement){
         this.renderList1()
@@ -160,15 +166,17 @@ export class ListComponent implements OnInit {
   openTaskDialog(taskId : string){
     this.localService.saveData("currentTask",taskId)
     this.taskService.getTaskById(taskId).subscribe(data =>{
-      let myData = <Task>data
+      let myData = <Task> data
 
       let taskDTO : TaskData = {currentListId:myData.listId, currentDeadline: myData.deadline, currentTopic:myData.body.topic,
       currentDescription:myData.body.description,currentPriority:myData.body.highPriority.toString(), currentTeam:myData.team}
       this.localService.setTaskDTOToStore(taskDTO)
 
-      this.dialogRef = this.dialog.open(TaskDialogComponent)
-      this.dialogRef.afterClosed().subscribe(_r =>{
+      this.dialogRef = this.dialog.open(TaskDialogComponent, {data: myData})
+      this.dialogRef.afterClosed().subscribe((task: Task) =>{
+        this.listService.sendTaskCollectionUpdates(task, this.sessionStorageService.get("inspectedList")!)
         this.renderList1()
+
       })
 
     })
