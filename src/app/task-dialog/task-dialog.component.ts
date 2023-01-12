@@ -51,7 +51,7 @@ export class TaskDialogComponent {
         this.selectedPriority = 'false'
       }
     }
-    this.listService.getAllListsByUserId(this.sessionStorageService.get("loggedInUserId")!).subscribe((data) =>{
+    this.listService.getAllListsByUserId(this.localService.getData("loggedInUserId")!).subscribe((data) =>{
       this.allLists=data
       this.nameIdMap=this.nameListIdMap(this.allLists)
       console.log("NAMEIDMAP key: listname val:listId : ",this.nameIdMap)
