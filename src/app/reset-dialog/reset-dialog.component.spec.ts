@@ -66,6 +66,11 @@ describe('ResetDialogComponent', () => {
     expect(emailInput).toBeTruthy()
     expect(lastNameInput).toBeTruthy()
   });
-
+  it('resetPwd', function () {
+  let emailInput = fixture.debugElement.query(By.css('#emailUserInput'))
+    let lastNameInput = fixture.debugElement.query(By.css('#lastNameUserInput'))
+    expect(emailInput).toBeTruthy()
+    expect(lastNameInput).toBeTruthy()
+  });
 
 });
