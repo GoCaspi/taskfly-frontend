@@ -11,9 +11,9 @@ import {ListService} from "../serives/list.service";
 import {BrowserStorageService} from "../storage.service";
 import {AppComponent} from "../app.component";
 import {TaskService} from "../serives/task.service";
-import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
 import {LocalService} from "../serives/local.service";
 import {RxStompState} from "@stomp/rx-stomp";
+import {BehaviorSubject, EMPTY, observable, Observable, of} from "rxjs";
 
 interface TaskBody{
   topic : string;
@@ -36,6 +36,7 @@ interface List{
   teamId:string;
   tasks:Task[]
   members:string[];
+  ownerID: string;
 }
 
 describe('ListComponent', () => {
@@ -46,9 +47,9 @@ describe('ListComponent', () => {
   let listSpy:Spy<ListService>
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
-  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
-  let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
-  let mockWichtigList : List = {id:"123",name:"Important",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""] || null, ownerID:"test"}
+  let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:["test"], ownerID:"test"}
+  let mockWichtigList : List = {id:"123",name:"Important",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:"test"}
   const todosServiceStub = {
     getListById(id:string) {
       const todos = mockList;
@@ -80,7 +81,7 @@ renderCheck:new BehaviorSubject(true)
 
   let body: TaskBody = {topic:"", highPriority: "", description: ""}
   let task: Task = {body: body, deadline: "",userId:"", listId:"", team:"", taskIdString:"", id:""}
-  let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task]}
+  let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task], ownerID:"test"}
 
 
   beforeEach(async () => {
@@ -89,12 +90,13 @@ renderCheck:new BehaviorSubject(true)
       imports: [MatMenuModule],
       providers:[MatDialog,Overlay,{provide : MAT_DIALOG_SCROLL_STRATEGY, useValue : {}},
         {provide: Dialog, useValue: {}},ListService,HttpClient,HttpHandler,{provide:BrowserStorageService,useValue: createSpyFromClass(BrowserStorageService)}
-        ,{provide: TaskService, useValue: createSpyFromClass(TaskService)},{provide: ListService,useValue: todosServiceStub},{provide:LocalService,useValue: storageStub}
+        ,{provide: TaskService, useValue: createSpyFromClass(TaskService)},{provide: ListService,useValue: /*todosServiceStub*/ createSpyFromClass(ListService)}
        ]
     })
     .compileComponents();
     storageSpy = TestBed.inject<any>(BrowserStorageService)
     taskServiceSpy = TestBed.inject<any>(TaskService)
+    listSpy = TestBed.inject<any>(ListService)
     fixture = TestBed.createComponent(ListComponent);
     component = fixture.componentInstance;
 
@@ -107,10 +109,19 @@ renderCheck:new BehaviorSubject(true)
   });
 
   it('should openListDialog', () => {
-    storageSpy.get.and.returnValue("123")
+    let fakeId = ""
     const openDialogSpy = spyOn(component.dialog, 'open').and.returnValue({afterClosed: () => EMPTY} as any)
- //   listSpy.getListById.and.resolveTo(mockList)
+    window.sessionStorage.setItem("inspectedList", "123")
+    listSpy.getListById.and.nextWith(mockList)
+    component.openListDialog()
+    expect(openDialogSpy).toHaveBeenCalled()
+  });
 
+  it('should openListDialog 2', () => {
+    let fakeId = ""
+    const openDialogSpy = spyOn(component.dialog, 'open').and.returnValue({afterClosed: () => EMPTY} as any)
+    window.sessionStorage.setItem("inspectedList", "123")
+    listSpy.getListById.and.nextWith(mockMyDayList)
     component.openListDialog()
     expect(openDialogSpy).toHaveBeenCalled()
   });
@@ -210,9 +221,9 @@ describe('ListComponent', () => {
   let listSpy:Spy<ListService>
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
-  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
-  let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
-  let mockWichtigList : List = {id:"123",name:"Important",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:"test"}
+  let mockMyDayList : List = {id:"123",name:"MyDay",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:"test"}
+  let mockWichtigList : List = {id:"123",name:"Important",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:"test"}
   /*
   const localStub = {
     getData(key : string){
@@ -260,7 +271,7 @@ describe('ListComponent', () => {
 
   let body: TaskBody = {topic:"", highPriority: "", description: ""}
   let task: Task = {body: body, deadline: "",userId:"", listId:"", team:"", taskIdString:"", id:""}
-  let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task]}
+  let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task], ownerID:"test"}
 
 
   beforeEach(async () => {
@@ -335,7 +346,7 @@ describe('ListComponent ngOnInit with a StompState of 1', () => {
   let taskServiceSpy: Spy<TaskService>;
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
-  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:"test"}
   const todosServiceStub = {
     getListById(id:string) {
       const todos = mockList;
@@ -371,7 +382,7 @@ describe('ListComponent ngOnInit with a StompState of 1', () => {
 
   let body: TaskBody = {topic:"", highPriority: "", description: ""}
   let task: Task = {body: body, deadline: "",userId:"", listId:"", team:"", taskIdString:"", id:""}
-  let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task]}
+  let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task], ownerID:"test"}
 
 
   beforeEach(async () => {
@@ -409,7 +420,7 @@ describe('ListComponent ngOnInit with a StompState of 0', () => {
   let taskServiceSpy: Spy<TaskService>;
   let mockTaskBody:TaskBody ={topic:"mockTopic",highPriority:"hoch",description:"mockDescription"}
   let mockTask : Task = {body:mockTaskBody,userId:"54321",listId:"123",taskIdString:"6789",team:"blue",deadline:"",id:"6789"}
-  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""]}
+  let mockList : List = {id:"123",name:"mockName",teamId:"mockTeam",tasks:[mockTask,mockTask],members:[""], ownerID:"test"}
   const todosServiceStub = {
     getListById(id:string) {
       const todos = mockList;
@@ -446,7 +457,7 @@ describe('ListComponent ngOnInit with a StompState of 0', () => {
 
   let body: TaskBody = {topic:"", highPriority: "", description: ""}
   let task: Task = {body: body, deadline: "",userId:"", listId:"", team:"", taskIdString:"", id:""}
-  let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task]}
+  let list: List = {id: "", name:"", teamId:"",members: [""] ,tasks: [task], ownerID:"test"}
 
 
   beforeEach(async () => {
