@@ -174,7 +174,7 @@ export class ListComponent implements OnInit {
 
       this.dialogRef = this.dialog.open(TaskDialogComponent, {data: myData})
       this.dialogRef.afterClosed().subscribe((task: Task) =>{
-        this.listService.sendTaskCollectionUpdates(task, this.sessionStorageService.get("inspectedList")!)
+        this.listService.sendTaskCollectionUpdates(task, this.localService.getData("inspectedList")!)
         this.renderList1()
 
       })
