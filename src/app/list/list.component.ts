@@ -43,7 +43,7 @@ export class ListComponent implements OnInit {
 
   async ngOnInit(): Promise<any> {
     this.renderList1()
-    this.listService.initializeStomp(this.sessionStorageService.get("email")!, this.sessionStorageService.get("password")!)
+    this.listService.initializeStomp(this.localService.getData("email")!, this.localService.getData("password")!)
       .subscribe(state => {
         if(state == 1){
             this.wsStatus = true
@@ -53,7 +53,8 @@ export class ListComponent implements OnInit {
         }
       })
     this.userIsOwner = this.isOwner();
-    this.listService.receiveTaskCollectionUpdates(this.sessionStorageService.get("inspectedList")!)
+    console.log(this.localService.getData("inspectedList"))
+    this.listService.receiveTaskCollectionUpdates(this.localService.getData("inspectedList")!)
       .subscribe((task: Task) => {
         console.log(task)
         let indexTasks = this.taskData.findIndex(item => item.id === task.id)

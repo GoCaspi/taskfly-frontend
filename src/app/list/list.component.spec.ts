@@ -302,9 +302,6 @@ describe('ListComponent', () => {
   });
 
   it('should execute renderList1', () => {
-
-
-
     component.renderList1()
     fixture.detectChanges()
     expect(component.taskData).toEqual(mockList.tasks)
