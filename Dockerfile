@@ -1,6 +1,8 @@
 FROM node:lts-alpine as build-stage
 ARG NG_APP_PROD_URL
 ENV NG_APP_PROD_URL=$NG_APP_PROD_URL
+ARG NG_APP_WS_URL
+ENV NG_APP_WS_URL=$NG_APP_WS_URL
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
