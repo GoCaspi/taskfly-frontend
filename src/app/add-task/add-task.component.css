@@ -39,6 +39,10 @@ td {
   letter-spacing: 3px;
 }
 
+#taskTopicInput {
+  
+}
+
 .mat-form-field input {
   height: 20px;
   transition: height ease-in-out 400ms;
