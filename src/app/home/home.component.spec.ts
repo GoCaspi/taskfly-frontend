@@ -7,6 +7,7 @@ import {createSpyFromClass, Spy} from "jasmine-auto-spies";
 import {AuthenticationService} from "../serives/authentication.service";
 import {User, Body} from "../user";
 import {By} from "@angular/platform-browser";
+import {MatDialogRef} from "@angular/material/dialog";
 describe('HomeComponent', () => {
   let mockbody: Body = {team: ""}
   let mockuser: User = {firstName:"",lastName:"",password:"",srole:"",id:"",email:"",reseted: true, body:mockbody}
@@ -22,7 +23,7 @@ describe('HomeComponent', () => {
       declarations: [ HomeComponent ],
       providers:[HomeComponent,HttpClient,HttpHandler,MatSnackBar,Overlay,{
         provide:HttpClient,useValue:createSpyFromClass(HttpClient)
-      }
+      },{provide: MatDialogRef,useValue: {}}
       ,]
     })
     .compileComponents();
