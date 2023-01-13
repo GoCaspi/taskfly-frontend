@@ -12,6 +12,7 @@ import {SignUpService} from "../serives/sign-up.service";
 import {Router} from "@angular/router";
 
 export function passwordsMatchValidator():ValidatorFn{
+
   // @ts-ignore
   return (control: AbstractControl): ValidationErrors | null =>{
     const password = control.get('password')?.value;
@@ -33,7 +34,7 @@ export function passwordsMatchValidator():ValidatorFn{
   providers:[BrowserStorageService, { provide: BROWSER_STORAGE, useFactory: () => sessionStorage }, SignUpService]
 })
 export class SignUpComponent   {
-
+ hide = true;
   firstName: string = ""
   lastName: string = ""
   emaill: string = ""

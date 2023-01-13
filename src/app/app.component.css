@@ -2,7 +2,7 @@
   flex: 1 1 auto;
 }
 mat-toolbar{
-  background: #004a9f;
+  background: #1b5583;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -18,39 +18,39 @@ mat-toolbar{
   justify-content: space-between !important;
   align-items: center !important;
 }
- mat-sidenav{
-   width: 200px;
-   background:#004a9f;
-   margin: 16px;
-   border-right: none;
-   color: white;
-   border-radius: 10px;
-   padding: 16px;
-   justify-content: space-between;
-   display: flex;
-   text-align: center;
- }
+
 mat-sidenav-container{
   height:calc(100vh - 65px );
   justify-content: space-between;
 }
-
- .content{
- height: calc(100vh - 98px);
-   margin: 16px;
-   margin-left: 32px;
-   display: flex;
-   justify-content: center;
-   align-items:center;
-   font-size: 1rem;
-   border-radius: 20px;
+mat-sidenav{
+  width: 200px;
+  background:#1b5583;
+  margin: 16px;
+  border-right: none;
+  color: white;
+  border-radius: 10px;
+  padding: 16px;
+  justify-content: space-between;
+  display: flex;
+  text-align: center;
+}
+.content{
+  height: calc(100vh - 98px);
+  margin: 16px;
+  margin-left: 32px;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  font-size: 1rem;
+  border-radius: 20px;
 
 }
+
 .more-vert{
   flex: 1 1 auto;
   margin-right: 12px;
 }
-
 .menu-button{
    width: 100%;
    display: flex;
@@ -88,11 +88,11 @@ mat-icon{
    margin-top: 8px;
    font-weight:normal ;
  }
- .designation{
-   margin-top: 2px;
-   font-size: 0.7rem;
-   color: lightgrey;
- }
+.designation{
+  margin-top: 2px;
+  font-size: 0.7rem;
+  color: lightgrey;
+}
  mat-divider{
    margin-top: 16px;
    margin-bottom: 16px;
