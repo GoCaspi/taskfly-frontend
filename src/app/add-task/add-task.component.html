@@ -5,10 +5,8 @@
         <mat-form-field  appearance="fill" >
           <input type="text" name="task"  id="taskTopicInput" required matInput [(ngModel)]="tasks" placeholder="Aufgabe hinzufügen" (keydown.enter)="task($event)">
         </mat-form-field>
-      </div>
 
-      <div class="center">
-        <mat-form-field  appearance="fill" *ngIf="hidden">
+        <mat-form-field  appearance="fill" *ngIf="hidden" id="test">
           <mat-label>Choose a date</mat-label>
           <input matInput [matDatepicker]="picker"  [(ngModel)]="date" [ngModelOptions]="{standalone:true}" name="fieldName" ngDefaultControl >
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
