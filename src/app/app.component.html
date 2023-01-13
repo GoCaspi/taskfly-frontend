@@ -3,7 +3,7 @@
       <h4>TaskFly</h4>
 
       <button mat-button (click)="opened=!opened" ><mat-icon>menu</mat-icon></button>
-      <button mat-button><mat-icon>home</mat-icon><a routerLink="/sign-up">Home</a></button>
+      <button mat-button class="aboutTaskflyBTN" routerLink="/myday"><mat-icon>sentiment_satisfied_alt</mat-icon>About TaskFly</button>
       <div class="spacer"></div>
       <div>
           <button mat-button routerLink="/login" *ngIf="!loginStatus">
@@ -38,7 +38,7 @@
   <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','Geplant',this.store.getData('loggedInUserId'))">Scheduled</mat-list-item>
   <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','MyDay',this.store.getData('loggedInUserId'))">My Tasks</mat-list-item>
 </mat-list>
-         <br><br><br>
+         <br><br>
          <mat-list *ngIf="loginStatus">
            <mat-list-item class="listElement" *ngFor="let list of allDynamicLists" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
          </mat-list>
@@ -54,7 +54,7 @@
 
       <mat-sidenav-content>
          <router-outlet></router-outlet>
-        <app-add-task id="Task" *ngIf="loginStatus && !(this.router.url =='/userSetting') && !this.detectStaticList()">
+        <app-add-task id="Task" *ngIf="loginStatus && !(this.router.url =='/userSetting') && !this.detectStaticList() && !(this.router.url =='/myday')">
         </app-add-task>
       </mat-sidenav-content>
     </mat-sidenav-container>
