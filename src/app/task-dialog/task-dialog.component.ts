@@ -65,7 +65,11 @@ export class TaskDialogComponent {
     this.task.deadline = this.formatDate(this.selectedDate?.toISOString()!)
 //    this.task.body.highPriority = (this.selectedPriority === 'true')
     this.task.listId = this.formatListNameToId(this.task.listId)
-    this.sls.updateTask(this.task, this.task.id).then(() => this.dialogRef.close(this.task))
+    this.sls.updateTask(this.task, this.task.id).then(() => {
+      this.dialogRef.close(this.task)
+      this.listService.toggleRender()
+      this.listService.toggleRenderList()
+    })
   }
 
   deleteTask(){

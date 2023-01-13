@@ -5,13 +5,13 @@
 
 
   <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>List</mat-label>
-    <textarea [(ngModel)]="listName" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..." id="listIdInput" type="text"></textarea>
+    <mat-label>Listname</mat-label>
+    <textarea [(ngModel)]="listName" [ngModelOptions]="{standalone: true}" matInput placeholder="Name for your list" id="listIdInput" type="text"></textarea>
   </mat-form-field>
 
   <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Topic</mat-label>
-    <textarea [(ngModel)]="listMembersString" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+    <mat-label>Team members</mat-label>
+    <textarea [(ngModel)]="listMembersString" [ngModelOptions]="{standalone: true}" matInput placeholder="Ids of the user you want to share the list with"  type="text"></textarea>
   </mat-form-field>
 
 
