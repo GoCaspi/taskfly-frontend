@@ -3,7 +3,7 @@
       <h4>TaskFly</h4>
 
       <button mat-button (click)="opened=!opened" ><mat-icon>menu</mat-icon></button>
-      <button mat-button><mat-icon>home</mat-icon><a routerLink="/sign-up">Home</a></button>
+      <button mat-button class="aboutTaskflyBTN" routerLink="/myday"><mat-icon>sentiment_satisfied_alt</mat-icon>About TaskFly</button>
       <div class="spacer"></div>
       <div>
           <button mat-button routerLink="/login" *ngIf="!loginStatus">
@@ -42,10 +42,6 @@
          <mat-list *ngIf="loginStatus">
            <mat-list-item class="listElement" *ngFor="let list of allDynamicLists" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
          </mat-list>
-             <br><br>
-             <mat-list>
-               <mat-list-item class="listElement" routerLink="/myday">Tutorial</mat-list-item>
-             </mat-list>
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
           </div>
