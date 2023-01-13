@@ -69,6 +69,7 @@ export class TaskDialogComponent {
   }
 
   deleteTask(){
+    this.taskId = this.localService.getData("currentTask")
     this.sls.deleteTask(this.taskId).then(_r => {
       this.dialogRef.close()
     })
