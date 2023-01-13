@@ -38,10 +38,14 @@
   <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','Geplant',this.store.getData('loggedInUserId'))">Scheduled</mat-list-item>
   <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','MyDay',this.store.getData('loggedInUserId'))">My Tasks</mat-list-item>
 </mat-list>
-         <br><br><br>
+         <br><br>
          <mat-list *ngIf="loginStatus">
            <mat-list-item class="listElement" *ngFor="let list of allDynamicLists" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
          </mat-list>
+             <br><br>
+             <mat-list>
+               <mat-list-item class="listElement" routerLink="/myday">Tutorial</mat-list-item>
+             </mat-list>
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
           </div>
@@ -54,7 +58,7 @@
 
       <mat-sidenav-content>
          <router-outlet></router-outlet>
-        <app-add-task id="Task" *ngIf="loginStatus && !(this.router.url =='/userSetting') && !this.detectStaticList()">
+        <app-add-task id="Task" *ngIf="loginStatus && !(this.router.url =='/userSetting') && !this.detectStaticList() && !(this.router.url =='/myday')">
         </app-add-task>
       </mat-sidenav-content>
     </mat-sidenav-container>
