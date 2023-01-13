@@ -1,21 +1,47 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {HotToastService} from "@ngneat/hot-toast";
+import {Observable} from "rxjs";
 
 
-export interface TaskBody {
-  topic : string;
-  highPriority: string;
-  description: string;
+export class TaskBody {
+  topic : string | undefined;
+  highPriority: string | undefined = "false";
+  description: string | undefined;
+
+  constructor(topic: string, highPriority?: string, description?: string){
+    this.topic = topic!
+    this.highPriority = highPriority!
+    this.description = description!
+  }
 }
 
-export interface Task{
+export class Task{
   id: string;
   body: TaskBody;
   userId : string;
   listId : string;
   team : string;
   deadline : string;
+
+  constructor(id?: string, topic?: string, highPriority?: string, description?: string, userId?: string, listId?: string, team?: string, deadline?: string){
+    let body: TaskBody = new TaskBody(topic || "", highPriority || "", description || "")
+    this.id = id!
+    this.body = body
+    this.userId = userId!
+    this.listId = listId!
+    this.team = team!
+    this.deadline = deadline!
+  }
+}
+
+export class TaskDialogPayload{
+  constructor(task: Task, action: string) {
+    this.task = task
+    this.action = action
+  }
+  task: Task
+  action: string
 }
 
 interface TaskUpdate{
@@ -70,5 +96,9 @@ export class TaskService {
 
   getHighPrioTasks(id : string){
     return this.http.get<Task[]>(this.baseURL+"/task/priority/"+id)
+  }
+
+  createTask(task: Task): Observable<Task>{
+    return this.http.post<Task>(this.baseURL+"/task", task);
   }
 }

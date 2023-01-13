@@ -22,7 +22,9 @@
 
 
   <mat-list role="list"  id="taskList">
-   <mat-list-item *ngFor="let t of this.taskData" class="listElement {{t.body.highPriority.toString()}}" role="listitem" id="taskItem"  (click)="openTaskDialog(t.id)">{{t.body.topic}}</mat-list-item>
+   <mat-list-item *ngFor="let t of this.taskData" class="listElement {{!t.body?.highPriority?.toString()}}" role="listitem" id="taskItem"  (click)="openTaskDialog(t.id)">{{t.body.topic}}</mat-list-item>
  </mat-list>
+
+  <app-add-task id="Task" (taskEvent)="sendListUpdate($event)" *ngIf="!this.staticList" ></app-add-task>
 
 </div>

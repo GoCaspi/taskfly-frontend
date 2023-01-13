@@ -54,8 +54,6 @@
 
       <mat-sidenav-content>
          <router-outlet></router-outlet>
-        <app-add-task id="Task" *ngIf="loginStatus && !(this.router.url =='/userSetting') && !this.detectStaticList()">
-        </app-add-task>
       </mat-sidenav-content>
     </mat-sidenav-container>
 
