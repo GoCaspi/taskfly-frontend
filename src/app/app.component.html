@@ -1,5 +1,5 @@
 <div id="Wrapper">
-    <mat-toolbar color="primary" id="Toolbar">
+    <mat-toolbar id="Toolbar">
       <h4>TaskFly</h4>
 
       <button mat-button (click)="opened=!opened" ><mat-icon>menu</mat-icon></button>
@@ -27,18 +27,19 @@
            <div id="test2">
 
              <img class="avatar mat-elevation-z4" src="assets/img/105198243.jpeg" alt="{{'language' }}">
-             <h4>{{email}}</h4>
-             <p class="designation">Software Engineer</p>
+             <h5>{{email}}</h5>
+             <h2 class="designation">Software Engineer</h2>
          <mat-divider></mat-divider>
-          <br>
          <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <mat-list *ngIf="enabled && loginStatus">
 
   <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','Important',this.store.getData('loggedInUserId'))">Important</mat-list-item>
   <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','Geplant',this.store.getData('loggedInUserId'))">Scheduled</mat-list-item>
   <mat-list-item class="listElement" routerLink="/list" (click)="saveCurrentListId('','MyDay',this.store.getData('loggedInUserId'))">My Tasks</mat-list-item>
+  <mat-divider></mat-divider>
 </mat-list>
-         <br><br>
+
+
          <mat-list *ngIf="loginStatus">
            <mat-list-item class="listElement" *ngFor="let list of allDynamicLists" routerLink="/list" (click)="saveCurrentListId(list.id,list.name,list.ownerID)">{{list.name}}</mat-list-item>
          </mat-list>
