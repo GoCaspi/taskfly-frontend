@@ -60,6 +60,7 @@ export class ListService {
   }
 
   initializeStomp(username: string, password: string): BehaviorSubject<RxStompState>{
+    console.log(this.wsUrl)
       const stompConfig: RxStompConfig = {
         connectHeaders: {
           username: username,
