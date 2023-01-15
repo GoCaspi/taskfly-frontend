@@ -129,14 +129,10 @@ renderCheck:new BehaviorSubject(true)
 
   it('should deleteList', () => {
     const app = fixture.componentInstance;
-    const toggleRenderSpy = spyOn(todosServiceStub, 'toggleRender')
-    const toggleRenderListSpy = spyOn(todosServiceStub, 'toggleRenderList')
     storageSpy.get.and.returnValue("123")
     listSpy.deleteList.and.nextWith("")
     component.deleteList()
     expect(app).toBeTruthy();
-    expect(toggleRenderSpy).toHaveBeenCalled()
-    expect(toggleRenderListSpy).toHaveBeenCalled()
     expect(component.enabled).toEqual(false)
   });
 

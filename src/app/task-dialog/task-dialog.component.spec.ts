@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskDialogComponent } from './task-dialog.component';
 import {MAT_DIALOG_SCROLL_STRATEGY, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from "@angular/material/dialog";
-import {TaskService, Task} from "../serives/task.service";
+import {TaskService, Task, TaskDialogPayload} from "../serives/task.service";
 import {HttpClient, HttpHandler} from "@angular/common/http";
 import {ListService} from "../serives/list.service";
 import {createSpyFromClass, Spy} from "jasmine-auto-spies";
@@ -21,6 +21,7 @@ describe('TaskDialogComponent', () => {
   let nameIdMap:Map<string, string>= new Map<string, string>();
 
   let mockTask : Task = {body:body,userId:"54321",listId:"123",team:"blue",deadline:new Date().toString(),id:"6789"}
+  let mockTaskPayload: TaskDialogPayload = new TaskDialogPayload(mockTask, "xyz")
 
   interface List{
     id:string;
@@ -50,7 +51,7 @@ describe('TaskDialogComponent', () => {
         {provide:BrowserStorageService, useValue:createSpyFromClass(BrowserStorageService)},
         {provide:MatDialog, useValue:MatDialog},
         {provide: Dialog, useValue: {}},{provide: MatDialogRef,useValue: {}},
-        { provide: MAT_DIALOG_DATA, useValue: mockTask },
+        { provide: MAT_DIALOG_DATA, useValue: mockTaskPayload },
         HttpClient,ListService, HttpHandler]
     })
       .compileComponents();
