@@ -1,13 +1,13 @@
 import { Component, OnInit, Self, SkipSelf} from '@angular/core';
 import {ListService} from "../serives/list.service";
-import {TaskService} from "../serives/task.service";
+import {TaskDialogPayload, TaskService} from "../serives/task.service";
 import type {Task} from '../serives/task.service'
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 import {BROWSER_STORAGE, BrowserStorageService} from '../storage.service';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UpdateListDialogComponent} from "../update-list-dialog/update-list-dialog.component";
 import {HotToastService} from "@ngneat/hot-toast";
-import {LocalService, TaskData} from "../serives/local.service";
+import {LocalService} from "../serives/local.service";
 
 interface List{
   id:string;
@@ -53,13 +53,25 @@ export class ListComponent implements OnInit {
         }
       })
     this.userIsOwner = this.isOwner();
-    console.log(this.localService.getData("inspectedList"))
     this.listService.receiveTaskCollectionUpdates(this.localService.getData("inspectedList")!)
-      .subscribe((task: Task) => {
-        console.log(task)
-        let indexTasks = this.taskData.findIndex(item => item.id === task.id)
-        this.taskData[indexTasks] = task
+      .subscribe((taskDialogPayload: TaskDialogPayload) => {
+        if(taskDialogPayload.action == "delete"){
+          let exists = this.taskData.find(element => element.id == taskDialogPayload.task.id)
+          if(exists != undefined){
+            let indexTasks = this.taskData.findIndex(item => item.id === taskDialogPayload.task.id)
+            this.taskData.splice(indexTasks, 1)
+          }
+        } else if (taskDialogPayload.action == "update"){
+          let indexTasks = this.taskData.findIndex(item => item.id === taskDialogPayload.task.id)
+          this.taskData[indexTasks] = taskDialogPayload.task
+        } else if (taskDialogPayload.action == "new"){
+          let exists = this.taskData.find(element => element.id == taskDialogPayload.task.id)
+          if(exists == undefined){
+            this.taskData.push(taskDialogPayload.task)
+          }
+        }
       })
+
     this.listService.renderCheck.subscribe(statement =>{
       if(statement){
         this.renderList1()
@@ -136,7 +148,7 @@ export class ListComponent implements OnInit {
   openListDialog(){
     let listId = this.localService.getData("inspectedList")
     this.listService.getListById(listId).subscribe(list =>{
-      if(list.members.length < 2 && list.members[0] == ""){
+      if(list.members == null || list.members == [""]){
         this.localService.saveData("inspectedListMembers", "")
         this.listDialogRef = this.dialog.open(UpdateListDialogComponent)
         this.listDialogRef.afterClosed().subscribe(_r =>{
@@ -152,6 +164,10 @@ export class ListComponent implements OnInit {
     })
   }
 
+  sendListUpdate(taskDialogPayload: TaskDialogPayload){
+    this.listService.sendTaskCollectionUpdates(taskDialogPayload, this.localService.getData("inspectedList")!)
+  }
+
   deleteList(){
     let listId = this.localService.getData("inspectedList")
     this.listService.deleteList(listId).subscribe(_response =>{
@@ -163,17 +179,14 @@ export class ListComponent implements OnInit {
   }
 
 
+
   openTaskDialog(taskId : string){
     this.localService.saveData("currentTask",taskId)
     this.taskService.getTaskById(taskId).subscribe(data =>{
-      let myData = <Task> data
+      let taskDialogPayload: TaskDialogPayload = new TaskDialogPayload(<Task>data, "update")
 
-      let taskDTO : TaskData = {currentListId:myData.listId, currentDeadline: myData.deadline, currentTopic:myData.body.topic,
-      currentDescription:myData.body.description,currentPriority:myData.body.highPriority.toString(), currentTeam:myData.team}
-      this.localService.setTaskDTOToStore(taskDTO)
-
-      this.dialogRef = this.dialog.open(TaskDialogComponent, {data: myData})
-      this.dialogRef.afterClosed().subscribe((task: Task) =>{
+      this.dialogRef = this.dialog.open(TaskDialogComponent, {data: taskDialogPayload})
+      this.dialogRef.afterClosed().subscribe((task: TaskDialogPayload) =>{
         this.listService.sendTaskCollectionUpdates(task, this.localService.getData("inspectedList")!)
         this.renderList1()
 

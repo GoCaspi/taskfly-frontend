@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, map} from "rxjs";
 import {RxStomp, RxStompConfig, RxStompState} from "@stomp/rx-stomp";
 import type {Task} from "./task.service";
+import {TaskDialogPayload} from "./task.service";
 
 export interface List{
   id:string;
@@ -60,7 +61,6 @@ export class ListService {
   }
 
   initializeStomp(username: string, password: string): BehaviorSubject<RxStompState>{
-    console.log(this.wsUrl)
       const stompConfig: RxStompConfig = {
         connectHeaders: {
           username: username,
@@ -79,12 +79,17 @@ export class ListService {
     return this.rxStomp.connectionState$
   }
 
-  sendTaskCollectionUpdates(data: Task, collectionID: string){
+  sendTaskCollectionUpdates(data: TaskDialogPayload, collectionID: string){
+    console.log(data)
+    console.log(collectionID)
     this.rxStomp.publish({destination: "/app/collection/broker/" + collectionID, body: JSON.stringify(data)})
   }
 
-  receiveTaskCollectionUpdates(collectionID: string): Observable<any>{
+
+  receiveTaskCollectionUpdates(collectionID: string): Observable<TaskDialogPayload>{
+
     return this.rxStomp.watch('/collection/' + collectionID).pipe(map(function (message){
+      console.log(message.body)
       return JSON.parse(message.body)
     }))
   }

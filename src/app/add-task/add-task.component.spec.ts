@@ -1,12 +1,14 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import { AddTaskComponent } from './add-task.component';
-import {AddTaskService} from "../add-task.service";
 import {Observable, of} from "rxjs";
 import {ListService} from "../serives/list.service";
+import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 
 
 describe('AddTaskComponent', () => {
   let component: AddTaskComponent;
+  let httpMock : HttpTestingController
+
   let fixture: ComponentFixture<AddTaskComponent>;
   const serviceStub={createTask(){
     let massage = "test";
@@ -21,10 +23,12 @@ describe('AddTaskComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ AddTaskComponent ],
-      providers:[{ provide:AddTaskService,useValue: serviceStub},{provide: ListService, useValue: listServiceStub}]
+      providers:[{provide: ListService, useValue: listServiceStub}],
+      imports: [HttpClientTestingModule]
     })
 
     .compileComponents();
+    httpMock = TestBed.inject(HttpTestingController);
     fixture = TestBed.createComponent(AddTaskComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -57,7 +61,6 @@ describe('AddTaskComponent', () => {
 
   it('should ', function () {
     component.tasks="test";
-    component.ngOnInit();
     setTimeout(function (){
       expect(component.hidden).toBe(true);
     },500)

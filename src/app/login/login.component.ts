@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit{
         this.toast.observe({
           success: 'Logged in successfully',
           loading: 'Logging in...',
-          error: 'There was an error'
+          error: 'Email and Password that not match'
         })
       ).subscribe(() =>{
         let userLoginDTO: UserLoginData = {email:this.userEmail,password:this.userPassword,loginStatus:"true"}

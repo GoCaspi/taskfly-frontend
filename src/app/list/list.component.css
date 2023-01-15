@@ -41,7 +41,21 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif;min-width: 90% }
 }
 #main-wrap{
   width: 90%;
+  height: 100%;
   margin-left: 5%;
+}
+
+.task-controller-container{
+  width: 50%;
+  position: fixed;
+  bottom: 1%;
+  left: 25%;
+}
+
+#add-task-wrap{
+  display: flex;
+  height: 100%;
+  width: 100%;
 }
 
 .false{

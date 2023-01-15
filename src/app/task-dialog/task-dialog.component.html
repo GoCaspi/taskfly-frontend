@@ -3,8 +3,8 @@
 <div class="priorityBox">
   <mat-label class="priorityLabel">Priority</mat-label>
   <mat-radio-group aria-label="Select an option">
-    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="task.body.highPriority" [ngModelOptions]="{standalone: true}" value="true">high</mat-radio-button>
-    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="task.body.highPriority" [ngModelOptions]="{standalone: true}" value="false">low</mat-radio-button>
+    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="taskDialogPayload.task.body.highPriority" [ngModelOptions]="{standalone: true}" value="true">high</mat-radio-button>
+    <mat-radio-button class="radioBtn" ngDefaultControl [(ngModel)]="taskDialogPayload.task.body.highPriority" [ngModelOptions]="{standalone: true}" value="false">low</mat-radio-button>
   </mat-radio-group>
 </div>
 
@@ -13,22 +13,22 @@
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>List</mat-label>
-    <textarea [(ngModel)]="task.listId" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..." id="listIdInput" type="text"></textarea>
+    <textarea [(ngModel)]="taskDialogPayload.task.listId" [ngModelOptions]="{standalone: true}" matInput placeholder="Enter the name of a dynamic list" id="listIdInput" type="text"></textarea>
   </mat-form-field>
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Topic</mat-label>
-    <textarea [(ngModel)]="task.body.topic" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+    <textarea [(ngModel)]="taskDialogPayload.task.body.topic" [ngModelOptions]="{standalone: true}" matInput placeholder="Topic of the task"  type="text"></textarea>
   </mat-form-field>
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Team</mat-label>
-    <textarea [(ngModel)]="task.team" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+    <textarea [(ngModel)]="taskDialogPayload.task.team" [ngModelOptions]="{standalone: true}" matInput placeholder="Team"  type="text"></textarea>
   </mat-form-field>
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Description</mat-label>
-    <textarea [(ngModel)]="task.body.description" [ngModelOptions]="{standalone: true}" matInput placeholder="Ex. It makes me feel..."  type="text"></textarea>
+    <textarea [(ngModel)]="taskDialogPayload.task.body.description" [ngModelOptions]="{standalone: true}" matInput placeholder="Description"  type="text"></textarea>
   </mat-form-field>
 
   <mat-form-field appearance="fill">

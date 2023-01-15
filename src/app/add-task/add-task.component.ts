@@ -1,8 +1,8 @@
-import {Component, OnInit, Self} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, Self} from '@angular/core';
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
-import {AddTaskService} from "../add-task.service";
 import {ListService} from "../serives/list.service";
 import {LocalService} from "../serives/local.service";
+import {TaskDialogPayload, TaskService, Task, TaskBody} from "../serives/task.service";
 
 @Component({
 
@@ -13,54 +13,40 @@ import {LocalService} from "../serives/local.service";
 
 })
 
-export class AddTaskComponent implements OnInit{
+export class AddTaskComponent{
+  @Output() taskEvent = new EventEmitter<TaskDialogPayload>()
+
   tasks : string ="" ;
   date : Date =new Date();
   event: string ="";
   message : string="";
   value: string =" ";
   hidden: boolean = false;
+  taskObj: Task = new Task()
 
 
 
 
-constructor(@Self() private sessionStorageService: BrowserStorageService,
-            private Service:AddTaskService,public listService:ListService, public localService:LocalService){
+
+  constructor(@Self() private sessionStorageService: BrowserStorageService,
+            private taskService: TaskService,public listService:ListService, public localService:LocalService){
 }
 
-  ngOnInit(): void {
-    setInterval(( )=>{
-      if(this.tasks == ""){
-        this.hidden=false;
-      }
-      else {
-        this.hidden = true;
-      }
-    },100)
-
-
-  }
-
   task(_$event: any){
-
-    let id = this.localService.getData("loggedInUserId");
-
-    console.log("von der test methode",this.tasks);
-    console.log("Date von dateinput", this.date);
-    let formatDate = this.formatDate(this.date.toISOString());
-
-    let listId= this.localService.getData("inspectedList")!;
-
-    if(this.tasks == '')
+    this.taskObj.deadline = this.formatDate(this.date.toISOString());
+    this.taskObj.userId = this.localService.getData("loggedInUserId")
+    this.taskObj.listId = this.localService.getData("inspectedList")
+    if(this.taskObj.body.topic == '')
     {
       this.message="Das Textfeld ist Leer!";
     }
     else {
-    this.Service.createTask(this.tasks,id,formatDate, listId).subscribe(data => {
-      this.listService.toggleRender()
-      this.listService.toggleRenderList()
-      console.log("RenderCHECK from ADDTAASKCOMPONENT",data)
-    });
+      this.taskService.createTask(this.taskObj).subscribe(taskData => {
+        let taskDialogPayload: TaskDialogPayload = new TaskDialogPayload(taskData, "new")
+        this.taskEvent.emit(taskDialogPayload)
+        this.listService.toggleRender()
+        this.listService.toggleRenderList()
+      });
     this.tasks = this.value;
 
     }

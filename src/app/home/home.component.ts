@@ -6,6 +6,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 import {HotToastService} from "@ngneat/hot-toast";
 import {LocalService} from "../serives/local.service";
+import {MatDialogRef} from "@angular/material/dialog";
 
 
 
@@ -29,7 +30,7 @@ export class HomeComponent {
     private toast: HotToastService,
    public localService:LocalService,
    @Self() private sessionStorageService: BrowserStorageService,
-    @SkipSelf() private localStorageService: BrowserStorageService,private http:HttpClient,private _snackBar: MatSnackBar
+    @SkipSelf() private localStorageService: BrowserStorageService,private http:HttpClient,private _snackBar: MatSnackBar,public dialogRef: MatDialogRef<HomeComponent>
   ) { this.baseURL = process.env['NG_APP_PROD_URL'];}
 
 get list(){
@@ -61,7 +62,7 @@ kollectionUser(){
       error : "text field is empty"
     })
   ).subscribe(()=>{
-    console.log("")
+    this.dialogRef.close()
   })
 }
 

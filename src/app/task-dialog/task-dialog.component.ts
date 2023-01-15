@@ -1,7 +1,7 @@
 import {Component, Injectable, Self, EventEmitter, Output, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef,} from "@angular/material/dialog";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
-import {Task, TaskService} from "../serives/task.service";
+import {Task, TaskService, TaskDialogPayload} from "../serives/task.service";
 import {ListService} from "../serives/list.service";
 import {LocalService} from "../serives/local.service";
 
@@ -30,7 +30,7 @@ export class TaskDialogComponent {
   selectedDate: Date | null = new Date()
 
   constructor(public dialog: MatDialog, private sls: TaskService,@Self() private sessionStorageService: BrowserStorageService,
- private listService:ListService,  public dialogRef: MatDialogRef<TaskDialogComponent>, @Inject(MAT_DIALOG_DATA) public task: Task,
+ private listService:ListService,  public dialogRef: MatDialogRef<TaskDialogComponent>, @Inject(MAT_DIALOG_DATA) public taskDialogPayload: TaskDialogPayload,
               public localService:LocalService) {}
   @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>()
   formatDate(date:string) : string {
@@ -40,12 +40,11 @@ export class TaskDialogComponent {
     return stringArray.join("");
   }
   ngOnInit(){
-    console.log(this.task.deadline)
-    if (this.task.deadline != (null || undefined)){
-      this.selectedDate = new Date(this.task.deadline)
+    if (this.taskDialogPayload.task.deadline != (null || undefined)){
+      this.selectedDate = new Date(this.taskDialogPayload.task.deadline)
     }
-    if (this.task.body.highPriority != null || undefined){
-      if(this.task.body.highPriority){
+    if (this.taskDialogPayload.task.body.highPriority != null || undefined){
+      if(this.taskDialogPayload.task.body.highPriority){
         this.selectedPriority = 'true'
       } else {
         this.selectedPriority = 'false'
@@ -58,19 +57,18 @@ export class TaskDialogComponent {
     })
   }
 
-
-
-
   sendUpdate(){
-    this.task.deadline = this.formatDate(this.selectedDate?.toISOString()!)
+    this.taskDialogPayload.action = "update"
+    this.taskDialogPayload.task.deadline = this.formatDate(this.selectedDate?.toISOString()!)
 //    this.task.body.highPriority = (this.selectedPriority === 'true')
-    this.task.listId = this.formatListNameToId(this.task.listId)
-    this.sls.updateTask(this.task, this.task.id).then(() => this.dialogRef.close(this.task))
+    this.taskDialogPayload.task.listId = this.formatListNameToId(this.taskDialogPayload.task.listId)
+    this.sls.updateTask(this.taskDialogPayload.task, this.taskDialogPayload.task.id).then(() => this.dialogRef.close(this.taskDialogPayload))
   }
 
   deleteTask(){
-    this.sls.deleteTask(this.taskId).then(_r => {
-      this.dialogRef.close()
+    this.taskDialogPayload.action = "delete"
+    this.sls.deleteTask(this.taskDialogPayload.task.id).then(_r => {
+      this.dialogRef.close(this.taskDialogPayload)
     })
   //  this.sessionStorageService.setBody("updated",true)
   }
