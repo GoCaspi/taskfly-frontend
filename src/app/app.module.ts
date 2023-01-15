@@ -94,7 +94,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         MatSnackBarModule,
         MatProgressBarModule,
         MatSelectModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
     ],
 
   providers: [MatMenuModule],

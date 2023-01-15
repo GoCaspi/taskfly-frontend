@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, Output, Self} from '@angular/core';
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
 import {ListService} from "../serives/list.service";
 import {LocalService} from "../serives/local.service";
-import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 import {TaskDialogPayload, TaskService, Task, TaskBody} from "../serives/task.service";
 
 @Component({
@@ -14,7 +13,7 @@ import {TaskDialogPayload, TaskService, Task, TaskBody} from "../serives/task.se
 
 })
 
-export class AddTaskComponent implements OnInit{
+export class AddTaskComponent{
   @Output() taskEvent = new EventEmitter<TaskDialogPayload>()
 
   tasks : string ="" ;
@@ -32,11 +31,6 @@ export class AddTaskComponent implements OnInit{
   constructor(@Self() private sessionStorageService: BrowserStorageService,
             private taskService: TaskService,public listService:ListService, public localService:LocalService){
 }
-
-  ngOnInit(): void {
-
-
-  }
 
   task(_$event: any){
     this.taskObj.deadline = this.formatDate(this.date.toISOString());

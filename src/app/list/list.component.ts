@@ -7,7 +7,7 @@ import {BROWSER_STORAGE, BrowserStorageService} from '../storage.service';
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UpdateListDialogComponent} from "../update-list-dialog/update-list-dialog.component";
 import {HotToastService} from "@ngneat/hot-toast";
-import {LocalService, TaskData} from "../serives/local.service";
+import {LocalService} from "../serives/local.service";
 
 interface List{
   id:string;

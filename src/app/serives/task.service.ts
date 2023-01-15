@@ -24,14 +24,13 @@ export class Task{
   team : string;
   deadline : string;
 
-  constructor(id?: string, topic?: string, highPriority?: string, description?: string, userId?: string, listId?: string, team?: string, deadline?: string){
-    let body: TaskBody = new TaskBody(topic || "", highPriority || "", description || "")
-    this.id = id!
-    this.body = body
-    this.userId = userId!
-    this.listId = listId!
-    this.team = team!
-    this.deadline = deadline!
+  constructor(taskObj?: Partial<Task>){
+    this.body = new TaskBody(taskObj?.body?.topic!, taskObj?.body?.highPriority, taskObj?.body?.description)
+    this.id = taskObj?.id!
+    this.userId = taskObj?.userId!
+    this.listId = taskObj?.listId!
+    this.team = taskObj?.team!
+    this.deadline = taskObj?.deadline!
   }
 }
 
