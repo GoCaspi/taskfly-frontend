@@ -22,14 +22,11 @@ export class UpdateListDialogComponent implements OnInit {
   }
 
   setInputFields(){
-  //  this.listName = this.sessisonStorageService.get("inspectedListName")!
-  //  this.listMembersString = this.sessisonStorageService.get("inspectedListMembers")!
     this.listName = this.localService.getData("inspectedListName")
     this.listMembersString = this.localService.getData("inspectedListMembers")
   }
   sendUpdate(){
     let membersArr = this.listMembersString.split(",")
-    console.log("LISTMEMBERSIDSTRING : ", membersArr)
     let update: List = {
       id: "",
       name: this.listName,
@@ -38,8 +35,8 @@ export class UpdateListDialogComponent implements OnInit {
       tasks: [],
       ownerID: this.localService.getData("inspectedListOwnerId")!
     }
-    if (this.listMembersString == "") {
-      this.toast.error("Please enter a new Topic")
+    if (this.listName == "") {
+    this.toast.error("Please enter a new Topic")
     } else {
       this.listService.updateListe(this.localService.getData("inspectedList")!, update).pipe(
         this.toast.observe({
@@ -48,7 +45,6 @@ export class UpdateListDialogComponent implements OnInit {
           error: "text field is empty"
         })
       ).subscribe(response => {
-        console.log("RESPONSE FROM UPDATE LIST ", response)
         this.listService.toggleRender()
         this.listService.toggleRenderList()
         this.dialog.closeAll()

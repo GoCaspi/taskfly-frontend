@@ -2,11 +2,11 @@ html,body{height: 100%; }
 body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
 .form-container{
   display: block;
-  max-width: 300px;
+  max-width: 800px;
   margin: auto;
 
   background: #eceff1;
-  padding: 250px;
+  padding: 50px;
   border-radius: 16px;
 
 }
@@ -26,4 +26,16 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
 .sign-up-link{
   font-size: 1.2rem;
   margin-left: 8px;
+}
+.quote{
+  font-style: italic;
+}
+.section{
+  margin-top:0.2rem;
+  margin-bottom: 0.5rem;
+}
+.sectionTitle{
+  margin-top:0.5rem;
+  font-style: oblique;
+  font-weight: bold;
 }

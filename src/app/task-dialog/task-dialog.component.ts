@@ -1,7 +1,7 @@
 import {Component, Injectable, Self, EventEmitter, Output, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef,} from "@angular/material/dialog";
 import {BROWSER_STORAGE, BrowserStorageService} from "../storage.service";
-import {TaskDialogPayload, TaskService} from "../serives/task.service";
+import {Task, TaskService} from "../serives/task.service";
 import {ListService} from "../serives/list.service";
 import {LocalService} from "../serives/local.service";
 

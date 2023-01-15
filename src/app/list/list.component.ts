@@ -148,7 +148,7 @@ export class ListComponent implements OnInit {
   openListDialog(){
     let listId = this.localService.getData("inspectedList")
     this.listService.getListById(listId).subscribe(list =>{
-      if(list.members.length < 2 && list.members[0] == ""){
+      if(list.members == null || list.members == [""]){
         this.localService.saveData("inspectedListMembers", "")
         this.listDialogRef = this.dialog.open(UpdateListDialogComponent)
         this.listDialogRef.afterClosed().subscribe(_r =>{

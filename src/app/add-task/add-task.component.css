@@ -10,8 +10,12 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
 }
 .form-container mat-form-field{
   width: 100%;
-
 }
+
+#test{
+  max-height: 20px !important;
+}
+
 .button-class{
   display: flex;
   align-items: center;
@@ -19,8 +23,7 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
 }
 .center{
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row;
 
 }
 .sign-up-link{
@@ -36,6 +39,10 @@ td {
   text-indent: 50px;
   text-align: justify;
   letter-spacing: 3px;
+}
+
+#taskTopicInput {
+
 }
 
 .mat-form-field input {
