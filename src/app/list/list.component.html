@@ -11,7 +11,7 @@
       <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" *ngIf="userIsOwner && !staticList && enabled" (click)="deleteList()">
         <mat-icon>delete</mat-icon>
       </button>
-      <button mat-icon-button class="" aria-label="Example icon-button with heart icon" *ngIf="userIsOwner && !staticList && enabled">
+      <button mat-icon-button class="" aria-label="Example icon-button with heart icon" *ngIf="!staticList && enabled">
         <mat-icon class="example-icon favorite-icon" *ngIf="!wsStatus" svgIcon="broadcast-off"></mat-icon>
         <mat-icon class="example-icon favorite-icon" *ngIf="wsStatus" svgIcon="broadcast"></mat-icon>
       </button>
@@ -19,12 +19,12 @@
   </mat-toolbar>
 
 
-
-
   <mat-list role="list"  id="taskList">
-   <mat-list-item *ngFor="let t of this.taskData" class="listElement {{!t.body?.highPriority?.toString()}}" role="listitem" id="taskItem"  (click)="openTaskDialog(t.id)">{{t.body.topic}}</mat-list-item>
- </mat-list>
+    <mat-list-item *ngFor="let t of this.taskData" class="listElement {{!t.body?.highPriority?.toString()}}" role="listitem" id="taskItem"  (click)="openTaskDialog(t.id)">{{t.body.topic}}</mat-list-item>
+  </mat-list>
+  <div class="task-controller-container">
 
-  <app-add-task id="Task" (taskEvent)="sendListUpdate($event)" *ngIf="!this.staticList" ></app-add-task>
 
+    <app-add-task id="Task" (taskEvent)="sendListUpdate($event)" *ngIf="!this.staticList" ></app-add-task>
+  </div>
 </div>

@@ -8,7 +8,7 @@
       </div>
 
       <div class="center">
-        <mat-form-field  appearance="fill" *ngIf="hidden">
+        <mat-form-field  appearance="fill" *ngIf="taskObj.body.topic">
           <mat-label>Choose a date</mat-label>
           <input matInput [matDatepicker]="picker"  [(ngModel)]="date" [ngModelOptions]="{standalone:true}" name="fieldName" ngDefaultControl >
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>

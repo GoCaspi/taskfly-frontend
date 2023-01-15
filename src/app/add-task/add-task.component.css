@@ -4,10 +4,9 @@ body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif; }
 
 .form-container{
   display: block;
-  margin: auto;
   border-radius: 16px;
   bottom: 0px;
-  max-width: 200px;
+
 }
 .form-container mat-form-field{
   width: 100%;
