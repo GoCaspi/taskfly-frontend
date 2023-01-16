@@ -43,6 +43,7 @@ import { AddTaskComponent } from './add-task/add-task.component';
 import {MatSelectModule} from "@angular/material/select";
 import {ResetFormComponent} from "./reset-form/reset-form.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {NgxPrintModule} from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     TaskDialogComponent,
     UpdateListDialogComponent,
     ResetFormComponent
+
   ],
     imports: [
         BrowserModule,
@@ -95,6 +97,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         MatProgressBarModule,
         MatSelectModule,
         MatProgressSpinnerModule,
+        NgxPrintModule
+
     ],
 
   providers: [MatMenuModule],

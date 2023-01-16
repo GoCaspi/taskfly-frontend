@@ -227,8 +227,6 @@ export class ListComponent implements OnInit {
     let checkId = this.localService.getData("loggedInUserId")
       return checkId == this.localService.getData("inspectedListOwnerId");
   }
-  printThisPage(){
-    window.print();
-  }
+
 
 }
