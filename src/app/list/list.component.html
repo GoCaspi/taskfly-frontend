@@ -16,7 +16,7 @@
         <mat-icon class="example-icon favorite-icon" *ngIf="!wsStatus" svgIcon="broadcast-off"></mat-icon>
         <mat-icon class="example-icon favorite-icon" *ngIf="wsStatus" svgIcon="broadcast"></mat-icon>
       </button>
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" printTitle="Your Todos List" [printStyle]="{h4:{'color':'red'}}" printSectionId="main-wrap" ngxPrint>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" printTitle="Your Todos List" [printStyle]="{h4:{'color':'red'}}" printSectionId="taskList" ngxPrint>
         <mat-icon>local_printshop</mat-icon>
       </button>
 
@@ -28,8 +28,8 @@
     <mat-list-item *ngFor="let t of this.taskData" class="listElement {{!t.body?.highPriority?.toString()}}" role="listitem" id="taskItem"  (click)="openTaskDialog(t.id)">{{t.body.topic}}</mat-list-item>
   </mat-list>
   <div class="task-controller-container">
-
-
     <app-add-task id="Task" (taskEvent)="sendListUpdate($event)" *ngIf="!this.staticList" ></app-add-task>
+
   </div>
+
 </div>
