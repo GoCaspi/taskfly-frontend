@@ -20,6 +20,7 @@ export class UserSettingsComponent implements OnInit{
   teamName: string = ""
   members: string[] = []
   membersInput: string = ""
+  ownTeam: Team = {teamName: "",userID: "", members: [""]}
   constructor(
     @Self() private sessionStorageService: BrowserStorageService,
     @SkipSelf() private localStorageService: BrowserStorageService,
@@ -81,5 +82,13 @@ console.log("")
     this.firstName = userInfoDTO.firstName
     this.lastName = userInfoDTO.lastName
     this.emaill = this.localService.getData("email")
+    this.getOwnTeamByUserId()
   }
+
+  getOwnTeamByUserId(){
+    this.authentication.getOwnTeamByUserId().subscribe(res =>{
+      this.ownTeam = res
+    })
+  }
+
 }

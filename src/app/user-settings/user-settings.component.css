@@ -2,7 +2,7 @@ html,body{height: 100%;}
 body{margin: 0; font-family: Roboto,"Helvetica Neue",sans-serif;}
 .form-container{
   display: block;
-  max-width: 400px;
+  max-width: 750px;
   margin: auto;
   min-height: 400px;
   background: #eceff1;

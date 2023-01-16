@@ -60,4 +60,10 @@ export class AuthenticationService {
     });
     return this.http.get<User>(this.baseURL+"/user/userInfo?email="+ email,{headers:headers_object})
   }
+
+  getOwnTeamByUserId(){
+    let userid = this.localService.getData("loggedInUserId") || ""
+
+    return this.http.get<Team>(this.baseURL + "/teammanagement/user/" + userid, {responseType:'json'})
+  }
 }
